@@ -1,0 +1,26 @@
+{
+  "name": "gulp-sass-and-browser-sync",
+  "version": "1.0.0",
+  "description": "An awesome bootstrap 4.1.3 responsive template.",
+  "main": "gulpfile.js",
+  "author": "DevCRUD",
+  "scripts": {
+    "start": "gulp"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.24.4",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-clean-css": "^3.9.4",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^3.2.1"
+  },
+  "dependencies": {
+    "del": "^3.0.0",
+    "gulp-csscomb": "^3.0.8",
+    "gulp-postcss": "^7.0.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-wait": "0.0.2",
+    "postcss-flexbugs-fixes": "^3.3.1"
+  }
+}

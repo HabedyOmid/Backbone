@@ -1,0 +1,70 @@
+.wysiwyg__editor{
+
+	h1, h2, h3, h4, h5, h6{
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-weight: $bold-3;
+		color: $navy;
+	}
+
+	.red, .maroon{
+		color: $maroon !important;
+	}
+	.blue{
+		color: $blue !important;
+	}
+	.white{
+		color: $white !important;
+	}
+	.black{
+		color: $black !important;
+	}
+	.navy{
+		color: $navy !important;
+	}
+	p{
+		color: $navy;
+		line-height: 24px;
+		padding: 0px;
+		margin: 0px;
+	}
+
+	strong{
+		font-weight: $bold-2;
+	}
+
+	a.cta{
+		padding: 6px 12px;
+		background: $blue;
+		color: $white;
+		font-weight: $bold-3;
+		letter-spacing: 1px;
+		font-size: $font-size-sm;
+		border-radius: $border-radius;
+		text-transform: uppercase;
+
+		&:hover{
+			color: $white;
+		}
+	}
+
+	ul li, 
+	ol li{
+		font-weight: $bold-3;
+		letter-spacing: 1px;
+		color: $navy;
+		padding: 5px;
+	}
+
+
+	img{
+		max-width: 50%;
+		height: auto;
+		margin-right: 20px;
+		float: left;
+	}
+
+
+
+
+}
