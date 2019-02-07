@@ -1,0 +1,23 @@
+{
+  "name": "gulp_boilerplate_minifier",
+  "version": "1.0.0",
+  "description": "This package uses gulp to minify sass, javascript and images to combile file into a singular file. gulp will automate any live change to the files and will inject the updates to the broswer.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "gulp"
+  },
+  "author": "Omid Habedy",
+  "license": "MIT",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sass": "^4.0.1",
+    "gulp-uglifycss": "^1.1.0",
+    "gulp-uglyfly": "^1.4.2",
+    "imagemin-pngquant": "^5.1.0",
+    "npm": "^6.4.0"
+  }
+}
