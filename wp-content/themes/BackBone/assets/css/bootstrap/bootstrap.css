@@ -1,18 +1,9 @@
 /*!
-=========================================================
-* BackBone - An Awesome WP Starter Theme + ACF
-=========================================================
-Theme Name: BackBone
-Theme URI: https://github.com/HabedyOmid/WP-Backbone.git
-Author: Omid Habedy
-Author URI: https://omidhabedy.me/
-Description: My 2019 BackBone theme is designed to build any Wordpress site with 100% freedom of design and development development using ACF (Advance Custom Field). The theme alos uses SASS preprocessor for stylesheet and layouts.
-Version: 2.0
-License: GNU General Public License v2 or later
-License URI: LICENSE
-Tags: ACF, Boostrap 4.1,  SASS, Gulp
-=========================================================
-*/
+ * Bootstrap v4.1.3 (https://getbootstrap.com/)
+ * Copyright 2011-2018 The Bootstrap Authors
+ * Copyright 2011-2018 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
 :root
 {
     --blue: #007bff;
