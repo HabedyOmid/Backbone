@@ -26,8 +26,8 @@ Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS
 // @import "bootstrap/tables";
 // @import "bootstrap/forms";
 // @import "bootstrap/buttons";
-// @import "bootstrap/transitions";
-// @import "bootstrap/dropdown";
+@import "bootstrap/transitions";
+@import "bootstrap/dropdown";
 // @import "bootstrap/button-group";
 // @import "bootstrap/input-group";
 // @import "bootstrap/custom-forms";
@@ -61,9 +61,12 @@ Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS
 @import "custom/core/colors";
 @import "custom/core/app";
 
+@import "custom/form/form";
+@import "custom/form/buttons";
 
+@import "custom/navigation/nav";
 
-
+@import "custom/sections/sections";
 
 
 

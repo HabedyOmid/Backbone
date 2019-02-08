@@ -1,15 +1,9 @@
 <?php
-/**
- * The template for displaying search results pages
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
- *
- * @package BackBone
- */
-
-get_header();
-?>
-
+//
+// The template for displaying search results pages
+//@link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
+get_header(); ?>
+	
 	<section id="primary" class="content-area">
 		<main id="main" class="site-main">
 
@@ -40,16 +34,10 @@ get_header();
 
 			the_posts_navigation();
 
-		else :
 
-			get_template_part( 'template-parts/content', 'none' );
-
-		endif;
-		?>
+		endif; ?>
 
 		</main><!-- #main -->
 	</section><!-- #primary -->
 
-<?php
-get_sidebar();
-get_footer();
+<?php get_footer(); ?>

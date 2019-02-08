@@ -1,40 +1,27 @@
 <?php
-/**
- * The template for displaying all pages
- *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
- * different template.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package BackBone
- */
+// 
+// The template for displaying all pages
+// @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+get_header(); ?>
+	
+	<?php if(have_posts()) : ?>
+	<section class="wp__content">
+		<div class="container">
+		<?php while ( have_posts() ) : the_post();
 
-get_header();
-?>
-
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
-
-		<?php
-		while ( have_posts() ) :
-			the_post();
-
-			get_template_part( 'template-parts/content', 'page' );
+			the_content();
 
 			// If comments are open or we have at least one comment, load up the comment template.
 			if ( comments_open() || get_comments_number() ) :
 				comments_template();
-			endif;
+			endif; 
 
-		endwhile; // End of the loop.
-		?>
+		endwhile; wp_reset_query(); ?>
+		</div>
+	</section>
+	<?php endif; ?>
 
-		</main><!-- #main -->
-	</div><!-- #primary -->
 
-<?php
-get_sidebar();
-get_footer();
+	<?php get_template_part("layouts/acf", "sections"); // ACF Sections ?>
+
+<?php get_footer(); ?>
