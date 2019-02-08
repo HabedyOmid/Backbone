@@ -6,7 +6,6 @@
  *
  * @package BackBone
  */
-
 if ( ! function_exists( 'backbone_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -120,17 +119,13 @@ add_action( 'widgets_init', 'backbone_widgets_init' );
  * Enqueue scripts and styles.
  */
 function backbone_scripts() {
-	wp_enqueue_style( 'backbone-style', get_stylesheet_uri() );
+    wp_enqueue_style( 'backbone-style', get_stylesheet_uri() );
+    wp_enqueue_script( 'backbone-script', get_template_directory_uri() . '/backbone.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'backbone-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
-
-	wp_enqueue_script( 'backbone-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+        wp_enqueue_script( 'comment-reply' );
+    }
 }
-add_action( 'wp_enqueue_scripts', 'backbone_scripts' );
 
 /**
  * Implement the Custom Header feature.

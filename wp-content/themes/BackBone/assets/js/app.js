@@ -1,5 +1,6 @@
 //
 // Affex Navbar
+// 
 +function ($) {
   'use strict';
   var Affix = function (element, options) {
@@ -138,127 +139,11 @@
 
 
 //
-// If There is Affix Navbar / ADJUST MARGINS TOP
-if ($('nav').attr('data-spy') == 'affix') {
-    var navHeight = $('nav').outerHeight();
-
-    // If there is Header Element 
-    if($('header')[0]){
-        $('header').css('marginTop', navHeight);
-    }else if($('#page__content')[0]){
-        $('#page__content').css('marginTop', navHeight+30);
-    }
-}
-
-
-//
-// dropdown menu toggle in medium screen size
-$('.dropdown .nav-link').click(function(){
-    $(this).parent().toggleClass('open');
-});
-
-
-// 
-// Add a class for navbar Dropdown for visibility issues
-$('a.dropdown-toggle').mouseover(function(){
-    $(this).next().addClass('imVisibleNow');
-});
-
-
-//
 // Navbar Toggle
+// 
 $('.navbar-toggle').click(function(){
     $(this).toggleClass('toggled')
     $('.primary-navbar').toggleClass('toggled');
 });
- 
-
-//
-// Navbar tgl checkbox for navbar collapse 
-$('#tgl-checkbox:checkbox').change(function(){
-    if($(this).is(":checked")) {
-        $('.navbar-item.links').addClass("show");
-    } else {
-        $('.navbar-item.links').removeClass("show");
-    }
-});
-
-
-
-
-//
-// Homepage Header Slider
-$('.owl-carousel.homepage__slider').owlCarousel({
-    loop: true,
-    margin: 0,
-    items: 1,
-    autoplay: true,
-    autoplayTimeout: 5000,
-    dots: true,
-    rewind: true,
-    autoplayHoverPause: true,
-});
-
-
-//
-// Copy Owl Carousel Slider
-$('.owl-carousel.copy__owl__slider').owlCarousel({
-    //loop: true,
-    loop: false,
-    margin: 0,
-    items: 1,
-    autoplay: false,
-    autoplayTimeout: 5000,
-    dots: false,
-    rewind: false,
-    nav: false,
-    dots: false,
-   //nav: true,
-    autoplayHoverPause: false,
-});
-
-
-// Testimonial Slider
-$('.owl-carousel.testimonial__carousel').owlCarousel({
-    loop: true,
-    margin: 0,
-    items: 3,
-    autoplay: true,
-    autoplayTimeout: 5000,
-    dots: true,
-    rewind: true,
-    autoplayHoverPause: true,
-    responsive:{
-        0:{
-            items:1,
-            nav:true
-        },
-        600:{
-            items:2,
-            nav:false
-        },
-        1000:{
-            items:3,
-            nav:true,
-            loop:false
-        }
-    }
-});
-
-
-
-// Detect Location Accordion for MAP
-jQuery('.accordion .card').each(function() {
-  var dataLocationId = jQuery(this).attr("data-location-id")
-  jQuery(this).click(function() {
-  google.maps.event.trigger(allMyMarkers[dataLocationId], 'click');
-  });
-});
-
-
-jQuery('.accordion .card').each(function() {
-
-
-}
 
 
