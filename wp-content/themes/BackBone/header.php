@@ -30,11 +30,11 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<h1>
+				<?php // Custom logo
+				$custom_logo_id = get_theme_mod( 'custom_logo' );
+				$image_alt = get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true);
+				$image = wp_get_attachment_image_src($custom_logo_id , 'full');?>
 				<a class="navbar-brand" href="/" rel="home" title="<?php echo $image_alt;?>">
-					<?php // Custom logo
-					$custom_logo_id = get_theme_mod( 'custom_logo' );
-					$image_alt = get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true);
-					$image = wp_get_attachment_image_src($custom_logo_id , 'full');?>
 					<img src="<?php echo $image[0]; ?>" alt="<?php echo $image_alt;?>">
 				</a>
 			</h1>
