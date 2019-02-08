@@ -43,7 +43,7 @@ if ( ! function_exists( 'backbone_setup' ) ) :
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
-			'menu-1' => esc_html__( 'Primary', 'backbone' ),
+			'primary-menu' => esc_html__( 'Primary', 'backbone' ),
 		) );
 
 		/*
@@ -115,42 +115,50 @@ function backbone_widgets_init() {
 }
 add_action( 'widgets_init', 'backbone_widgets_init' );
 
-/**
- * Enqueue scripts and styles.
- */
+//
+// Enqueue scripts and styles.
+//
 function backbone_scripts() {
-    wp_enqueue_style( 'backbone-style', get_stylesheet_uri() );
-    wp_enqueue_script( 'backbone-script', get_template_directory_uri() . '/backbone.js', array(), '20151215', true );
+	wp_enqueue_style( 'backbone-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'backbone-style-custom', get_template_directory_uri() . '/style.css', array(), '20151215', false);
+	wp_enqueue_script( 'backbone-script', get_template_directory_uri() . '/backbone.js', array(), '20151215', true );
 
-    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-        wp_enqueue_script( 'comment-reply' );
-    }
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
 }
+add_action( 'wp_enqueue_scripts', 'backbone_scripts' );
 
-/**
- * Implement the Custom Header feature.
- */
+
+//
+// Bootstrap Navigation
+//
+require get_template_directory() . '/inc/wp-bootstrap-navwalker.php';
+
+
+//
+// Implement the Custom Header feature.
+//
 require get_template_directory() . '/inc/custom-header.php';
 
-/**
- * Custom template tags for this theme.
- */
+// 
+// Custom template tags for this theme.
+//
 require get_template_directory() . '/inc/template-tags.php';
 
-/**
- * Functions which enhance the theme by hooking into WordPress.
- */
+//
+// Functions which enhance the theme by hooking into WordPress.
+//
 require get_template_directory() . '/inc/template-functions.php';
 
-/**
- * Customizer additions.
- */
+//
+// Customizer additions.
+//
 require get_template_directory() . '/inc/customizer.php';
 
-/**
- * Load Jetpack compatibility file.
- */
+//
+// Load Jetpack compatibility file.
+//
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
-

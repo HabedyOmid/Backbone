@@ -11,42 +11,54 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="profile" href="https://gmpg.org/xfn/11">
+	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri() . '/apple-touch-icon.png'; ?>">
+	<link rel="icon" type="image/png" sizes="32x32" href="<?php echo get_template_directory_uri() . '/favicon-32x32.png'; ?>">
+	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo get_template_directory_uri() . '/favicon-16x16.png'; ?>">
+	<link rel="manifest" href="<?php echo get_template_directory_uri() . '/site.webmanifest'; ?>">
+	<link rel="mask-icon" href="<?php echo get_template_directory_uri() . '/safari-pinned-tab.svg'; ?>" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="manifest" href="<?php echo get_template_directory_uri() . '/site.webmanifest'; ?>">
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'backbone' ); ?></a>
+<body <?php body_class(); ?> >
 
-	<header id="masthead" class="site-header">
-		<div class="site-branding">
-			<?php
-			the_custom_logo();
-			if ( is_front_page() && is_home() ) :
-				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<?php
-			else :
-				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php
-			endif;
-			$backbone_description = get_bloginfo( 'description', 'display' );
-			if ( $backbone_description || is_customize_preview() ) :
-				?>
-				<p class="site-description"><?php echo $backbone_description; /* WPCS: xss ok. */ ?></p>
-			<?php endif; ?>
-		</div><!-- .site-branding -->
+	<nav class="navbar navbar-expand-md affix-top" data-spy="affix" data-offset-top="50" role="navigation">
+  		<div class="container">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<h1>
+				<a class="navbar-brand" href="/" rel="home" title="<?php echo $image_alt;?>">
+					<?php // Custom logo
+					$custom_logo_id = get_theme_mod( 'custom_logo' );
+					$image_alt = get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true);
+					$image = wp_get_attachment_image_src($custom_logo_id , 'full');?>
+					<img src="<?php echo $image[0]; ?>" alt="<?php echo $image_alt;?>">
+				</a>
+			</h1>
 
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'backbone' ); ?></button>
 			<?php
 			wp_nav_menu( array(
-				'theme_location' => 'menu-1',
-				'menu_id'        => 'primary-menu',
-			) );
-			?>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
+				'theme_location'    => 'primary-menu',
+				'depth'             => 2,
+				'container'         => 'div',
+				'container_class'   => 'collapse navbar-collapse',
+				'container_id'      => 'bs-example-navbar-collapse-1',
+				'menu_class'        => 'nav navbar-nav',
+				'fallback_cb'       => 'WP_Bootstrap_Navwalker::fallback',
+				'walker'            => new WP_Bootstrap_Navwalker(),
+			) );?>
+		</div>
+	</nav>
 
-	<div id="content" class="site-content">
+	<header></header>
+
+	<main>
+		<div id="content">
+			
+			<section></section>
+
+
+
