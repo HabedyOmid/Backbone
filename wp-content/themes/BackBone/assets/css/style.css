@@ -1335,18 +1335,22 @@ nav.navbar h1.navbar__brand img
 }
 nav.navbar .collapse
 {
-    display: inline-block;
-    float: right;
+    display: flex;
 
+    width: 100%;
     height: 100%;
+
+    justify-content: right;
 }
 nav.navbar .collapse ul#menu-primary
 {
     display: flex;
 
-    height: 100%; 
+    height: 100%;
 
     list-style: none;
+
+    text-align: right;
 }
 nav.navbar .collapse ul#menu-primary li
 {

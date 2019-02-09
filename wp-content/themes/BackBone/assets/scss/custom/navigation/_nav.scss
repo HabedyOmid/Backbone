@@ -90,15 +90,17 @@ nav.navbar{
 	
 	// Navbar Links
   	.collapse{
-  		display: inline-block;
-  		float: right;
   		height: 100%;
+  		width: 100%;
+  		display: flex;
+  		justify-content: right;
 
 		// Navigation Main Container
   		ul#menu-primary{
 			list-style: none;
 			display: flex;
 			height: 100%;
+			text-align: right;
 
 			// Links Container <li>
 			li{
