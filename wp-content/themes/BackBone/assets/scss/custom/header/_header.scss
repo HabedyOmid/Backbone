@@ -1,0 +1,27 @@
+header.header{
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 40rem;
+	display: block;
+	width: 100%;
+	position: relative;
+
+	.header__title{
+		position: absolute;
+		top: 44%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: $white;
+		display: block;
+		text-align: center;
+	}
+
+	@include media-breakpoint-down(md) {
+		height: 30rem;
+	}
+
+	@include media-breakpoint-down(sm) {
+		height: 25rem;
+	}
+}

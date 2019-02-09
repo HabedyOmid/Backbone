@@ -21,7 +21,6 @@ get_header(); ?>
 	</section>
 	<?php endif; ?>
 
-
 	<?php get_template_part("layouts/acf", "sections"); // ACF Sections ?>
 
 <?php get_footer(); ?>
