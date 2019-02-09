@@ -11,7 +11,7 @@ a:link,
 a:visited{
 	color: $link-color;
 	text-decoration: $link-decoration;
-	transition: all .3s;
+	transition: all .5s;
 
 	&:hover{
 		color: $link-hover-color;

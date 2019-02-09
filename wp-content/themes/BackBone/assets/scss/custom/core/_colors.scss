@@ -1,8 +1,14 @@
-$body-color: #777;
-$body-bg: #fafafa;
-
-$black: #000000;
-$white: #ffffff;
+$white:    #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black:    #000;
 
 $blue:    #007bff;
 $red:     #dc3545;
@@ -42,3 +48,9 @@ $theme-colors: map-merge(
 	),
   	$theme-colors
 );
+
+
+
+$body-color: #777;
+$body-bg: #fafafa;
+$border-color: $gray-300;
