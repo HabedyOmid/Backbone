@@ -1,4 +1,4 @@
-$dropdown-min-width:  15rem;
+$dropdown-min-width:  18rem;
 
 
 .dropdown {
@@ -23,9 +23,10 @@ $dropdown-min-width:  15rem;
 	// Dropdown Menu
 	.dropdown-menu{
 		position: absolute;
-		left: 0;
+		right: 0;
 		top: calc(100% + 0rem);
 		min-width: $dropdown-min-width;
+		max-width: auto;
 		margin: 0;
 		padding-left: 0;
 		list-style-type: none;
@@ -49,19 +50,44 @@ $dropdown-min-width:  15rem;
 			background-color: inherit;
 			position: absolute;
 			top: -.8rem;
-			left: 3rem;
+			right: 3rem;
 			transform: rotate(45deg);
 			border: .1rem solid $border-color;
 			border-bottom: 0;
 			border-right: 0;
 			z-index: 99;
 		}
-	} 
+
+		// Mobile Nav DropDown
+		@include media-breakpoint-down(md) {
+			position: static;
+			opacity: 1;
+			visibility: visible;
+			max-height: 0;
+			overflow: hidden;
+			transition: .3s;
+			padding: 0;
+			border: 0;
+			width: 100%;
+			border-radius: 0;
+
+			&:after {
+				display: none;
+			}
+
+			&.show {
+				max-height: 30rem;
+				height: auto;
+			}
+		} 
+	}
+
+
 	&:hover {
 		.dropdown-menu {
 			opacity: 1;
 			visibility: visible;
-			top: calc(100% + 1.7rem);
+			top: calc(100% + 1rem);
 		}
 	}
 }

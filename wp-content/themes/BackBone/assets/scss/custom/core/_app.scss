@@ -8,6 +8,7 @@
 
 html{
 	font-size: $reset-root-font-size;
+	overflow-x: hidden;
 }
 
 body{
@@ -20,7 +21,7 @@ body{
 
 main{
 	#content{
-		border: 5px solid cyan;
+		//border: 5px solid cyan;
 	}
 }
 

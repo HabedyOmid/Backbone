@@ -3,6 +3,16 @@ nav.navbar{
 	flex-wrap: wrap;
   	list-style: none;
   	background: $white;
+  	border-bottom: .1rem solid $border-color;
+  	margin-bottom: 3rem;
+  	height: 6rem;
+
+  	.container {
+		background: inherit;
+		position: relative;
+		@include flex;
+		align-items: center;
+    }
 
   	// Menu Toggle on mobile
   	button.navbar__toggler{
@@ -16,6 +26,7 @@ nav.navbar{
 		transform: translateY(-50%);
 		margin: 0;
 		padding: 0;
+		display: none;
 
 		span {
 			display: block;
@@ -56,6 +67,10 @@ nav.navbar{
 				}
 			}
 		}
+
+		@include media-breakpoint-down(md) {
+			display: block;
+		}
 	} 
 
   	h1.navbar__brand{
@@ -78,18 +93,17 @@ nav.navbar{
   		display: inline-block;
   		float: right;
   		height: 100%;
-		
+
 		// Navigation Main Container
   		ul#menu-primary{
 			list-style: none;
 			display: flex;
 			height: 100%;
-			
+
 			// Links Container <li>
 			li{
 				list-style: none;
 				padding: 2rem 1.5rem;
-				font-size: 1.5rem;
 				display: flex;
 				align-self: center;
 
@@ -97,72 +111,70 @@ nav.navbar{
 					padding-right: 0rem;
 				}
 			}
+			a{
+				width: 100%;
+			}
 
-			// Link's Dropdown <a class="dropdown-toggle">
 			// Additional Style in _dropdown.scss file
 			ul.dropdown-menu{
 				width: auto;
 
 				li{
 					padding: 1rem 1.3rem;
-					font-size: 1.4rem;
 					width: 100%;
+					font-size: 1.4rem;
+				}
+			}
+			
+			// Dropdown for mobile
+			@include media-breakpoint-down(md) {
+				position: absolute;
+				width: 100%;
+				margin: 0;
+				z-index: 999;
+				transition: .3s;
+				padding: .5rem 0;
+				background: $white;
+				left: 0;
+				top: 100%;
+				bottom: auto;
+				border-bottom: .1rem $border-color;
+				display: block;
+
+				li{
+					display: block;
+					width: 100%;
+					background: $white;
+					padding: .8rem 2rem;
+					text-align: left;
+
+					&:last-child{
+						padding-bottom: 1.5rem;
+						border-bottom: .1rem solid $border-color;
+					}
+				}
+
+				ul.dropdown-menu{
+					li{
+						padding: 1rem 2rem;
+						text-align: left;
+						font-size: 1.4rem;
+
+						&:first-child{
+							padding-top: 2rem;
+						}
+						&:last-child{
+							border: none;
+						}
+					}
 				}
 			}
   		}
-  	}
-	
-	// Toggle for mobile
-  	@include media-breakpoint-down(md) {
-		button.navbar__toggler {
-			display: block;
-		}
-
-		.navbar-nav {
-			position: absolute;
-			width: 100%;
-			margin: 0;
-			z-index: 999;
-			transition: .3s;
-			padding: .5rem 0;
-			background: $white;
-			left: 0;
-			top: 100%;
-			bottom: auto;
-
-			.menu-item {
-				display: block;
-				width: 100%;
-			}
-
-			.dropdown {
-				.dropdown-menu {
-					position: static;
-					opacity: 1;
-					visibility: visible;
-					max-height: 0;
-					overflow: hidden;
-					transition: .3s;
-					padding: 0;
-					border: 0;
-					width: 100%;
-					border-radius: 0;
-
-					&:after {
-						display: none;
-					}
-
-					&.show {
-						max-height: 30rem;
-						height: auto;
-					}
-				}
-			}
-		}
-
-		// Collapse option for navbar-nav
-		.collapse {
-			.navbar-nav {  
+		
+		// Mobile Nav
+  		// Collapse option for navbar-nav
+		@include media-breakpoint-down(md) {
+			.navbar-nav{  
 				opacity: 0;
 				visibility: hidden;
 			}
@@ -173,7 +185,6 @@ nav.navbar{
 					visibility: visible;
 				}
 			}
-		} 
-	}
-
+		}
+  	}
 }

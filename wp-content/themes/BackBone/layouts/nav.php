@@ -1,6 +1,8 @@
 <nav class="navbar" data-spy="affix" data-offset-top="50" role="navigation">
 	<div class="container">
-		<button class="navbar__toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">fuck</button>
+		<button class="navbar__toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 		
 		<?php // Custom logo
 		$custom_logo_id = get_theme_mod( 'custom_logo' );
