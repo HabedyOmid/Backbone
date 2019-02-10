@@ -10,7 +10,7 @@ Description: My 2019 BackBone theme is designed to build any Wordpress site with
 Version: 2.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
-Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS, Gulp
+Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS, CSS Architecture 7-1 Pattern, Gulp
 =========================================================
 */
 .container
@@ -1182,6 +1182,38 @@ Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS
     }
 }
 
+*,
+*::after,
+*::before
+{
+    box-sizing: inherit; 
+    margin: 0;
+    padding: 0;
+}
+
+html
+{
+    font-size: 62.5%;
+
+    overflow-x: hidden;
+}
+
+body
+{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    font-size: 1.6rem;
+
+    box-sizing: border-box; 
+
+    color: #495057;
+    background: #f8f9fa;
+}
+
+main #content
+{
+    padding-top: 3rem;
+}
+
 a:link,
 a:visited
 {
@@ -1213,38 +1245,6 @@ h5,
 h6
 {
     margin: 2rem 0rem;
-}
-
-*,
-*::after,
-*::before
-{
-    box-sizing: inherit; 
-    margin: 0;
-    padding: 0;
-}
-
-html
-{
-    font-size: 62.5%;
-
-    overflow-x: hidden;
-}
-
-body
-{
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-    font-size: 1.6rem;
-
-    box-sizing: border-box; 
-
-    color: #495057;
-    background: #f8f9fa;
-}
-
-main #content
-{
-    padding-top: 3rem;
 }
 
 nav.navbar
@@ -1473,6 +1473,47 @@ nav.navbar .collapse ul#menu-primary ul.dropdown-menu li
     }
 }
 
+header.header
+{
+    position: relative; 
+
+    display: block;
+
+    width: 100%;
+    height: 40rem;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+header.header .header__title
+{
+    position: absolute;
+    top: 44%;
+    left: 50%;
+
+    display: block;
+
+    transform: translate(-50%, -50%);
+    text-align: center; 
+
+    color: #fff;
+}
+@media (max-width: 991.98px)
+{
+    header.header
+    {
+        height: 30rem;
+    }
+}
+@media (max-width: 767.98px)
+{
+    header.header
+    {
+        height: 25rem;
+    }
+}
+
 .dropdown
 {
     position: relative;
@@ -1577,47 +1618,6 @@ nav.navbar .collapse ul#menu-primary ul.dropdown-menu li
     visibility: visible;
 
     opacity: 1;
-}
-
-header.header
-{
-    position: relative; 
-
-    display: block;
-
-    width: 100%;
-    height: 40rem;
-
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-}
-header.header .header__title
-{
-    position: absolute;
-    top: 44%;
-    left: 50%;
-
-    display: block;
-
-    transform: translate(-50%, -50%);
-    text-align: center; 
-
-    color: #fff;
-}
-@media (max-width: 991.98px)
-{
-    header.header
-    {
-        height: 30rem;
-    }
-}
-@media (max-width: 767.98px)
-{
-    header.header
-    {
-        height: 25rem;
-    }
 }
 
 footer

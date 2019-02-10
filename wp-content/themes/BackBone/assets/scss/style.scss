@@ -10,68 +10,45 @@ Description: My 2019 BackBone theme is designed to build any Wordpress site with
 Version: 2.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
-Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS, Gulp
+Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS, CSS Architecture 7-1 Pattern, Gulp
 =========================================================
 */
-// Core
-@import "bootstrap/functions";
-@import "bootstrap/variables";
-@import "bootstrap/mixins";
-// @import "bootstrap/root";
-// @import "bootstrap/reboot";
-// @import "bootstrap/type";
-// @import "bootstrap/images";
-// @import "bootstrap/code";
-@import "bootstrap/grid";
-// @import "bootstrap/tables";
-// @import "bootstrap/forms";
-// @import "bootstrap/buttons";
-// @import "bootstrap/transitions";
-// @import "bootstrap/dropdown";
-// @import "bootstrap/button-group";
-// @import "bootstrap/input-group";
-// @import "bootstrap/custom-forms";
-// @import "bootstrap/nav";
-// @import "bootstrap/navbar";
-// @import "bootstrap/card";
-// @import "bootstrap/breadcrumb";
-// @import "bootstrap/pagination";
-// @import "bootstrap/badge";
-// @import "bootstrap/jumbotron";
-// @import "bootstrap/alert";
-// @import "bootstrap/progress";
-// @import "bootstrap/media";
-// @import "bootstrap/list-group";
-// @import "bootstrap/close";
-// @import "bootstrap/modal";
-// @import "bootstrap/tooltip";
-// @import "bootstrap/popover";
-// @import "bootstrap/carousel";
-// @import "bootstrap/utilities";
-// @import "bootstrap/print";
-
 
 // Vendors
+@import "vendors/bootstrap_4.2/functions";
+@import "vendors/bootstrap_4.2/variables";
+@import "vendors/bootstrap_4.2/mixins";
+@import "vendors/bootstrap_4.2/grid";
 
 
-// Custom
-@import "custom/core/variables";
-@import "custom/core/typography";
-@import "custom/core/mixins";
-@import "custom/core/colors";
-@import "custom/core/app";
+// Custom - CSS Architecture 7-1 Pattern
+@import "abstracts/variables";
+@import "abstracts/mixins";
+@import "abstracts/grids";
+@import "abstracts/colors";
 
-@import "custom/form/form";
-@import "custom/form/buttons";
+@import "base/base";
+@import "base/animations";
+@import "base/typography";
+@import "base/utilities";
 
-@import "custom/navigation/nav";
-@import "custom/navigation/dropdown";
+@import "components/nav";
+@import "components/header";
+@import "components/buttons";
+@import "components/form";
+@import "components/dropdown";
+@import "components/footer";
 
-@import "custom/header/header";
+@import "layouts/sections";
 
-@import "custom/sections/sections";
+@import "pages/homepage";
 
-@import "custom/footer/footer";
+@import "themes/default";
+
+
+
+
+
 
 
 
