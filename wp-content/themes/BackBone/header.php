@@ -23,12 +23,7 @@
 </head>
 
 <body <?php body_class(); ?> >
-	
 	<?php get_template_part( 'layouts/nav' ); // Get Navbar ?>
 	<?php get_template_part( 'layouts/header' ); // Get Header ?>
 
 	<main>
-		<div id="content">
-
-
-
