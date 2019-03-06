@@ -1,66 +1,75 @@
- // Gulp file
-var gulp         = require('gulp');
-var wait         = require('gulp-wait');
-var sass         = require('gulp-sass');
-var postcss      = require('gulp-postcss');
-var csscomb      = require('gulp-csscomb');
-var cleanCSS     = require('gulp-clean-css');
-var uglify       = require('gulp-uglify');
-var concat       = require('gulp-concat');
-var autoprefixer = require('gulp-autoprefixer');
+// node.js Packages / Dependencies
+const gulp          = require('gulp');
+const sass          = require('gulp-sass');
+const uglify        = require('gulp-uglify');
+const concat        = require('gulp-concat');
+const cleanCSS      = require('gulp-clean-css');
+const browserSync   = require('browser-sync').create();
+const autoprefixer  = require('gulp-autoprefixer');
 
 
-// Define paths
+// Paths
 var paths = {
-    src: {
+    root: {
         root: '../',
-        css:  'css',
-        html: '**/*.html',
-        js:   'js/*.js',
-        scss: 'scss/**/*.scss',
+        node: 'node_modules'
+    },
+    src: {
+        css: 'css/',
+        php: '../**/*.php',
+        js:  'js/**/*.js',
+        scss:'scss/**/*.scss',
     }
 }
+
 
 // Compile SCSS
 gulp.task('sass', function() {
     return gulp.src(paths.src.scss)
 
-    .pipe(wait(500))
     .pipe(sass().on('error', sass.logError))
-    .pipe(postcss([require('gulp-autoprefixer')]))
-    .pipe(autoprefixer({
-        browsers: ['last 10 versions']
-    }))
-
-    .pipe(csscomb())
     .pipe(gulp.dest(paths.src.css))
+    .pipe(browserSync.stream());
 });
 
-// Minify CSS
+
+// Minify + AutoPreFixer + Combine CSS
 gulp.task('css', function() {
-    return gulp.src([
-        paths.src.css + '/style.css'
-    ])
-
-    .pipe(cleanCSS())
-    .pipe(gulp.dest(paths.src.root))
+    return gulp.src(paths.src.css + '/*.css')
+    .pipe(autoprefixer({
+        browsers: ['last 10 versions'],
+        cascade: false
+    }))
+    .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(concat('style.css'))
+    .pipe(gulp.dest(paths.root.root))
 });
 
-// Minify JS
+
+// Minify + Combine JS
 gulp.task('js', function() {
     return gulp.src(paths.src.js)
-
-    .pipe(concat("backbone.js"))
     .pipe(uglify())
-    .pipe(gulp.dest(paths.src.root))
+    .pipe(concat('backbone.js'))
+    .pipe(gulp.dest(paths.root.root))
+    .pipe(browserSync.stream());
 });
 
-// Watch for SASS/CSS/JS/HTML Changes
-gulp.task('watch', ['sass'], function() {
-    gulp.watch(paths.src.scss, ['sass']);
-    gulp.watch(paths.src.css + '/*.css', ['css']);
-    gulp.watch(paths.src.root + '/assets/js/*.js', ['js']);
-});
 
-// Default = Watch
-gulp.task('default', ['watch']);
+// Prepare all assets for production
+gulp.task('build', gulp.series('sass', 'css', 'js'));
+
+
+// Watch (SASS, CSS, JS, and HTML) reload browser on change
+gulp.task('watch', function() {
+    browserSync.init({
+        server: {
+            baseDir: paths.root
+        } 
+    })
+
+    gulp.watch(paths.src.scss, gulp.series('sass'));
+    gulp.watch(paths.src.css, gulp.series('css'));
+    gulp.watch(paths.src.js, gulp.series('js'));
+    gulp.watch(paths.src.php).on('change', browserSync.reload);
+});
