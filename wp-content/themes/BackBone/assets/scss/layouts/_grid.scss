@@ -1,0 +1,30 @@
+//
+// Grid breakpoints
+//
+$grid-breakpoints: (
+  xs: 0,
+  sm: 60rem,
+  md: 90rem,
+  lg: 120rem,
+  xl: 144rem
+);
+
+@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
+@include _assert-starts-at-zero($grid-breakpoints);
+
+//
+// Grid containers
+//
+$container-max-widths: (
+  sm: 54rem,
+  md: 72rem,
+  lg: 96rem,
+  xl: 114rem
+);
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+//
+// Grid columns
+//
+$grid-columns:                12;
+$grid-gutter-width:           2.5rem;

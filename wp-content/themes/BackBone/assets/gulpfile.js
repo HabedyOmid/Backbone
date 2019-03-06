@@ -27,9 +27,9 @@ gulp.task('sass', function() {
 
     .pipe(wait(500))
     .pipe(sass().on('error', sass.logError))
-    .pipe(postcss([require('postcss-flexbugs-fixes')]))
+    .pipe(postcss([require('gulp-autoprefixer')]))
     .pipe(autoprefixer({
-        browsers: ['> 1%']
+        browsers: ['last 10 versions']
     }))
 
     .pipe(csscomb())
