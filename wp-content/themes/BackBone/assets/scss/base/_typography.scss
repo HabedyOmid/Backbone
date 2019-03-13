@@ -10,6 +10,11 @@ $link-decoration:           none;
 $link-hover-color:          darken($link-color, 10%);
 $link-hover-decoration:     none;
 
+::selection{
+	background-color: $primary;
+	color: $white;
+}
+
 
 a:link,
 a:visited{

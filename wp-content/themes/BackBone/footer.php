@@ -3,9 +3,7 @@
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  */
 ?>
-		
 	</main>
-
 	<footer>
 		<div class="container">
 			<?php if( have_rows('footer_links', 'option') ) : while ( have_rows('footer_links', 'option') ) : the_row(); ?>
