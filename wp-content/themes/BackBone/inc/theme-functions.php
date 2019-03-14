@@ -146,6 +146,30 @@ if( function_exists('acf_add_options_page') ) {
 
 
 //
+// Change Admin Login LOGO
+function my_login_logo() {  $upload_dir = wp_upload_dir();  ?>
+    <style type="text/css"> 
+        #login h1 a,
+        .login h1 a{
+            background-image: url(<?php echo $upload_dir['url'] . '/admin_logo.png'; ?>);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-repeat: no-repeat;
+            margin-bottom: 30px;
+            display: block;
+            margin: 0 auto;
+            border: 5px solid #fff;
+        }
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+
+//
 // Get Image Different Sizes by ID
 //
 function get_image_src($id, $size = "lg") {    
