@@ -115,7 +115,7 @@ add_filter('upload_mimes', 'cc_mime_types');
 
 
 //
-// Remove jQuery Migrate File
+// Remove jQuery Migrate File - Front-end ONLY
 // 
 function dequeue_jquery_migrate( &$scripts){
     if(!is_admin()){
@@ -126,7 +126,7 @@ add_filter( 'wp_default_scripts', 'dequeue_jquery_migrate' );
 
 
 //
-// Theme Settings
+// ACF Theme Settings
 // 
 if( function_exists('acf_add_options_page') ) {
     acf_add_options_page(array(
@@ -142,4 +142,33 @@ if( function_exists('acf_add_options_page') ) {
         'menu_title'    => 'Footer',
         'parent_slug'   => 'theme-general-settings',
     ));
+}
+
+
+//
+// Get Image Different Sizes by ID
+//
+function get_image_src($id, $size = "lg") {    
+    $img = wp_get_attachment_metadata($id, TRUE); 
+    $path = wp_upload_dir();
+
+    if($size == 'sm'){
+        $src = $path['url'] . "/" . $img['sizes']['medium']['file'];
+        return $src;
+
+    }elseif($size == 'md'){
+        $src = $path['url'] . "/" . $img['sizes']['medium_large']['file'];
+        return $src;
+
+    }elseif($size == 'lg'){
+        $src = $path['url'] . "/" . $img['sizes']['large']['file'];
+        return $src;
+
+    }elseif($size == 'full'){
+        $src = $path['url'] . "/" . $img['file'];
+        return $src;
+
+    }else{
+        return "Make sure to add ID and SIZE 'PARAMS'";
+    }
 }

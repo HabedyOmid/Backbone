@@ -1,11 +1,8 @@
 <?php
-/**
- * BackBone functions and definitions
- *
- * @link https://developer.wordpress.org/themes/basics/theme-functions/
- *
- * @package BackBone
- */
+//
+// BackBone functions and definitions
+// @link https://developer.wordpress.org/themes/basics/theme-functions/
+//
 if ( ! function_exists( 'backbone_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -82,26 +79,11 @@ if ( ! function_exists( 'backbone_setup' ) ) :
 endif;
 add_action( 'after_setup_theme', 'backbone_setup' );
 
-/**
- * Set the content width in pixels, based on the theme's design and stylesheet.
- *
- * Priority 0 to make it available to lower priority callbacks.
- *
- * @global int $content_width
- */
-function backbone_content_width() {
-	// This variable is intended to be overruled from themes.
-	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
-	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-	$GLOBALS['content_width'] = apply_filters( 'backbone_content_width', 640 );
-}
-add_action( 'after_setup_theme', 'backbone_content_width', 0 );
 
-/**
- * Register widget area.
- *
- * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
- */
+//
+// Register widget area.
+// @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+//
 function backbone_widgets_init() {
 	register_sidebar( array(
 		'name'          => esc_html__( 'Sidebar', 'backbone' ),
@@ -115,12 +97,12 @@ function backbone_widgets_init() {
 }
 add_action( 'widgets_init', 'backbone_widgets_init' );
 
+
 //
 // Enqueue scripts and styles.
 //
 function backbone_scripts() {
 	wp_enqueue_style( 'backbone-style', get_stylesheet_uri() );
-	wp_enqueue_style( 'backbone-style-custom', get_template_directory_uri() . '/style.css', array(), '11071988', false);
 	wp_enqueue_script( 'backbone-script', get_template_directory_uri() . '/backbone.js', array(), '11071988', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -141,20 +123,12 @@ require get_template_directory() . '/inc/wp-bootstrap-navwalker.php';
 //
 require get_template_directory() . '/inc/custom-header.php';
 
-// 
-// Custom template tags for this theme.
-//
-require get_template_directory() . '/inc/template-tags.php';
-
-//
-// Functions which enhance the theme by hooking into WordPress.
-//
-require get_template_directory() . '/inc/template-functions.php';
 
 //
 // Customizer additions.
 //
 require get_template_directory() . '/inc/customizer.php';
+
 
 //
 // Load Jetpack compatibility file.
@@ -162,3 +136,9 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+
+//
+// Functions which enhance the theme by hooking into WordPress.
+//
+require get_template_directory() . '/inc/theme-functions.php';
