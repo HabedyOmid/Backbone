@@ -163,6 +163,7 @@ function my_login_logo() {  $upload_dir = wp_upload_dir();  ?>
             display: block;
             margin: 0 auto;
             border: 5px solid #fff;
+            margin-bottom: 15px;
         }
     </style>
 <?php }
