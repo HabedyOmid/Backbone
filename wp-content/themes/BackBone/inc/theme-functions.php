@@ -163,7 +163,29 @@ function my_login_logo() {  $upload_dir = wp_upload_dir();  ?>
             display: block;
             margin: 0 auto;
             border: 5px solid #fff;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        /*remember me radio button*/
+        .forgetmenot{
+            margin-bottom: 20px !important;
+        }
+        /*Full width button*/
+        .wp-core-ui .button-primary,
+        .wp-core-ui .button-primary{
+            width: 100%;
+            display: block;
+            padding: 6px !important;
+            height: auto !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 0px !important;
+        }
+
+        #login #nav a,
+        #login #backtoblog a{
+            display: block;
+            width: 100%;
+            text-align: center;
         }
     </style>
 <?php }
