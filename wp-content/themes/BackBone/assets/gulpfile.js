@@ -28,7 +28,6 @@ var paths = {
 }
 
 
-
 // Compile SCSS
 gulp.task('sass', function() {
     return gulp.src(paths.src.scss)
