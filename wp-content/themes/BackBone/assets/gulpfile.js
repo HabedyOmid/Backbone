@@ -11,7 +11,6 @@ const autoprefixer  = require('gulp-autoprefixer');
 const jpgRecompress = require('imagemin-jpeg-recompress');
 
 
-
 // Paths
 var paths = {
     src: {
