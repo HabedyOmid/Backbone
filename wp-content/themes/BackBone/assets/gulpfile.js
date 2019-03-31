@@ -5,10 +5,10 @@ const uglify        = require('gulp-uglify');
 const concat        = require('gulp-concat');
 const cleanCSS      = require('gulp-clean-css');
 const imageMin      = require('gulp-imagemin');
-const pngQuint      = require('imagemin-pngquant');
+const pngQuint      = require('imagemin-pngquant'); 
 const browserSync   = require('browser-sync').create();
 const autoprefixer  = require('gulp-autoprefixer');
-const jpgRecompress = require('imagemin-jpeg-recompress');
+const jpgRecompress = require('imagemin-jpeg-recompress'); 
 
 
 // Paths
@@ -80,7 +80,7 @@ gulp.task('build', gulp.series('sass', 'css', 'js', 'img'));
 // Watch (SASS, CSS, JS, and HTML) reload browser on change
 gulp.task('watch', function() {
     browserSync.init({
-        proxy: "http://localhost:8888",
+        proxy: "http://pasha.test",
         notify: true
     });
     gulp.watch(paths.src.scss, gulp.series('sass')).on('change', browserSync.reload);

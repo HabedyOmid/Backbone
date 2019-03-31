@@ -59,7 +59,7 @@ $dropdown-min-width:  18rem;
 		}
 
 		// Mobile Nav DropDown
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			position: static;
 			opacity: 1;
 			visibility: visible;

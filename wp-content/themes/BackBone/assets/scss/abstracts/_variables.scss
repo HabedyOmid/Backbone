@@ -1,1 +1,14 @@
+$reset-root-font-size: 62.5%; // == 10px root font-size
+$font-family-base:'Exo 2', sans-serif;
+$font-family-secondary: 'Abril Fatface', cursive;
+$paragraph-line-height: 3rem;
+$paragraph-bottom-margin: 2rem;
+$headings-margin: 2rem 0rem;
+
+
+$link-color:                $red;
+$link-decoration:           none;
+$link-hover-color:          darken($red, 10%);
+$link-hover-decoration:     none;
+
 $border-radius: .5rem;

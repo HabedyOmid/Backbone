@@ -67,7 +67,7 @@ nav.navbar{
 			}
 		}
 
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			display: block;
 		}
 	} 
@@ -128,7 +128,7 @@ nav.navbar{
 			}
 			
 			// Dropdown for mobile
-			@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(sm) {
 				position: absolute;
 				width: 100%;
 				margin: 0;
@@ -174,7 +174,7 @@ nav.navbar{
 		
 		// Mobile Nav
   		// Collapse option for navbar-nav
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			.navbar-nav{  
 				opacity: 0;
 				visibility: hidden;
