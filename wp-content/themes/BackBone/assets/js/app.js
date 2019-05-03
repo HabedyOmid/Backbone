@@ -1,6 +1,6 @@
 //
 // Affex Navbar
-// 
+//
 +function ($) {
   'use strict';
   var Affix = function (element, options) {
@@ -152,11 +152,11 @@ $(document).ready(function(){
           }, 700, function(){
             window.location.hash = hash;
           });
-        } 
+        }
     });
 });
 
-// tgl checkbox for navbar collapse 
+// tgl checkbox for navbar collapse
 $('#tgl-checkbox:checkbox').change(function(){
     if($(this).is(":checked")) {
         $('.navbar-item.links').addClass("show");
@@ -166,10 +166,6 @@ $('#tgl-checkbox:checkbox').change(function(){
 });
 
 // dropdown menu toggle in medium screen size
-$('.Dropdown .nav-link').click(function(){
+$('.dropdown .nav-link').click(function(){
     $(this).parent().toggleClass('open');
 });
-
-
-
-

@@ -1,10 +1,3 @@
-<?php
-/**
- * The header for our theme
- * This is the template that displays all of the <head> section and everything up until <div id="content">
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- */
-?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -18,6 +11,7 @@
 	<link rel="mask-icon" href="<?php echo get_template_directory_uri() . '/safari-pinned-tab.svg'; ?>" color="#5bbad5">
 	<meta name="msapplication-TileColor" content="#da532c">
 	<meta name="theme-color" content="#ffffff">
+	<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 	<link rel="manifest" href="<?php echo get_template_directory_uri() . '/site.webmanifest'; ?>">
 	<?php wp_head(); ?>
 </head>

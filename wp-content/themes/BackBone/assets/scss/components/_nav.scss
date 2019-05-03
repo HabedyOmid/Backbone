@@ -2,19 +2,28 @@ nav.navbar{
 	display: flex;
 	flex-wrap: wrap;
   	list-style: none;
-  	background: $white;
-  	border-bottom: .1rem solid $border-color;
-  	height: auto;
+  	background: transparent;
+  	height: $navbar-height;
+  	padding: 0 !important;
+  	position: relative;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999999999;
+	background-color: $navbar-bg;
+	font-size: $font-size-md;
 
   	.container {
 		background: inherit;
 		position: relative;
 		@include flex;
 		align-items: center;
+		padding: 0 1rem !important;
     }
 
   	// Menu Toggle on mobile
-  	button.navbar__toggler{
+	button.navbar__toggler{
 		border: 0;
 		outline: 0;
 		background: transparent;
@@ -44,7 +53,7 @@ nav.navbar{
 				height: .2rem;
 				background-color: inherit;
 				border-radius: 0rem;
-				transition: all .2s;
+				transition: $transition-sm;
 			}
 			&:before {
 				transform: translateY(-.8rem);
@@ -70,12 +79,15 @@ nav.navbar{
 		@include media-breakpoint-down(sm) {
 			display: block;
 		}
-	} 
+	}
+
 
   	h1.navbar__brand{
   		float: left;
   		height: 100%;
   		display: flex;
+  		margin: 0;
+  		border: 1px solid red;
 
 		a{
 			display: flex;
@@ -83,16 +95,20 @@ nav.navbar{
 		}
 
   		img{
-  			max-height: 3rem;
+  			max-height: 4rem;
+  			width: auto;
   		}
   	}
-	
+
+
 	// Navbar Links
   	.collapse{
-  		height: 100%;
+  		height: $navbar-height;
   		width: 100%;
   		display: flex;
   		justify-content: right;
+  		align-self: flex-end;
+  		justify-content: flex-end;
 
 		// Navigation Main Container
   		ul#menu-primary{
@@ -100,92 +116,74 @@ nav.navbar{
 			display: flex;
 			height: 100%;
 			text-align: left;
+			transition: $transition-md;
 
-			// Links Container <li>
-			li{
+			// First List Items
+			> li{
 				list-style: none;
-				padding: 2rem 1.5rem;
+				padding: 0;
 				display: flex;
 				align-self: center;
+				height: 100%;
 
+				// Active Items
+				&.active{
+					> a:link,
+					> a:visited{
+						background-color: $navbar-bg-hover;
+						color: $nav-link-hover-color;
+						text-decoration: $nav-link-hover-decoration;
+					}
+
+					a.active{
+						color: $nav-link-hover-color;
+					}
+				}
+
+				// Last Item
 				&:last-child{
-					padding-right: 0rem;
-				}
-			}
-			a{
-				width: 100%;
-			}
+					margin-left: 2rem;
+					background-color: $red;
+					transition: $transition-md;
+					padding-left: 1.5rem;
+					padding-right: 1.5rem;
 
-			// Additional Style in _dropdown.scss file
-			ul.dropdown-menu{
-				width: auto;
+					a:link,
+					a:visited{
+						background-color: transparent;
+						color: $white;
+						text-decoration: $nav-link-decoration;
 
-				li{
-					padding: 1rem 1.3rem;
-					width: 100%;
-					font-size: 1.4rem;
-				}
-			}
-			
-			// Dropdown for mobile
-			@include media-breakpoint-down(sm) {
-				position: absolute;
-				width: 100%;
-				margin: 0;
-				z-index: 999;
-				transition: .3s;
-				padding: .5rem 0;
-				background: $white;
-				left: 0;
-				top: 100%;
-				bottom: auto;
-				border-bottom: .1rem $border-color;
-				display: block;
-
-				li{
-					display: block;
-					width: 100%;
-					background: $white;
-					padding: .8rem 2rem;
-					text-align: left;
-
-					&:last-child{
-						padding-bottom: 1.5rem;
-						border-bottom: .1rem solid $border-color;
-					}
-				}
-
-				ul.dropdown-menu{
-					li{
-						padding: 1rem 2rem;
-						text-align: left;
-						font-size: 1.4rem;
-
-						&:first-child{
-							padding-top: 2rem;
-						}
-						&:last-child{
-							border: none;
+						&:hover,
+						&:active{
+							color: $white;
+							background-color: transparent;
+							text-decoration: $nav-link-hover-decoration;
 						}
 					}
+				}
+			}
+
+			// Child items in _dropdown.scss file
+			a:link,
+			a:visited{
+				color: $nav-link-color;
+				text-decoration: $nav-link-decoration;
+				padding: 2.3rem 2rem;
+
+				&:hover,
+				&:active{
+					background-color: $navbar-bg-hover;
+					color: $nav-link-hover-color;
+					text-decoration: $nav-link-hover-decoration;
 				}
 			}
   		}
-		
-		// Mobile Nav
-  		// Collapse option for navbar-nav
-		@include media-breakpoint-down(sm) {
-			.navbar-nav{  
-				opacity: 0;
-				visibility: hidden;
-			}
-
-			&.show {
-				.navbar-nav {
-					opacity: 1;
-					visibility: visible;
-				}
-			}
-		}
   	}
+}
+
+
+nav.navbar + header,
+nav.navbar + main{
+	margin-top: $navbar-height !important;
 }

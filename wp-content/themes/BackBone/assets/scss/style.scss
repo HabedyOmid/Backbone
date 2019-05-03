@@ -14,19 +14,18 @@ Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS
 =========================================================
 */
 
-// Vendors
+// Boostrap 4.3 Core + Override
 @import "vendors/bootstrap4.3/functions";
 @import "vendors/bootstrap4.3/variables";
-@import "vendors/bootstrap4.3/mixins";
-@import "vendors/bootstrap4.3/grid";
-
-
-// Custom - CSS Architecture 7-1 Pattern
-@import "abstracts/variables";
-@import "abstracts/mixins";
-@import "abstracts/grids";
 @import "abstracts/colors";
+@import "abstracts/variables";
+@import "vendors/bootstrap4.3/mixins";
+@import "abstracts/mixins";
+@import "vendors/bootstrap4.3/grid";
+@import "abstracts/grids";
 
+
+// Custom
 @import "base/typography";
 @import "base/base";
 @import "base/animations";
@@ -40,10 +39,6 @@ Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS
 @import "components/footer";
 
 @import "layouts/sections";
-
-@import "pages/homepage";
-
-@import "themes/default";
 
 
 

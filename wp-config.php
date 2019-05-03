@@ -26,7 +26,7 @@ define('DB_NAME', 'backbone');
 define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'password');
+define('DB_PASSWORD', '');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');

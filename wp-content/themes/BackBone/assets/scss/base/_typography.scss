@@ -3,12 +3,11 @@
 	color: $white;
 }
 
-
 a:link,
 a:visited{
 	color: $link-color;
 	text-decoration: $link-decoration;
-	transition: all .5s;
+	transition: $transition-md;
 
 	&:hover,
 	&:active{
@@ -19,9 +18,12 @@ a:visited{
 
 p{
 	line-height: $paragraph-line-height;
-	margin-bottom: $paragraph-bottom-margin;
+	&:not(:last-child){
+		margin-bottom: 2rem;
+	}
 }
 
 h1, h2, h3, h4, h5, h6{
-	margin: $headings-margin;
+	font-weight: $bold-3;
+	margin-bottom: 1rem;
 }

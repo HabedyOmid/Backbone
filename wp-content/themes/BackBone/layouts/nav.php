@@ -1,8 +1,8 @@
 <nav class="navbar" data-spy="affix" data-offset-top="50" role="navigation">
 	<div class="container">
 		<button class="navbar__toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+			<span class="navbar-toggler-icon"></span>
+		</button>
 		
 		<?php // Custom logo
 		$custom_logo_id = get_theme_mod( 'custom_logo' );
@@ -17,7 +17,7 @@
 		<?php
 		wp_nav_menu( array(
 			'theme_location'    => 'primary-menu',
-			'depth'             => 2,
+			'depth'             => 3,
 			'container'         => 'div',
 			'container_class'   => 'collapse navbar-collapse',
 			'container_id'      => 'bs-example-navbar-collapse-1',

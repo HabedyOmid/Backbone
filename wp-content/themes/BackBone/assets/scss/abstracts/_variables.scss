@@ -1,14 +1,56 @@
 $reset-root-font-size: 62.5%; // == 10px root font-size
-$font-family-base:'Exo 2', sans-serif;
-$font-family-secondary: 'Abril Fatface', cursive;
+$font-family-base: 'Poppins', sans-serif;
+$font-family-secondary: 'Poppins', sans-serif;
 $paragraph-line-height: 3rem;
 $paragraph-bottom-margin: 2rem;
 $headings-margin: 2rem 0rem;
 
 
+// Font Sizes
+$font-size-xs: 1.1rem;
+$font-size-sm: 1.2rem;
+$font-size-md: 1.4rem;
+$font-size-lg: 1.8rem;
+$font-size-xl: 2.2rem;
+
+
+// Links
 $link-color:                $red;
 $link-decoration:           none;
 $link-hover-color:          darken($red, 10%);
 $link-hover-decoration:     none;
 
-$border-radius: .5rem;
+
+// Border Radius
+$border-radius-sm: .4rem;
+$border-radius-md: .8rem;
+$border-radius-lg: 1rem;
+
+
+// Transition
+$transition-sm: all .3s;
+$transition-md: all .5s;
+$transition-lg: all .8s;
+
+
+// Weight
+$paragraph-line-height: 3rem;
+$bold-1: 400;
+$bold-2: 500;
+$bold-3: 700;
+
+
+// Shadow
+$box-shadow-sm:  0 .125rem .25rem rgba($black, .075);
+$box-shadow-md:  0 .5rem 1rem rgba($black, .15);
+$box-shadow-lg:  0 1rem 3rem rgba($black, .175);
+
+
+// Navbar Setttings
+$navbar-bg: $white;
+$navbar-bg-hover: $off-white;
+$navbar-height: 7rem;
+$nav-link-color:                $body-color;
+$nav-link-decoration:           none;
+$nav-link-hover-color:          $default;
+$nav-link-hover-decoration:     none;
