@@ -14,6 +14,11 @@ Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS
 =========================================================
 */
 
+// Slick Slider
+@import "vendors/slick-slider/slick-theme";
+@import "vendors/slick-slider/slick";
+
+
 // Boostrap 4.3 Core + Override
 @import "vendors/bootstrap4.3/functions";
 @import "vendors/bootstrap4.3/variables";
@@ -35,20 +40,11 @@ Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS
 @import "components/header";
 @import "components/buttons";
 @import "components/form";
+@import "components/slider";
+@import "components/wysiwyg";
 @import "components/dropdown";
+@import "components/slick-slider";
 @import "components/footer";
 
 @import "layouts/sections";
-
-
-
-
-
-
-
-
-
-
-
-
-
+@import "layouts/section-sliders";

@@ -6,6 +6,11 @@ $paragraph-bottom-margin: 2rem;
 $headings-margin: 2rem 0rem;
 
 
+// Body Settings
+$body-color: $gray-600;
+$body-bg: $gray-100;
+
+
 // Font Sizes
 $font-size-xs: 1.1rem;
 $font-size-sm: 1.2rem;
@@ -55,8 +60,10 @@ $nav-link-color:                $body-color;
 $nav-link-decoration:           none;
 $nav-link-hover-color:          $default;
 $nav-link-hover-decoration:     none;
-
 $navbar-sm-max-width: 420px;
-// category name font size
-$cat-sm-font-size: 1.9rem;
-$cat-sm-padding: 1rem;
+$cat-sm-padding: 1rem 1.5rem;
+
+
+
+// slider
+$fullscreen-slider-min-height: 30rem;

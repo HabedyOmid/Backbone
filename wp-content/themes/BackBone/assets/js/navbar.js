@@ -4,7 +4,6 @@ $(document).ready(function(){
         $( this ).has( "ul" ).addClass('parent__dropdown');
     });
 
-
     // Check if <li> has .active class then added to parent <li> for styling
     $( "#menu-primary li ul li" ).each(function( index ) {
         if($(this).hasClass("active")){
@@ -15,6 +14,7 @@ $(document).ready(function(){
         }
     });
 
+    // Navbar Toggle
     $(".navbar__toggler").click(function() {
         $('#menu-primary').toggleClass('show')
     })

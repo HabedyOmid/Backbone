@@ -2,175 +2,162 @@ $dropdown-min-width:  25rem;
 $child-dropdown-width: 15%;
 
 .dropdown {
-	position: relative;
-
-	&:hover {
-		.dropdown-menu {
-			opacity: 1;
-			visibility: visible;
-			top: calc(100% + 1rem);
-		}
-	}
-
-	// Link with dropdown meun
-	.dropdown-toggle {
 		position: relative;
 
-		&:after {
-			content: '\25BE';
-			font-size: 1.2rem;
-			color: inherit;
-			transition: $transition-sm;
-			margin-left: .6rem;
-			display: inline-block;
-			position: relative;
-			top: -.2rem;
-			color: $gray-400;
-		}
-	}
-
-
-	// First DropDown
-	ul.dropdown-menu {
-		position: absolute;
-		right: 0;
-		padding-left: 0;
-		list-style-type: none;
-		flex-direction: column;
-		background-color: $navbar-bg;
-		z-index: 9;
-		border-radius: none;
-		padding: .8rem 0;
-		opacity: 0;
-		visibility: hidden;
-		transition: $transition-md;
-		min-width: $dropdown-min-width;
-		max-width: 100%;
-		top: $navbar-height;
-
-
-		// Dropdown has NO child <ul>
-		&:not(.parent__dropdown){
-			margin-top: -1rem;
-			background-color: $navbar-bg-hover;
-		}
-		&:not(.parent__dropdown) li a{
-			padding: 1rem 2rem !important;
-			display: block;
-			fonto-size: $font-size-md;
-		}
-
-
-		// Parent <ul> that has child <ul>
-		&.parent__dropdown{
-			position: fixed;
-			transition: 0;
-			top: $navbar-height;
-			right: 0;
-			left: auto;
-			width: 100vw;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			flex-wrap: wrap;
-			padding: 0;
-			transition: $transition-md;
-			background-color: $navbar-bg-hover;
-			max-height: calc(100% - #{$navbar-height}) !important;
-			overflow: auto;
-
-
-
-			// DROPDOWNS AS COLUMNS
-			> li{
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-
-				// Four columns in the first row between (1500px - 1210px) viewport width
-				@media screen and (max-width:1500px) and (min-width:1211px) {
-					margin: 10px;
-
-					&:first-child,
-					&:nth-child(5) {
-						margin-left: 5%;
-					}
-
-					&:nth-child(4),
-					&:last-child {
-						margin-right: 5%;
-					}
+		&:hover {
+				.dropdown-menu {
+						opacity: 1;
+						visibility: visible;
+						top: calc(100% + 1rem);
 				}
+		}
 
-				// Three cloumns in each row between (1500px - 992px) viewpoet width
-				@media screen and (max-width:1210px) and (min-width:993px) {
-					// display: none;
+		// Link with dropdown meun
+		.dropdown-toggle {
+				position: relative;
 
-					&:first-child,
-					&:nth-child(4) {
-						margin-left: 10%;
-					}
+				&:after {
+						content: '\25BE';
+						font-size: 1.2rem;
+						color: inherit;
+						transition: $transition-sm;
+						margin-left: .6rem;
+						display: inline-block;
+						position: relative;
+						top: -.2rem;
+						color: $gray-400;
+				}
+		}
 
-					&:nth-child(3),
-					&:last-child {
-						margin-right: 10%;
-					}
+		// First DropDown
+		ul.dropdown-menu {
+				position: absolute;
+				right: 0;
+				padding-left: 0;
+				list-style-type: none;
+				flex-direction: column;
+				background-color: $navbar-bg;
+				z-index: 9;
+				border-radius: none;
+				padding: .8rem 0;
+				opacity: 0;
+				visibility: hidden;
+				transition: $transition-md;
+				min-width: $dropdown-min-width;
+				max-width: 100%;
+				top: $navbar-height;
+
+				// Dropdown has NO child <ul>
+				&:not(.parent__dropdown){
+						margin-top: -1rem;
+						background-color: $navbar-bg-hover;
+				}
+				&:not(.parent__dropdown) li a{
+						padding: 1rem 2rem !important;
+						display: block;
+						fonto-size: $font-size-md;
 				}
 
 
-			}
-			> li > a{
-				display: flex;
-				font-weight: $bold-3;
-				letter-spacing: 1px;
-				font-size: $font-size-md;
-				width: 100%;
-				margin-bottom: 1.5rem !important;
-				padding: 0 !important;
-				height: 2.5rem;
+				// Parent <ul> that has child <ul>
+				&.parent__dropdown{
+						position: fixed;
+						transition: 0;
+						top: $navbar-height;
+						right: 0;
+						left: auto;
+						width: 100vw;
+						display: flex;
+						flex-direction: row;
+						justify-content: center;
+						flex-wrap: wrap;
+						padding: 0;
+						transition: $transition-md;
+						background-color: $navbar-bg-hover;
+						max-height: calc(100% - #{$navbar-height}) !important;
+						overflow: auto;
 
-			}
-			> li ul{
-				height: calc(100% - 1rem) !important;
-			}
-			// END FLEX COLUMN
+
+						// DROPDOWNS AS COLUMNS
+						> li{
+								display: flex;
+								flex-direction: row;
+								flex-wrap: wrap;
+
+								// Four columns in the first row between (1500px - 1210px) viewport width
+								@media screen and (max-width:1500px) and (min-width:1211px) {
+										margin: 10px;
+
+										&:first-child,
+										&:nth-child(5) {
+												margin-left: 5%;
+										}
+
+										&:nth-child(4),
+										&:last-child {
+												margin-right: 5%;
+										}
+								}
+
+								// Three cloumns in each row between (1500px - 992px) viewpoet width
+								@media screen and (max-width:1210px) and (min-width:993px) {
+										// display: none;
+
+										&:first-child,
+										&:nth-child(4) {
+											margin-left: 10%;
+										}
+
+										&:nth-child(3),
+										&:last-child {
+											margin-right: 10%;
+										}
+								}
+						}
+
+						> li > a{
+								display: flex;
+								font-weight: $bold-3;
+								letter-spacing: 1px;
+								font-size: $font-size-md;
+								width: 100%;
+								margin-bottom: 1.5rem !important;
+								padding: 0 !important;
+								height: 2.5rem;
+						}
+						> li ul{
+								background-color: transparent !important;
+								height: calc(100% - 1rem) !important;
+						}
+						// END FLEX COLUMN
 
 
+						// Child List Items
+						li.menu-item{
+								height: auto;
+								flex-basis: $child-dropdown-width;
+								padding-top: 5rem; // Dropdowns as Columns
+								padding-bottom: 4rem; // Dropdowns as Columns
 
+								// Child DropDown
+								ul.dropdown-menu{
+										position: static;
+										width: auto;
+										background-color: $navbar-bg-hover;
+										box-sizing: border-box;
 
-			// Child List Items
-			li.menu-item{
-				height: auto;
-				flex-basis: $child-dropdown-width;
-				padding-top: 5rem; // Dropdowns as Columns
-				padding-bottom: 4rem; // Dropdowns as Columns
+										li.menu-item{
+												padding: .8rem 1rem .8rem 1rem;
+										}
 
-				// // Border Right except last element
-				// &:not(:last-child){
-				// 	ul{
-				// 		border-right: 1px solid $border-color;
-				// 	}
-				// }
-
-				// Child DropDown
-				ul.dropdown-menu{
-					position: static;
-					width: auto;
-					background-color: $navbar-bg-hover;
-					box-sizing: border-box;
-
-					li.menu-item{
-						padding: .8rem 1rem .8rem 1rem;
-					}
-
-					a.dropdown-item{
-						font-weight: normal;
-						font-size: $font-size-sm;
-						padding: 0 1.5rem 0 1.5rem !important;
-					}
+										a.dropdown-item{
+												font-weight: normal;
+												font-size: $font-size-sm;
+												padding: 0 1.5rem 0 1.5rem !important;
+										}
+								}
+						}
 				}
-			}
-		}
 
-	}
+		}
 }
