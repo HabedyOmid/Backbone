@@ -14,4 +14,8 @@ $(document).ready(function(){
             $(this).children('a').addClass('active');
         }
     });
+
+    $(".navbar__toggler").click(function() {
+        $('#menu-primary').toggleClass('show')
+    })
 });

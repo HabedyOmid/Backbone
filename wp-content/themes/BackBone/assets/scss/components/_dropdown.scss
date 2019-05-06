@@ -76,6 +76,8 @@ $child-dropdown-width: 15%;
 			padding: 0;
 			transition: $transition-md;
 			background-color: $navbar-bg-hover;
+			max-height: calc(100% - #{$navbar-height}) !important;
+			overflow: auto;
 
 
 
@@ -84,6 +86,38 @@ $child-dropdown-width: 15%;
 				display: flex;
 				flex-direction: row;
 				flex-wrap: wrap;
+
+				// Four columns in the first row between (1500px - 1210px) viewport width
+				@media screen and (max-width:1500px) and (min-width:1211px) {
+					margin: 10px;
+
+					&:first-child,
+					&:nth-child(5) {
+						margin-left: 5%;
+					}
+
+					&:nth-child(4),
+					&:last-child {
+						margin-right: 5%;
+					}
+				}
+
+				// Three cloumns in each row between (1500px - 992px) viewpoet width
+				@media screen and (max-width:1210px) and (min-width:993px) {
+					// display: none;
+
+					&:first-child,
+					&:nth-child(4) {
+						margin-left: 10%;
+					}
+
+					&:nth-child(3),
+					&:last-child {
+						margin-right: 10%;
+					}
+				}
+
+
 			}
 			> li > a{
 				display: flex;
@@ -111,12 +145,12 @@ $child-dropdown-width: 15%;
 				padding-top: 5rem; // Dropdowns as Columns
 				padding-bottom: 4rem; // Dropdowns as Columns
 
-				// Border Right except last element
-				&:not(:last-child){
-					ul{
-						border-right: 1px solid $border-color;
-					}
-				}
+				// // Border Right except last element
+				// &:not(:last-child){
+				// 	ul{
+				// 		border-right: 1px solid $border-color;
+				// 	}
+				// }
 
 				// Child DropDown
 				ul.dropdown-menu{
