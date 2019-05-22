@@ -5,10 +5,10 @@ const uglify        = require('gulp-uglify');
 const concat        = require('gulp-concat');
 const cleanCSS      = require('gulp-clean-css');
 const imageMin      = require('gulp-imagemin');
-const pngQuint      = require('imagemin-pngquant'); 
+const pngQuint      = require('imagemin-pngquant');
 const browserSync   = require('browser-sync').create();
 const autoprefixer  = require('gulp-autoprefixer');
-const jpgRecompress = require('imagemin-jpeg-recompress'); 
+const jpgRecompress = require('imagemin-jpeg-recompress');
 
 
 // Paths
@@ -40,7 +40,7 @@ gulp.task('sass', function() {
 gulp.task('css', function() {
     return gulp.src(paths.src.css + '/*.css')
         .pipe(autoprefixer({
-            browsers: ['last 10 versions'],
+            browsers: ['last 99 versions'],
             cascade: false
         }))
         .pipe(cleanCSS({compatibility: 'ie8'}))
