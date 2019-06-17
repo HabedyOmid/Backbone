@@ -80,7 +80,7 @@ gulp.task('build', gulp.series('sass', 'css', 'js', 'img'));
 // Watch (SASS, CSS, JS, and HTML) reload browser on change
 gulp.task('watch', function() {
     browserSync.init({
-        proxy: "https://versacreative.test",
+        proxy: "https://backbone.test",
         notify: true
     });
     gulp.watch(paths.src.scss, gulp.series('sass')).on('change', browserSync.reload);
