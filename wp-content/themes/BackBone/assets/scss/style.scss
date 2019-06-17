@@ -13,7 +13,6 @@ License URI: LICENSE
 Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS, CSS Architecture 7-1 Pattern, Gulp
 =========================================================
 */
-
 // Slick Slider
 @import "vendors/slick-slider/slick-theme";
 @import "vendors/slick-slider/slick";
@@ -36,15 +35,13 @@ Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS
 @import "base/animations";
 @import "base/utilities";
 
-@import "components/nav";
+@import "layouts/navbar";
+@import "layouts/footer";
+@import "layouts/sections";
+
 @import "components/header";
 @import "components/buttons";
 @import "components/form";
 @import "components/slider";
-@import "components/wysiwyg";
 @import "components/dropdown";
 @import "components/slick-slider";
-@import "components/footer";
-
-@import "layouts/sections";
-@import "layouts/section-sliders";

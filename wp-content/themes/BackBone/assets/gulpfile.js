@@ -32,6 +32,10 @@ var paths = {
 gulp.task('sass', function() {
     return gulp.src(paths.src.scss)
         .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer({
+            browsers: ['last 99 versions'],
+            cascade: false
+        }))
         .pipe(gulp.dest(paths.src.css))
 });
 
@@ -39,10 +43,6 @@ gulp.task('sass', function() {
 // Minify + AutoPreFixer + Combine CSS
 gulp.task('css', function() {
     return gulp.src(paths.src.css + '/*.css')
-        .pipe(autoprefixer({
-            browsers: ['last 99 versions'],
-            cascade: false
-        }))
         .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(concat('style.css'))
         .pipe(gulp.dest(paths.dist.root))

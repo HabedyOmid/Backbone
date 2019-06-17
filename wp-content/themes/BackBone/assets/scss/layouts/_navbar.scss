@@ -15,11 +15,12 @@ nav.navbar {
 		font-size: $font-size-md;
 
   	.container {
+			  min-width: 100% !important;
 				background: inherit;
 				position: relative;
 				@include flex;
 				align-items: center;
-				padding: 0 1rem !important;
+				padding: 0 0 0 2rem !important;
     }
 
   	// Menu Toggle on mobile
@@ -97,18 +98,33 @@ nav.navbar {
 		}
 
 
-  	h1.navbar__brand{
+  	.navbar__brand{
 				float: left;
 				height: 100%;
 				display: flex;
+				padding: 0;
 				margin: 0;
 				a{
-					display: flex;
-					align-self: center;
+						display: flex;
+						align-self: center;
+						padding: 0;
+						line-height: 0;
+						margin: 0;
 				}
-				img{
-					max-height: 4rem;
-					width: auto;
+
+				&_art{
+						align-self: center;
+						svg{
+								height: 4.3rem;
+						}
+				}
+				&_text{
+						align-self: center;
+						height: auto;
+						svg{
+								height: 1.2rem;
+								padding-left: 1rem;
+						}
 				}
   	}
 
@@ -155,17 +171,18 @@ nav.navbar {
 
 						// Last Item
 						&:last-child{
-							margin-left: 2rem;
 							background-color: $red;
-							// transition: $transition-md;
 							padding-left: 1.5rem;
 							padding-right: 1.5rem;
+							text-transform: uppercase;
+							font-weight: $bold-3;
+							letter-spacing: 1px;
 
 							a:link,
 							a:visited{
-								background-color: transparent;
-								color: $white;
-								text-decoration: $nav-link-decoration;
+									background-color: transparent;
+									color: $white;
+									text-decoration: $nav-link-decoration;
 
 								&:hover,
 								&:active{
