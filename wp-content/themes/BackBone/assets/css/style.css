@@ -1922,16 +1922,6 @@ header.header {
     header.header {
       height: 25rem; } }
 
-.slider {
-  color: #ffffff; }
-  .slider__slide {
-    padding: 5rem 0;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-repeat: no-repeat; }
-
 .dropdown {
   position: relative; }
   .dropdown:hover .dropdown-menu {
@@ -2095,9 +2085,3 @@ header.header {
             font-weight: normal;
             font-size: 1.2rem;
             padding: 0 1.5rem 0 1.5rem !important; }
-
-.slick-dots {
-  bottom: 2rem; }
-  .slick-dots li {
-    margin: 0;
-    padding: 0; }
