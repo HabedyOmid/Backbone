@@ -1,131 +1,131 @@
 nav.navbar {
-		display: flex;
-		flex-wrap: wrap;
-		list-style: none;
-		background: transparent;
-		height: $navbar-height;
-		padding: 0 !important;
-		position: relative;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		z-index: 9999999999;
-		background-color: $navbar-bg;
-		font-size: $font-size-md;
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	background: transparent;
+	height: $navbar-height;
+	padding: 0 !important;
+	position: relative;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999999999;
+	background-color: $navbar-bg;
+	font-size: $font-size-md;
 
   	.container {
-			  min-width: 100% !important;
-				background: inherit;
-				position: relative;
-				@include flex;
-				align-items: center;
-				padding: 0 0 0 2rem !important;
+		min-width: 100% !important;
+		background: inherit;
+		position: relative;
+		@include flex;
+		align-items: center;
+		padding: 0 0 0 2rem !important;
     }
 
   	// Menu Toggle on mobile
-		button.navbar__toggler{
-			border: 0;
-			outline: 0;
-			background: transparent;
-			height: 3rem;
-			position: absolute;
-			right: 2rem;
-			top: 50%;
-			transform: translateY(-50%);
+	button.navbar__toggler{
+		border: 0;
+		outline: 0;
+		background: transparent;
+		height: 3rem;
+		position: absolute;
+		right: 2rem;
+		top: 50%;
+		transform: translateY(-50%);
+		margin: 0;
+		padding: 0;
+		display: none;
+		cursor: pointer;
+
+		span {
+			display: block;
+			width: 2.6rem;
+			height: .2rem;
+			background-color: $body-color;
 			margin: 0;
 			padding: 0;
-			display: none;
-			cursor: pointer;
+			border: 0;
+			transition: .3s;
+			transform-origin: center;
 
-			span {
+			&:before,
+			&:after {
+				content: '';
 				display: block;
 				width: 2.6rem;
 				height: .2rem;
-				background-color: $body-color;
-				margin: 0;
-				padding: 0;
-				border: 0;
-				transition: .3s;
-				transform-origin: center;
+				background-color: inherit;
+				border-radius: 0rem;
+				transition: $transition-sm;
+			}
+			&:before {
+				transform: translateY(-.8rem);
+			}
+			&:after {
+				transform: translateY(.7rem);
+			}
+		}
+
+		// Hamburger's style When Toggled
+		&[aria-expanded="true"] {
+			position: fixed;
+			top: 3.3rem;
+			right: 3rem;
+			z-index: 99999999;
+
+			span {
+				background: rgba(0,0,0, 0);
 
 				&:before,
 				&:after {
-						content: '';
-						display: block;
-						width: 2.6rem;
-						height: .2rem;
-						background-color: inherit;
-						border-radius: 0rem;
-						transition: $transition-sm;
+					background-color: $body-color;
 				}
+
 				&:before {
-						transform: translateY(-.8rem);
+						transform: translateY(0.2rem) rotate(45deg) !important;
 				}
+
 				&:after {
-						transform: translateY(.7rem);
+					transform: rotate(-45deg);
 				}
 			}
-
-				// Hamburger's style When Toggled
-				&[aria-expanded="true"] {
-						position: fixed;
-						top: 3.3rem;
-						right: 3rem;
-						z-index: 99999999;
-
-						span {
-								background: rgba(0,0,0, 0);
-
-								&:before,
-								&:after {
-									background-color: $body-color;
-								}
-
-								&:before {
-										transform: translateY(0.2rem) rotate(45deg) !important;
-								}
-
-								&:after {
-									transform: rotate(-45deg);
-								}
-						}
-				}
-
-				@media screen and (max-width:992px) {
-					display: block;
-				}
 		}
+
+		@media screen and (max-width:992px) {
+			display: block;
+		}
+	}
 
 
   	.navbar__brand{
-				float: left;
-				height: 100%;
-				display: flex;
-				padding: 0;
-				margin: 0;
-				a{
-						display: flex;
-						align-self: center;
-						padding: 0;
-						line-height: 0;
-						margin: 0;
-				}
+		float: left;
+		height: 100%;
+		display: flex;
+		padding: 0;
+		margin: 0;
+		a{
+			display: flex;
+			align-self: center;
+			padding: 0;
+			line-height: 0;
+			margin: 0;
+		}
 
-				&_art{
-						align-self: center;
-						svg{
-								height: 4.3rem;
-						}
-				}
-				&_text{
-						align-self: center;
-						height: auto;
-						svg{
-								height: 1.2rem;
-								padding-left: 1rem;
-						}
-				}
+		&_art{
+			align-self: center;
+			svg{
+				height: 4.3rem;
+			}
+		}
+		&_text{
+			align-self: center;
+			height: auto;
+			svg{
+				height: 1.2rem;
+				padding-left: 1rem;
+			}
+		}
   	}
 
 
@@ -140,75 +140,75 @@ nav.navbar {
 
 			// Navigation Main Container
   		ul#menu-primary{
-					list-style: none;
-					display: flex;
-					height: 100%;
-					text-align: left;
-					transition: $transition-md;
-					transition-timing-function: $transition-timing-bezier;
+			list-style: none;
+			display: flex;
+			height: 100%;
+			text-align: left;
+			transition: $transition-md;
+			transition-timing-function: $transition-timing-bezier;
 
-					// First List Items
-					> li{
-						list-style: none;
-						padding: 0;
-						display: flex;
-						align-self: center;
-						height: 100%;
+			// First List Items
+			> li{
+				list-style: none;
+				padding: 0;
+				display: flex;
+				align-self: center;
+				height: 100%;
 
-						// Active Items
-						&.active{
-							> a:link,
-							> a:visited{
-								background-color: $navbar-bg-hover;
-								color: $nav-link-hover-color;
-								text-decoration: $nav-link-hover-decoration;
-							}
-
-							a.active{
-								color: $nav-link-hover-color;
-							}
-						}
-
-						// Last Item
-						&:last-child{
-							background-color: $red;
-							padding-left: 1.5rem;
-							padding-right: 1.5rem;
-							text-transform: uppercase;
-							font-weight: $bold-3;
-							letter-spacing: 1px;
-
-							a:link,
-							a:visited{
-									background-color: transparent;
-									color: $white;
-									text-decoration: $nav-link-decoration;
-
-								&:hover,
-								&:active{
-									color: $white;
-									background-color: transparent;
-									text-decoration: $nav-link-hover-decoration;
-								}
-							}
-						}
+				// Active Items
+				&.active{
+					> a:link,
+					> a:visited{
+						background-color: $navbar-bg-hover;
+						color: $nav-link-hover-color;
+						text-decoration: $nav-link-hover-decoration;
 					}
 
-					// Child items in _dropdown.scss file
+					a.active{
+						color: $nav-link-hover-color;
+					}
+				}
+
+				// Last Item
+				&:last-child{
+					background-color: $red;
+					padding-left: 1.5rem;
+					padding-right: 1.5rem;
+					text-transform: uppercase;
+					font-weight: $bold-3;
+					letter-spacing: 1px;
+
 					a:link,
 					a:visited{
-						color: $nav-link-color;
+						background-color: transparent;
+						color: $white;
 						text-decoration: $nav-link-decoration;
-						padding: 2.3rem 2rem;
 
 						&:hover,
 						&:active{
-							background-color: $navbar-bg-hover;
-							color: $nav-link-hover-color;
+							color: $white;
+							background-color: transparent;
 							text-decoration: $nav-link-hover-decoration;
 						}
 					}
-  		 }
+				}
+			}
+
+			// Child items in _dropdown.scss file
+			a:link,
+			a:visited{
+				color: $nav-link-color;
+				text-decoration: $nav-link-decoration;
+				padding: 2.3rem 2rem;
+
+				&:hover,
+				&:active{
+					background-color: $navbar-bg-hover;
+					color: $nav-link-hover-color;
+					text-decoration: $nav-link-hover-decoration;
+				}
+			}
+  		}
   	}
 }
 
@@ -236,7 +236,7 @@ nav.navbar + main{
 			flex-direction: column;
 
 			a{
-					background-color: transparent !important;
+				background-color: transparent !important;
 			}
 
 			&.show {
@@ -252,73 +252,71 @@ nav.navbar + main{
 				flex-direction: column !important;
 
 				& > a {
-						padding: $cat-sm-padding !important;
-						width: 100%;
-						font-size: $font-size-lg;
-						opacity: .8;
+					padding: $cat-sm-padding !important;
+					width: 100%;
+					font-size: $font-size-lg;
+					opacity: .8;
 
-						&.dropdown-toggle:after {
-								position: absolute;
-								right: 2rem;
-								top: 50%;
-								transform: translateY(-50%);
-						}
+					&.dropdown-toggle:after {
+						position: absolute;
+						right: 2rem;
+						top: 50%;
+						transform: translateY(-50%);
+					}
 				}
 
 				&:last-child {
-						margin: 1rem auto !important;
+					margin: 1rem auto !important;
 				}
 
 				& > ul {
-						position: static !important;
-						width: 100% !important;
-						display: block !important;
-						visibility: visible !important;
-						opacity: 1 !important;
-						width: 100%;
-						transform: none;
-						padding: 0 !important;
-						height: initial !important;
-						min-height: initial !important;
-						max-height: 0 !important;
-						overflow: hidden !important;
+					position: static !important;
+					width: 100% !important;
+					display: block !important;
+					visibility: visible !important;
+					opacity: 1 !important;
+					width: 100%;
+					transform: none;
+					padding: 0 !important;
+					height: initial !important;
+					min-height: initial !important;
+					max-height: 0 !important;
+					overflow: hidden !important;
 
-						&.show {
-								max-height: 100rem !important;
-								padding: 1rem 0 !important;
+					&.show {
+						max-height: 100rem !important;
+						padding: 1rem 0 !important;
+					}
+
+					& > .menu-item {
+						padding-top: 0; // Dropdowns as Columns
+						padding-bottom: 0; // Dropdowns as Columns
+						padding: 0 1.5rem;
+
+						& > a {
+							margin-bottom: .2rem !important;
+							margin-top: 0 !important;
 						}
-
-						& > .menu-item {
-								padding-top: 0; // Dropdowns as Columns
-								padding-bottom: 0; // Dropdowns as Columns
-								padding: 0 1.5rem;
-
-								& > a {
-										margin-bottom: .2rem !important;
-										margin-top: 0 !important;
-								}
-						}
+					}
 				}
 
 				.parent__dropdown {
-						& > .menu-item {
-								& > a {
-										margin-bottom: 0rem !important;
-										margin-top: 1rem !important;
-								}
+					& > .menu-item {
+						& > a {
+							margin-bottom: 0rem !important;
+							margin-top: 1rem !important;
 						}
+					}
 				}
-
 			}
 
 			ul.dropdown-menu {
-					opacity: 1 !important;
-					visibility: visible !important;
-					margin-top: 0 !important;
-					width: 100%;
-					background-color: transparent !important;
+				opacity: 1 !important;
+				visibility: visible !important;
+				margin-top: 0 !important;
+				width: 100%;
+				background-color: transparent !important;
 			}
-
 		}
-		}
+	}
 }
