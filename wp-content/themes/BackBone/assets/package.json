@@ -19,5 +19,17 @@
     "gulp-uglify": "^3.0.2",
     "imagemin-jpeg-recompress": "^6.0.0",
     "imagemin-pngquant": "^7.0.0"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "ie >= 8",
+    "edge >= 15",
+    "ie_mob >= 10",
+    "ff >= 45",
+    "chrome >= 45",
+    "safari >= 7",
+    "opera >= 23",
+    "ios >= 7",
+    "android >= 4"
+  ]
 }

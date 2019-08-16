@@ -73,19 +73,15 @@ nav.navbar {
 			top: 3.3rem;
 			right: 3rem;
 			z-index: 99999999;
-
 			span {
 				background: rgba(0,0,0, 0);
-
 				&:before,
 				&:after {
 					background-color: $body-color;
 				}
-
 				&:before {
-						transform: translateY(0.2rem) rotate(45deg) !important;
+					transform: translateY(0.2rem) rotate(45deg) !important;
 				}
-
 				&:after {
 					transform: rotate(-45deg);
 				}
@@ -96,7 +92,6 @@ nav.navbar {
 			display: block;
 		}
 	}
-
 
   	.navbar__brand{
 		float: left;
@@ -111,26 +106,14 @@ nav.navbar {
 			line-height: 0;
 			margin: 0;
 		}
-
-		&_art{
-			align-self: center;
-			svg{
-				height: 4.3rem;
-			}
-		}
-		&_text{
-			align-self: center;
-			height: auto;
-			svg{
-				height: 1.2rem;
-				padding-left: 1rem;
-			}
+		img{
+			height: 5rem;
 		}
   	}
 
 
 	// Navbar Links
-  .navbar-collapse{
+   .navbar-collapse{
   		height: $navbar-height;
   		width: 100%;
   		display: flex;
@@ -138,7 +121,7 @@ nav.navbar {
   		align-self: flex-end;
   		justify-content: flex-end;
 
-			// Navigation Main Container
+		// Navigation Main Container
   		ul#menu-primary{
 			list-style: none;
 			display: flex;
@@ -208,7 +191,7 @@ nav.navbar {
 					text-decoration: $nav-link-hover-decoration;
 				}
 			}
-  		}
+  		 }
   	}
 }
 

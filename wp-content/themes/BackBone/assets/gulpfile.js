@@ -32,10 +32,7 @@ var paths = {
 gulp.task('sass', function() {
     return gulp.src(paths.src.scss)
         .pipe(sass().on('error', sass.logError))
-        .pipe(autoprefixer({
-            browsers: ['last 99 versions'],
-            cascade: false
-        }))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.src.css))
 });
 
