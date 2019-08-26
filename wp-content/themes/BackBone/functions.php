@@ -71,6 +71,7 @@ add_action( 'widgets_init', 'backbone_widgets_init' );
 //
 function backbone_scripts() {
 	wp_enqueue_style( 'backbone-style', get_stylesheet_uri() );
+	
 	wp_enqueue_script( 'backbone-script', get_template_directory_uri() . '/backbone.js', array(), '11071988', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

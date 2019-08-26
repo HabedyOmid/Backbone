@@ -8,7 +8,7 @@ Theme URI: https://github.com/HabedyOmid/Backbone
 Author: Omid Habedy
 Author URI: https://omidhabedy.me/
 Description: BackBone theme is developed to build any Wordpress site with 100% freedom of design and development using ACF (Advance Custom Field) and CPT UI (Custom Post Type). The theme also uses Gulp, BrowserSync and AutoPrefixer to compile (SASS, CSS and JS) adding prefixes to support almost all browsers, and to compress (JPG, PNG, SVG, GIF). Automating tasks to watch for (SASS, CSS, PHP, and JS) files change, to recompile and push those changes to browser in real-time.
-Version: 2.5
+Version: 2.6
 License: GNU General Public License v2 or later
 License URI: LICENSE
 Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Architecture 7-1 Pattern
@@ -1376,16 +1376,17 @@ body {
           flex-wrap: wrap;
   list-style: none;
   background: transparent;
-  height: 7rem;
+  height: auto;
   padding: 0 !important;
   position: relative;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9999999999;
+  z-index: 5000;
   background-color: #ffffff;
-  font-size: 1.4rem; }
+  font-size: 1.4rem;
+  border-bottom: 1px solid #dee2e6; }
   .navbar .container {
     min-width: 100% !important;
     background: inherit;
@@ -1398,7 +1399,7 @@ body {
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
-    padding: 0 0 0 2rem !important; }
+    padding: 0 0 0 3rem !important; }
   .navbar button.navbar__toggler {
     border: 0;
     outline: 0;

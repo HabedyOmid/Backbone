@@ -1,4 +1,4 @@
-<nav class="navbar" data-spy="affix" data-offset-top="20" role="navigation">
+<nav class="navbar" role="navigation">
 	<div class="container">
 		<button class="navbar__toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>

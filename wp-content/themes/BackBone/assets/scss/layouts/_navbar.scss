@@ -3,16 +3,17 @@
 	flex-wrap: wrap;
 	list-style: none;
 	background: transparent;
-	height: $navbar-height;
+	height: auto;
 	padding: 0 !important;
 	position: relative;
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
-	z-index: 9999999999;
+	z-index: 5000;
 	background-color: $navbar-bg;
 	font-size: $font-size-md;
+	border-bottom: 1px solid $border-color;
 
   	.container {
 		min-width: 100% !important;
@@ -20,7 +21,7 @@
 		position: relative;
 		@include flex;
 		align-items: center;
-		padding: 0 0 0 2rem !important;
+		padding: 0 0 0 3rem !important;
     }
 
   	// Menu Toggle on mobile
