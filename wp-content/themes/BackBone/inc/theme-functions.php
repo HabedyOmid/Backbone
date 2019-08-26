@@ -213,3 +213,29 @@ function get_image_src($id, $size = "lg") {
         return "Make sure to add ID and SIZE 'PARAMS'";
     }
 }
+
+
+
+//
+// Image ALT by ID
+//
+function get_image_alt_by_id( $attachment_ID ) {
+
+    // Get ALT
+    $thumb_alt = get_post_meta( $attachment_ID, '_wp_attachment_image_alt', true );
+    
+    // No ALT supplied get attachment info
+    if ( empty( $thumb_alt ) )
+        $attachment = get_post( $attachment_ID );
+    
+    // Use caption if no ALT supplied
+    if ( empty( $thumb_alt ) )
+        $thumb_alt = $attachment->post_excerpt;
+    
+    // Use title if no caption supplied either
+    if ( empty( $thumb_alt ) )
+        $thumb_alt = $attachment->post_title;
+ 
+    // Return ALT
+    return esc_attr( trim( strip_tags( $thumb_alt ) ) );
+}
