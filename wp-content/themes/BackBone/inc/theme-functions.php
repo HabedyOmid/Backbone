@@ -13,7 +13,6 @@ function backbone_body_classes( $classes ) {
 	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 		$classes[] = 'no-sidebar';
 	}
-
 	return $classes;
 }
 add_filter( 'body_class', 'backbone_body_classes' );
@@ -28,6 +27,7 @@ function backbone_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'backbone_pingback_header' );
+
 
 
 //

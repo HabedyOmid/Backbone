@@ -1,17 +1,17 @@
 @charset "UTF-8";
 /*!
 =========================================================
-* BackBone - An Awesome WP Starter Theme + ACF
+* BackBone - WP + Bootstrap 4.x Starter Theme
 =========================================================
 Theme Name: BackBone
-Theme URI: https://github.com/HabedyOmid/WP-Backbone.git
+Theme URI: https://github.com/HabedyOmid/Backbone
 Author: Omid Habedy
 Author URI: https://omidhabedy.me/
-Description: My 2019 BackBone theme is designed to build any Wordpress site with 100% freedom of design and development using ACF (Advance Custom Field) and CPT UI (Custom Post Type). The theme alos uses SASS preprocessor for stylesheet and layouts.
-Version: 2.0
+Description: BackBone theme is developed to build any Wordpress site with 100% freedom of design and development using ACF (Advance Custom Field) and CPT UI (Custom Post Type). The theme also uses Gulp, BrowserSync and AutoPrefixer to compile (SASS, CSS and JS) adding prefixes to support almost all browsers, and to compress (JPG, PNG, SVG, GIF). Automating tasks to watch for (SASS, CSS, PHP, and JS) files change, to recompile and push those changes to browser in real-time.
+Version: 2.5
 License: GNU General Public License v2 or later
 License URI: LICENSE
-Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS, CSS Architecture 7-1 Pattern, Gulp
+Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Architecture 7-1 Pattern
 =========================================================
 */
 /* Slider */
@@ -1254,11 +1254,11 @@ Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS
     margin-left: 91.66667%; } }
 
 ::-moz-selection {
-  background-color: #007bff;
+  background-color: red;
   color: #ffffff; }
 
 ::selection {
-  background-color: #007bff;
+  background-color: red;
   color: #ffffff; }
 
 a:link,
@@ -1483,20 +1483,8 @@ nav.navbar {
       padding: 0;
       line-height: 0;
       margin: 0; }
-    nav.navbar .navbar__brand_art {
-      -webkit-align-self: center;
-          -ms-flex-item-align: center;
-              align-self: center; }
-      nav.navbar .navbar__brand_art svg {
-        height: 4.3rem; }
-    nav.navbar .navbar__brand_text {
-      -webkit-align-self: center;
-          -ms-flex-item-align: center;
-              align-self: center;
-      height: auto; }
-      nav.navbar .navbar__brand_text svg {
-        height: 1.2rem;
-        padding-left: 1rem; }
+    nav.navbar .navbar__brand img {
+      height: 5rem; }
   nav.navbar .navbar-collapse {
     height: 7rem;
     width: 100%;

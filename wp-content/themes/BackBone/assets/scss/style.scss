@@ -1,31 +1,32 @@
 /*!
 =========================================================
-* BackBone - An Awesome WP Starter Theme + ACF
+* BackBone - WP + Bootstrap 4.x Starter Theme
 =========================================================
 Theme Name: BackBone
-Theme URI: https://github.com/HabedyOmid/WP-Backbone.git
+Theme URI: https://github.com/HabedyOmid/Backbone
 Author: Omid Habedy
 Author URI: https://omidhabedy.me/
-Description: My 2019 BackBone theme is designed to build any Wordpress site with 100% freedom of design and development using ACF (Advance Custom Field) and CPT UI (Custom Post Type). The theme alos uses SASS preprocessor for stylesheet and layouts.
-Version: 2.0
+Description: BackBone theme is developed to build any Wordpress site with 100% freedom of design and development using ACF (Advance Custom Field) and CPT UI (Custom Post Type). The theme also uses Gulp, BrowserSync and AutoPrefixer to compile (SASS, CSS and JS) adding prefixes to support almost all browsers, and to compress (JPG, PNG, SVG, GIF). Automating tasks to watch for (SASS, CSS, PHP, and JS) files change, to recompile and push those changes to browser in real-time.
+Version: 2.5
 License: GNU General Public License v2 or later
 License URI: LICENSE
-Tags: ACF (Advance Custom Field), CPT UI (Custom Post Type), Boostrap 4.1,  SASS, CSS Architecture 7-1 Pattern, Gulp
+Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Architecture 7-1 Pattern
 =========================================================
 */
+
 // Slick Slider
 @import "vendors/slick-slider/slick-theme";
 @import "vendors/slick-slider/slick";
 
 
 // Boostrap 4.3 Core + Override
-@import "vendors/bootstrap4.3/functions";
-@import "vendors/bootstrap4.3/variables";
+@import "vendors/bootstrap4/functions";
+@import "vendors/bootstrap4/variables";
 @import "abstracts/colors";
 @import "abstracts/variables";
-@import "vendors/bootstrap4.3/mixins";
+@import "vendors/bootstrap4/mixins";
 @import "abstracts/mixins";
-@import "vendors/bootstrap4.3/grid";
+@import "vendors/bootstrap4/grid";
 @import "abstracts/grids";
 
 
