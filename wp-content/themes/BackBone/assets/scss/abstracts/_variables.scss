@@ -1,4 +1,4 @@
-$reset-root-font-size: 62.5%; // == 10px root font-size
+$reset-root-font-size: 62.5%; // 1rem == 10px root font-size
 $font-family-base: 'Poppins', sans-serif;
 $font-family-secondary: 'Poppins', sans-serif;
 $paragraph-line-height: 3rem;
@@ -62,8 +62,3 @@ $nav-link-hover-color:          $primary;
 $nav-link-hover-decoration:     none;
 $navbar-sm-max-width: 420px;
 $cat-sm-padding: 1rem 1.5rem;
-
-
-
-// slider
-$fullscreen-slider-min-height: 30rem;

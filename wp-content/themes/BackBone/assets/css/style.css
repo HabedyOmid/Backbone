@@ -269,6 +269,7 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
 .col-xl-auto {
   position: relative;
   width: 100%;
+  min-height: 1px;
   padding-right: 15px;
   padding-left: 15px; }
 
@@ -288,7 +289,7 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
   width: auto;
-  max-width: 100%; }
+  max-width: none; }
 
 .col-1 {
   -webkit-box-flex: 0;
@@ -513,7 +514,7 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
     width: auto;
-    max-width: 100%; }
+    max-width: none; }
   .col-sm-1 {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 8.33333%;
@@ -702,7 +703,7 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
     width: auto;
-    max-width: 100%; }
+    max-width: none; }
   .col-md-1 {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 8.33333%;
@@ -891,7 +892,7 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
     width: auto;
-    max-width: 100%; }
+    max-width: none; }
   .col-lg-1 {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 8.33333%;
@@ -1080,7 +1081,7 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
     width: auto;
-    max-width: 100%; }
+    max-width: none; }
   .col-xl-1 {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 8.33333%;
@@ -1365,7 +1366,7 @@ body {
           justify-content: center;
   text-align: center; }
 
-nav.navbar {
+.navbar {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1385,7 +1386,7 @@ nav.navbar {
   z-index: 9999999999;
   background-color: #ffffff;
   font-size: 1.4rem; }
-  nav.navbar .container {
+  .navbar .container {
     min-width: 100% !important;
     background: inherit;
     position: relative;
@@ -1398,7 +1399,7 @@ nav.navbar {
         -ms-flex-align: center;
             align-items: center;
     padding: 0 0 0 2rem !important; }
-  nav.navbar button.navbar__toggler {
+  .navbar button.navbar__toggler {
     border: 0;
     outline: 0;
     background: transparent;
@@ -1413,7 +1414,7 @@ nav.navbar {
     padding: 0;
     display: none;
     cursor: pointer; }
-    nav.navbar button.navbar__toggler span {
+    .navbar button.navbar__toggler span {
       display: block;
       width: 2.6rem;
       height: .2rem;
@@ -1426,7 +1427,7 @@ nav.navbar {
       -webkit-transform-origin: center;
           -ms-transform-origin: center;
               transform-origin: center; }
-      nav.navbar button.navbar__toggler span:before, nav.navbar button.navbar__toggler span:after {
+      .navbar button.navbar__toggler span:before, .navbar button.navbar__toggler span:after {
         content: '';
         display: block;
         width: 2.6rem;
@@ -1435,35 +1436,35 @@ nav.navbar {
         border-radius: 0rem;
         -webkit-transition: all 0.3s;
         transition: all 0.3s; }
-      nav.navbar button.navbar__toggler span:before {
+      .navbar button.navbar__toggler span:before {
         -webkit-transform: translateY(-0.8rem);
             -ms-transform: translateY(-0.8rem);
                 transform: translateY(-0.8rem); }
-      nav.navbar button.navbar__toggler span:after {
+      .navbar button.navbar__toggler span:after {
         -webkit-transform: translateY(0.7rem);
             -ms-transform: translateY(0.7rem);
                 transform: translateY(0.7rem); }
-    nav.navbar button.navbar__toggler[aria-expanded="true"] {
+    .navbar button.navbar__toggler[aria-expanded="true"] {
       position: fixed;
       top: 3.3rem;
       right: 3rem;
       z-index: 99999999; }
-      nav.navbar button.navbar__toggler[aria-expanded="true"] span {
+      .navbar button.navbar__toggler[aria-expanded="true"] span {
         background: rgba(0, 0, 0, 0); }
-        nav.navbar button.navbar__toggler[aria-expanded="true"] span:before, nav.navbar button.navbar__toggler[aria-expanded="true"] span:after {
+        .navbar button.navbar__toggler[aria-expanded="true"] span:before, .navbar button.navbar__toggler[aria-expanded="true"] span:after {
           background-color: #6c757d; }
-        nav.navbar button.navbar__toggler[aria-expanded="true"] span:before {
+        .navbar button.navbar__toggler[aria-expanded="true"] span:before {
           -webkit-transform: translateY(0.2rem) rotate(45deg) !important;
               -ms-transform: translateY(0.2rem) rotate(45deg) !important;
                   transform: translateY(0.2rem) rotate(45deg) !important; }
-        nav.navbar button.navbar__toggler[aria-expanded="true"] span:after {
+        .navbar button.navbar__toggler[aria-expanded="true"] span:after {
           -webkit-transform: rotate(-45deg);
               -ms-transform: rotate(-45deg);
                   transform: rotate(-45deg); }
     @media screen and (max-width: 992px) {
-      nav.navbar button.navbar__toggler {
+      .navbar button.navbar__toggler {
         display: block; } }
-  nav.navbar .navbar__brand {
+  .navbar .navbar__brand {
     float: left;
     height: 100%;
     display: -webkit-box;
@@ -1472,7 +1473,7 @@ nav.navbar {
     display: flex;
     padding: 0;
     margin: 0; }
-    nav.navbar .navbar__brand a {
+    .navbar .navbar__brand a {
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -1483,9 +1484,11 @@ nav.navbar {
       padding: 0;
       line-height: 0;
       margin: 0; }
-    nav.navbar .navbar__brand img {
+    .navbar .navbar__brand img {
       height: 5rem; }
-  nav.navbar .navbar-collapse {
+    .navbar .navbar__brand span {
+      color: #343a40; }
+  .navbar .navbar-collapse {
     height: 7rem;
     width: 100%;
     display: -webkit-box;
@@ -1503,7 +1506,7 @@ nav.navbar {
     -webkit-justify-content: flex-end;
         -ms-flex-pack: end;
             justify-content: flex-end; }
-    nav.navbar .navbar-collapse ul#menu-primary {
+    .navbar .navbar-collapse ul#menu-primary {
       list-style: none;
       display: -webkit-box;
       display: -webkit-flex;
@@ -1515,7 +1518,7 @@ nav.navbar {
       transition: all 0.5s;
       -webkit-transition-timing-function: cubic-bezier(1, 0, 0, 1);
               transition-timing-function: cubic-bezier(1, 0, 0, 1); }
-      nav.navbar .navbar-collapse ul#menu-primary > li {
+      .navbar .navbar-collapse ul#menu-primary > li {
         list-style: none;
         padding: 0;
         display: -webkit-box;
@@ -1526,39 +1529,47 @@ nav.navbar {
             -ms-flex-item-align: center;
                 align-self: center;
         height: 100%; }
-        nav.navbar .navbar-collapse ul#menu-primary > li.active > a:link,
-        nav.navbar .navbar-collapse ul#menu-primary > li.active > a:visited {
+        .navbar .navbar-collapse ul#menu-primary > li.active > a:link,
+        .navbar .navbar-collapse ul#menu-primary > li.active > a:visited {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -webkit-align-items: center;
+              -ms-flex-align: center;
+                  align-items: center;
           background-color: #f8fefe;
           color: red;
           text-decoration: none; }
-        nav.navbar .navbar-collapse ul#menu-primary > li.active a.active {
+        .navbar .navbar-collapse ul#menu-primary > li.active a.active {
           color: red; }
-        nav.navbar .navbar-collapse ul#menu-primary > li:last-child {
+        .navbar .navbar-collapse ul#menu-primary > li.cta-link {
           background-color: #dc3545;
           padding-left: 1.5rem;
           padding-right: 1.5rem;
           text-transform: uppercase;
           font-weight: 700;
           letter-spacing: 1px; }
-          nav.navbar .navbar-collapse ul#menu-primary > li:last-child a:link,
-          nav.navbar .navbar-collapse ul#menu-primary > li:last-child a:visited {
+          .navbar .navbar-collapse ul#menu-primary > li.cta-link a:link,
+          .navbar .navbar-collapse ul#menu-primary > li.cta-link a:visited {
             background-color: transparent;
             color: #ffffff;
             text-decoration: none; }
-            nav.navbar .navbar-collapse ul#menu-primary > li:last-child a:link:hover, nav.navbar .navbar-collapse ul#menu-primary > li:last-child a:link:active,
-            nav.navbar .navbar-collapse ul#menu-primary > li:last-child a:visited:hover,
-            nav.navbar .navbar-collapse ul#menu-primary > li:last-child a:visited:active {
+            .navbar .navbar-collapse ul#menu-primary > li.cta-link a:link:hover, .navbar .navbar-collapse ul#menu-primary > li.cta-link a:link:active,
+            .navbar .navbar-collapse ul#menu-primary > li.cta-link a:visited:hover,
+            .navbar .navbar-collapse ul#menu-primary > li.cta-link a:visited:active {
               color: #ffffff;
               background-color: transparent;
               text-decoration: none; }
-      nav.navbar .navbar-collapse ul#menu-primary a:link,
-      nav.navbar .navbar-collapse ul#menu-primary a:visited {
+      .navbar .navbar-collapse ul#menu-primary a:link,
+      .navbar .navbar-collapse ul#menu-primary a:visited {
         color: #6c757d;
         text-decoration: none;
         padding: 2.3rem 2rem; }
-        nav.navbar .navbar-collapse ul#menu-primary a:link:hover, nav.navbar .navbar-collapse ul#menu-primary a:link:active,
-        nav.navbar .navbar-collapse ul#menu-primary a:visited:hover,
-        nav.navbar .navbar-collapse ul#menu-primary a:visited:active {
+        .navbar .navbar-collapse ul#menu-primary a:link:hover, .navbar .navbar-collapse ul#menu-primary a:link:active,
+        .navbar .navbar-collapse ul#menu-primary a:visited:hover,
+        .navbar .navbar-collapse ul#menu-primary a:visited:active {
           background-color: #f8fefe;
           color: red;
           text-decoration: none; }
@@ -1672,8 +1683,11 @@ footer {
         padding: .8rem;
         font-size: 1.3rem; } }
 
-section.ACF {
-  padding: 5rem 0; }
+.wysiwyg {
+  padding: 7rem 0; }
+  @media (max-width: 76.78rem) {
+    .wysiwyg {
+      padding: 4rem 2rem; } }
 
 header.header {
   background-size: cover;

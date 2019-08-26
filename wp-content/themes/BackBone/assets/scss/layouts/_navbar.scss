@@ -1,4 +1,4 @@
-nav.navbar {
+.navbar {
 	display: flex;
 	flex-wrap: wrap;
 	list-style: none;
@@ -109,6 +109,9 @@ nav.navbar {
 		img{
 			height: 5rem;
 		}
+		span{
+			color: $dark;
+		}
   	}
 
 
@@ -142,6 +145,8 @@ nav.navbar {
 				&.active{
 					> a:link,
 					> a:visited{
+						display: flex;
+    					align-items: center;
 						background-color: $navbar-bg-hover;
 						color: $nav-link-hover-color;
 						text-decoration: $nav-link-hover-decoration;
@@ -152,8 +157,8 @@ nav.navbar {
 					}
 				}
 
-				// Last Item
-				&:last-child{
+				// CTA-LINK
+				&.cta-link{
 					background-color: $red;
 					padding-left: 1.5rem;
 					padding-right: 1.5rem;

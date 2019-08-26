@@ -19,13 +19,15 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
 @import "vendors/slick-slider/slick";
 
 
-// Boostrap 4.3 Core + Override
+// Boostrap 4.x Core + Overrides
 @import "vendors/bootstrap4/functions";
 @import "vendors/bootstrap4/variables";
 @import "abstracts/colors";
 @import "abstracts/variables";
+
 @import "vendors/bootstrap4/mixins";
 @import "abstracts/mixins";
+
 @import "vendors/bootstrap4/grid";
 @import "abstracts/grids";
 
@@ -38,7 +40,8 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
 
 @import "layouts/navbar";
 @import "layouts/footer";
-@import "layouts/sections";
+
+@import "sections/wysiwyg";
 
 @import "components/header";
 @import "components/dropdown";
