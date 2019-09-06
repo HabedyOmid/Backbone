@@ -24,13 +24,10 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
 @import "vendors/bootstrap4/variables";
 @import "abstracts/colors";
 @import "abstracts/variables";
+@import "abstracts/grids";
 
 @import "vendors/bootstrap4/mixins";
 @import "abstracts/mixins";
-
-@import "vendors/bootstrap4/grid";
-@import "abstracts/grids";
-
 
 // Custom
 @import "base/typography";
