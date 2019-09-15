@@ -1,36 +1,34 @@
+// Typography
 $reset-root-font-size: 62.5%; // 1rem == 10px root font-size
-$font-family-base: 'Poppins', sans-serif;
-$font-family-secondary: 'Poppins', sans-serif;
+$font-family-base: 'Rubik', sans-serif;
 $paragraph-line-height: 3rem;
 $paragraph-bottom-margin: 2rem;
-$headings-margin: 2rem 0rem;
-
-
-// Body Settings
-$body-color: $gray-600;
-$body-bg: $gray-100;
-
+$bold-1: 300;
+$bold-2: 400;
+$bold-3: 500;
 
 // Font Sizes
+$font-size-base: 1.6rem;
 $font-size-xs: 1.1rem;
 $font-size-sm: 1.2rem;
 $font-size-md: 1.4rem;
 $font-size-lg: 1.8rem;
 $font-size-xl: 2.2rem;
 
-
 // Links
-$link-color:                $red;
+$link-color:                $primary;
 $link-decoration:           none;
-$link-hover-color:          darken($red, 10%);
+$link-hover-color:          darken($primary, 10%);
 $link-hover-decoration:     none;
 
+// Body Settings
+$body-color: $gray-600;
+$body-bg: $gray-100;
 
 // Border Radius
 $border-radius-sm: .4rem;
 $border-radius-md: .8rem;
 $border-radius-lg: 1rem;
-
 
 // Transition
 $transition-sm: all .3s;
@@ -38,27 +36,18 @@ $transition-md: all .5s;
 $transition-lg: all .8s;
 $transition-timing-bezier: cubic-bezier(1.000, 0.000, 0.000, 1.000);
 
-
-// Weight
-$paragraph-line-height: 3rem;
-$bold-1: 400;
-$bold-2: 500;
-$bold-3: 700;
-
-
 // Shadow
 $box-shadow-sm:  0 .125rem .25rem rgba($black, .075);
 $box-shadow-md:  0 .5rem 1rem rgba($black, .15);
 $box-shadow-lg:  0 1rem 3rem rgba($black, .175);
 
-
 // Navbar Setttings
 $navbar-bg: $white;
-$navbar-bg-hover: $off-white;
+$navbar-bg-hover: $light;
 $navbar-height: 7rem;
-$nav-link-color:                $body-color;
-$nav-link-decoration:           none;
-$nav-link-hover-color:          $primary;
-$nav-link-hover-decoration:     none;
+$nav-link-color: $body-color;
+$nav-link-decoration: none;
+$nav-link-hover-color: $primary;
+$nav-link-hover-decoration: none;
 $navbar-sm-max-width: 420px;
 $cat-sm-padding: 1rem 1.5rem;

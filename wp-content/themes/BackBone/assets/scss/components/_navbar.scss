@@ -189,6 +189,8 @@
 				color: $nav-link-color;
 				text-decoration: $nav-link-decoration;
 				padding: 2.3rem 2rem;
+				display: flex;
+				align-items: center;
 
 				&:hover,
 				&:active{

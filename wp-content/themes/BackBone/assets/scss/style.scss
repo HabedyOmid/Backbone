@@ -14,31 +14,25 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
 =========================================================
 */
 
-// Slick Slider
-@import "vendors/slick-slider/slick-theme";
-@import "vendors/slick-slider/slick";
-
-
-// Boostrap 4.x Core + Overrides
+// Boostrap 4.x Core
 @import "vendors/bootstrap4/functions";
 @import "vendors/bootstrap4/variables";
-@import "abstracts/colors";
-@import "abstracts/variables";
-@import "abstracts/grids";
-
 @import "vendors/bootstrap4/mixins";
-@import "abstracts/mixins";
 
 // Custom
+@import "abstracts/colors";
+@import "abstracts/variables";
+@import "abstracts/mixins";
+@import "abstracts/grids";
+
 @import "base/typography";
 @import "base/base";
 @import "base/animations";
 @import "base/utilities";
 
-@import "layouts/navbar";
-@import "layouts/footer";
-
-@import "sections/wysiwyg";
-
-@import "components/header";
+@import "components/navbar";
 @import "components/dropdown";
+@import "components/buttons";
+@import "components/footer";
+
+@import "sections/section-wysiwyg";

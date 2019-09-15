@@ -1,19 +1,11 @@
-
 // Background Colors
-.u_bg_white { background-color: $white; color: $body-bg; }
-.u_bg_gray { background-color: $gray; color: $body-bg; }
-.u_bg_black { background-color: $black; color: $gray; }
-.u_bg_light_gray { background-color: $l-gray; color: $body-bg; }
-.u_bg_dark_gray { background-color: $d-gray; color: $gray; }
-.u_bg_red { background-color: $red; color: $gray; }
-.u_bg_green { background-color: $green; color: $gray; }
-.u_bg_blue { background-color: $blue; color: $gray; }
-.u_bg_teal { background-color: $teal; color: $white; }
-.u_bg_yellow { background-color: $yellow; color: $body-bg; }
-.u_bg_pink { background-color: $pink; color: $gray; }
+.u_bg_white { background-color: $white; color: $dark; }
+.u_bg_black { background-color: $black; color: $light; }
+.u_bg_red { background-color: $red; color: $white; }
+.u_bg_green { background-color: $green; color: $white; }
+.u_bg_blue { background-color: $blue; color: $white; }
 
-
-// Content Alignment
-.u_align_left { justify-content: flex-start;  text-align: left; }
-.u_align_right { justify-content: flex-end;  text-align: right; }
-.u_align_center { justify-content: center;  text-align: center; }
+// Justify Alignment
+.u_justify_left { justify-content: flex-start; }
+.u_justify_right { justify-content: flex-end; }
+.u_justify_center { justify-content: center; }
