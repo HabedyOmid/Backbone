@@ -4,11 +4,15 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<h1 class="navbar__brand">
-			<a href="/" rel="home" title="Backbone">
-				Back<span>Bone</span>
+		<?php // Custom logo
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		$image_alt = get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true);
+		$image = wp_get_attachment_image_src($custom_logo_id , 'full');?>
+		<div class="navbar__brand">
+			<a href="/" rel="home" title="<?php echo $image_alt; ?>">
+				<img src="<?php echo $image[0]; ?>" alt="<?php echo $image_alt;?>">
 			</a>
-		</h1>
+		</div>
 
 		<?php
 		wp_nav_menu( array(

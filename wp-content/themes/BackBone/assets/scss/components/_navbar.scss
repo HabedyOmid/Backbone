@@ -101,18 +101,12 @@
 		padding: 0;
 		margin: 0;
 		a{
+			width: 14rem;
 			display: flex;
 			align-self: center;
-			padding: 0;
-			line-height: 0;
 			margin: 0;
 		}
-		img{
-			height: 5rem;
-		}
-		span{
-			color: $dark;
-		}
+		img, svg{ width: 100%; max-height: 5rem; }
   	}
 
 
@@ -160,7 +154,7 @@
 
 				// CTA-LINK
 				&.cta-link{
-					background-color: $red;
+					background-color: $primary;
 					padding-left: 1.5rem;
 					padding-right: 1.5rem;
 					text-transform: uppercase;

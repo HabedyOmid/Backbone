@@ -264,6 +264,7 @@ body {
     padding: 0;
     margin: 0; }
     .navbar .navbar__brand a {
+      width: 14rem;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -271,13 +272,10 @@ body {
       -webkit-align-self: center;
           -ms-flex-item-align: center;
               align-self: center;
-      padding: 0;
-      line-height: 0;
       margin: 0; }
-    .navbar .navbar__brand img {
-      height: 5rem; }
-    .navbar .navbar__brand span {
-      color: #212529; }
+    .navbar .navbar__brand img, .navbar .navbar__brand svg {
+      width: 100%;
+      max-height: 5rem; }
   .navbar .navbar-collapse {
     height: 7rem;
     width: 100%;
@@ -335,7 +333,7 @@ body {
         .navbar .navbar-collapse ul#menu-primary > li.active a.active {
           color: #33d399; }
         .navbar .navbar-collapse ul#menu-primary > li.cta-link {
-          background-color: #dc3545;
+          background-color: #33d399;
           padding-left: 1.5rem;
           padding-right: 1.5rem;
           text-transform: uppercase;
@@ -488,7 +486,6 @@ nav.navbar + main {
     -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
-    background-color: #fff;
     z-index: 9;
     border-radius: none;
     padding: .8rem 0;
@@ -498,7 +495,8 @@ nav.navbar + main {
     transition: all 0.5s;
     min-width: 25rem;
     max-width: 100%;
-    top: 7rem; }
+    top: 7rem;
+    background-color: #fff; }
     .dropdown ul.dropdown-menu:not(.parent__dropdown) {
       margin-top: -1rem;
       background-color: #e9ecef; }

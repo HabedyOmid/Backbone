@@ -3,7 +3,6 @@ $child-dropdown-width: 15%;
 
 .dropdown {
 	position: relative;
-
 	&:hover {
 		.dropdown-menu {
 			opacity: 1;
@@ -36,7 +35,6 @@ $child-dropdown-width: 15%;
 		padding-left: 0;
 		list-style-type: none;
 		flex-direction: column;
-		background-color: $navbar-bg;
 		z-index: 9;
 		border-radius: none;
 		padding: .8rem 0;
@@ -46,6 +44,7 @@ $child-dropdown-width: 15%;
 		min-width: $dropdown-min-width;
 		max-width: 100%;
 		top: $navbar-height;
+		background-color: $navbar-bg;
 
 		// Dropdown has NO child <ul>
 		&:not(.parent__dropdown){
