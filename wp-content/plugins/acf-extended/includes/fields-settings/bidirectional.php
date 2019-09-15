@@ -128,7 +128,7 @@ function acfe_bidirectional_ajax_query($options = array()){
     foreach($r_field_groups as $r_field_group){
         
         // Bypass current field group
-        if($r_field_group['key'] == $field_group['key'])
+        if($r_field_group['key'] === $field_group['key'])
             continue;
         
         // Bypass ACFE native groups
@@ -367,7 +367,7 @@ function acfe_bidirectional_update_value($value, $post_id, $field){
     $new_values = acf_get_array($value);
     
     // Bail early if no difference
-    //if($old_values == $new_values)
+    // if($old_values === $new_values)
     //    return $value;
         
     // Values have been removed
@@ -417,9 +417,9 @@ function acfe_bidirectional_relationship($type = 'add', $r_id, $p_field, $p_valu
     
     // Get Related Data Type ({post_id}, user_{id} ...)
     $r_mtype = '';
-    if($p_field['type'] == 'user')
+    if($p_field['type'] === 'user')
         $r_mtype = 'user_';
-    elseif($p_field['type'] == 'taxonomy')
+    elseif($p_field['type'] === 'taxonomy')
         $r_mtype = 'term_';
     
     // Get Related Field Ancestors
@@ -470,8 +470,11 @@ function acfe_bidirectional_relationship($type = 'add', $r_id, $p_field, $p_valu
         
     }
     
+    // Convert strings to integers
+    $r_values = acf_parse_types($r_values);
+    
     // Add Value
-    if($type == 'add'){
+    if($type === 'add'){
         
         if(!in_array($p_value, $r_values))
             $r_values[] = $p_value;
@@ -479,12 +482,12 @@ function acfe_bidirectional_relationship($type = 'add', $r_id, $p_field, $p_valu
     }
     
     // Remove Value
-    elseif($type == 'remove'){
+    elseif($type === 'remove'){
             
         $r_new_values = array();
         foreach($r_values as $r_value){
             
-            if($r_value == $p_value)
+            if($r_value === $p_value)
                 continue;
             
             $r_new_values[] = $r_value;
@@ -494,6 +497,23 @@ function acfe_bidirectional_relationship($type = 'add', $r_id, $p_field, $p_valu
         $r_values = $r_new_values;
         
     }
+    
+    /*
+     * Post Object & User 'Allow Multiple' Disabled
+     * Value must not be inside array
+     */
+    if(($r_ref_field['type'] === 'post_object' || $r_ref_field['type'] === 'user') && empty($r_ref_field['multiple']) && isset($r_values[0])){
+        
+        // Get latest value
+        $r_values = end($r_values);
+        
+    }
+    
+    /*
+     * Remove potential empty serialized array in meta value 'a:0:{}'
+     */
+    if(empty($r_values))
+        $r_values = false;
     
     /*
      * Construct a value array in case of ancestors. ie:

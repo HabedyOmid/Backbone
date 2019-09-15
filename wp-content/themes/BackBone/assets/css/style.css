@@ -13,9 +13,68 @@ License URI: LICENSE
 Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Architecture 7-1 Pattern
 =========================================================
 */
+.container {
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  margin-right: auto;
+  margin-left: auto; }
+  @media (min-width: 576px) {
+    .container {
+      max-width: 540px; } }
+  @media (min-width: 768px) {
+    .container {
+      max-width: 720px; } }
+  @media (min-width: 992px) {
+    .container {
+      max-width: 960px; } }
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1140px; } }
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin-right: -1rem;
+  margin-left: -1rem; }
+
+.l3-m4-s6 {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 1rem;
+  padding-left: 1rem; }
+  @media (min-width: 576px) {
+    .l3-m4-s6 {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 50%;
+          -ms-flex: 0 0 50%;
+              flex: 0 0 50%;
+      max-width: 50%; } }
+  @media (min-width: 768px) {
+    .l3-m4-s6 {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 33.33333%;
+          -ms-flex: 0 0 33.33333%;
+              flex: 0 0 33.33333%;
+      max-width: 33.33333%; } }
+  @media (min-width: 992px) {
+    .l3-m4-s6 {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 25%;
+          -ms-flex: 0 0 25%;
+              flex: 0 0 25%;
+      max-width: 25%; } }
+
 ::-moz-selection {
   background-color: #dc3545;
   color: #fff; }
+
 ::selection {
   background-color: #dc3545;
   color: #fff; }
@@ -542,7 +601,7 @@ footer {
   padding: 2rem; }
   footer a {
     padding: 0rem 1.5rem; }
-  @media (max-width: 76.78rem) {
+  @media (max-width: 767.98px) {
     footer {
       display: -webkit-box;
       display: -webkit-flex;
@@ -560,6 +619,6 @@ footer {
 
 .wysiwyg {
   padding: 7rem 0; }
-  @media (max-width: 76.78rem) {
+  @media (max-width: 767.98px) {
     .wysiwyg {
       padding: 4rem 2rem; } }

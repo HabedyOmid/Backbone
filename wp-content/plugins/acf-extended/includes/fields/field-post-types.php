@@ -22,17 +22,21 @@ class acfe_field_post_types extends acf_field{
         // force value to array
         $field['value'] = acf_get_array($field['value']);
         
-        if( $field['field_type'] == 'select' ) {
+        if($field['field_type'] === 'select'){
             
-            $this->render_field_select( $field );
+            $this->render_field_select($field);
         
-        } elseif( $field['field_type'] == 'radio' ) {
-            
-            $this->render_field_checkbox( $field );
-            
-        } elseif( $field['field_type'] == 'checkbox' ) {
+        }
         
-            $this->render_field_checkbox( $field );
+        elseif($field['field_type'] === 'radio'){
+            
+            $this->render_field_checkbox($field);
+            
+        }
+        
+        elseif($field['field_type'] === 'checkbox'){
+        
+            $this->render_field_checkbox($field);
             
         }
         
@@ -44,6 +48,8 @@ class acfe_field_post_types extends acf_field{
         $field['type'] = 'select';
         $field['ui'] = 0;
         $field['ajax'] = 0;
+        $field['allow_null'] = 0;
+        $field['multiple'] = 0;
         $field['choices'] = get_post_types(array(
             'public' => true, 
             'show_ui' => true
@@ -60,7 +66,7 @@ class acfe_field_post_types extends acf_field{
             'name'	=> $field['name'],
         ));
         
-        if($field['field_type'] == 'checkbox')
+        if($field['field_type'] === 'checkbox')
             $field['name'] .= '[]';
         
         $taxonomies = get_post_types(array(
@@ -131,9 +137,9 @@ class acfe_field_post_types extends acf_field{
         $value = acf_get_array($value);
         
         // format = name
-        if($field['return_format'] == 'name'){
+        if($field['return_format'] === 'name'){
             
-            if($field['field_type'] == 'select' || $field['field_type'] == 'radio')
+            if($field['field_type'] === 'select' || $field['field_type'] === 'radio')
                 return array_shift($value);
             
             return $value;
@@ -141,7 +147,7 @@ class acfe_field_post_types extends acf_field{
         }
         
         // format = object
-        elseif($field['return_format'] == 'object'){
+        elseif($field['return_format'] === 'object'){
             
             $post_types = array();
             
@@ -149,7 +155,7 @@ class acfe_field_post_types extends acf_field{
                 $post_types[] = get_post_type_object($post_type);
             }
             
-            if($field['field_type'] == 'select' || $field['field_type'] == 'radio')
+            if($field['field_type'] === 'select' || $field['field_type'] === 'radio')
                 return array_shift($post_types);
             
             return $post_types;

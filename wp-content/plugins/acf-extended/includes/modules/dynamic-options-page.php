@@ -3,6 +3,10 @@
 if(!defined('ABSPATH'))
     exit;
 
+// Check setting
+if(!acf_get_setting('acfe/modules/dynamic_options_pages', true))
+    return;
+
 /**
  * Register Dynamic Options Page
  */
@@ -371,7 +375,7 @@ add_action('manage_acfe-dop_posts_custom_column', 'acfe_dop_admin_columns_html',
 function acfe_dop_admin_columns_html($column, $post_id){
     
     // Name
-    if($column == 'name'){
+    if($column === 'name'){
         
         $name = get_field('acfe_dop_name', $post_id);
         
@@ -380,7 +384,7 @@ function acfe_dop_admin_columns_html($column, $post_id){
     }
     
     // Post ID
-    elseif($column == 'post_id'){
+    elseif($column === 'post_id'){
         
         $p_id = get_field('post_id', $post_id);
         if(empty($p_id))
@@ -391,7 +395,7 @@ function acfe_dop_admin_columns_html($column, $post_id){
     }
     
     // Autoload
-    elseif($column == 'autoload'){
+    elseif($column === 'autoload'){
         
         $autoload = get_field('autoload', $post_id);
         

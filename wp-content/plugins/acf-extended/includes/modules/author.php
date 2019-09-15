@@ -3,6 +3,10 @@
 if(!defined('ABSPATH'))
     exit;
 
+// Check setting
+if(!acf_get_setting('acfe/modules/author', true))
+    return;
+
 /**
  * Register Field Group
  */
@@ -69,6 +73,7 @@ function acfe_author_field_group(){
     $locations = array();
     
     foreach($get_post_types as $post_type){
+        
         $locations[] = array(
             array(
                 'param'     => 'post_type',
@@ -76,6 +81,7 @@ function acfe_author_field_group(){
                 'value'     => $post_type,
             )
         );
+        
     }
     
     // Roles
@@ -90,8 +96,6 @@ function acfe_author_field_group(){
         $authors_roles[] = $role_name;
         
     }
-    
-    
     
     acf_add_local_field_group(array(
         'title'                 => __('Author'),
@@ -209,7 +213,7 @@ function acfe_author_post_save($post_id){
 add_filter('acf/pre_update_value', 'acfe_author_meta_update', 10, 4);
 function acfe_author_meta_update($return, $value, $post_id, $field){
     
-    if($field['name'] == 'acfe_author')
+    if($field['name'] === 'acfe_author')
         return false;
     
     return $return;
