@@ -72,23 +72,23 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
       max-width: 25%; } }
 
 ::-moz-selection {
-  background-color: #dc3545;
+  background-color: #33d399;
   color: #fff; }
 
 ::selection {
-  background-color: #dc3545;
+  background-color: #33d399;
   color: #fff; }
 
 a:link,
 a:visited {
-  color: #dc3545;
+  color: #33d399;
   text-decoration: none;
   -webkit-transition: all 0.5s;
   transition: all 0.5s; }
   a:link:hover, a:link:active,
   a:visited:hover,
   a:visited:active {
-    color: #bd2130;
+    color: #25ae7c;
     text-decoration: none; }
 
 p {
@@ -130,7 +130,7 @@ body {
   color: #fff; }
 
 .u_bg_green {
-  background-color: #28a745;
+  background-color: #33d399;
   color: #fff; }
 
 .u_bg_blue {
@@ -330,10 +330,10 @@ body {
               -ms-flex-align: center;
                   align-items: center;
           background-color: #e9ecef;
-          color: #dc3545;
+          color: #33d399;
           text-decoration: none; }
         .navbar .navbar-collapse ul#menu-primary > li.active a.active {
-          color: #dc3545; }
+          color: #33d399; }
         .navbar .navbar-collapse ul#menu-primary > li.cta-link {
           background-color: #dc3545;
           padding-left: 1.5rem;
@@ -369,7 +369,7 @@ body {
         .navbar .navbar-collapse ul#menu-primary a:visited:hover,
         .navbar .navbar-collapse ul#menu-primary a:visited:active {
           background-color: #e9ecef;
-          color: #dc3545;
+          color: #33d399;
           text-decoration: none; }
 
 nav.navbar + header,
