@@ -2,6 +2,10 @@
 
 ![alt text](preview.jpg)
 ---
+### WP Login:
+- **User**: root
+- **Pass**: password
+
 ### Requirements:
 You have to install the following softwares on your machine to able to use this automation tool.
 - [node.js](https://nodejs.org/en/) is a JavaScript runtime built on Chrome's V8 JavaScript engine.
