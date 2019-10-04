@@ -22,8 +22,8 @@ $link-hover-color:          darken($primary, 10%);
 $link-hover-decoration:     none;
 
 // Body Settings
-$body-color: $gray-600;
-$body-bg: $gray-100;
+$body-color: $light;
+$body-bg: $dark;
 
 // Border Radius
 $border-radius-sm: .4rem;
@@ -41,7 +41,7 @@ $box-shadow-sm:  0 .125rem .25rem rgba($black, .075);
 $box-shadow-md:  0 .5rem 1rem rgba($black, .15);
 $box-shadow-lg:  0 1rem 3rem rgba($black, .175);
 
-// Navbar Setttings
+// Navbar Settings
 $navbar-bg: $white;
 $navbar-bg-hover: $light;
 $navbar-height: 7rem;

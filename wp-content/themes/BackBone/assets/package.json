@@ -1,10 +1,10 @@
 {
-  "name": "Gulp-Masterfy-Assets",
-  "version": "1.1.0",
-  "description": "A simple and powerful app to masterfy your web assets.",
+  "name": "BackBone-WP-Theme",
+  "version": "2.1.0",
+  "description": "BackBone WP Theme + Bootstrap 4.x Starter Theme.",
   "main": "gulpfile.js",
   "author": "Omid Habedy",
-  "url": "https://github.com/HabedyOmid/Gulp-Masterfy-Assets",
+  "url": "https://github.com/HabedyOmid/Backbone",
   "scripts": {
     "start": "gulp watch"
   },
