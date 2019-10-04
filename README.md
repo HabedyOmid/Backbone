@@ -1,6 +1,6 @@
 # WordPress + Gulp + BrowserSync + Bootstrap 4 
 
-![alt text](preview.png)
+![alt text](preview.jpg)
 ---
 ### Requirements:
 You have to install the following softwares on your machine to able to use this automation tool.
