@@ -1,4 +1,4 @@
-# Gulp + Bootstrap 4 + WordPress
+# WordPress + Gulp + BrowserSync + Bootstrap 4 
 
 ![alt text](preview.png)
 ---
