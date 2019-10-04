@@ -9,6 +9,6 @@
 </head>
 
 <body <?php body_class(); ?> >
-	<?php get_template_part( 'layouts/navigation' ); // Get Navbar ?>
+	<?php get_template_part( 'components/navigation' ); // Get Navbar ?>
 
 	<main>
