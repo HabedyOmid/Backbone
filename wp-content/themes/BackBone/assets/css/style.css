@@ -112,8 +112,8 @@ html {
 
 body {
   font-family: "Rubik", sans-serif;
-  color: #6c757d;
-  background: #f8f9fa;
+  color: #212529;
+  background: #e9ecef;
   font-size: 1.6rem;
   box-sizing: border-box; }
 
@@ -208,7 +208,7 @@ body {
       display: block;
       width: 2.6rem;
       height: .2rem;
-      background-color: #6c757d;
+      background-color: #212529;
       margin: 0;
       padding: 0;
       border: 0;
@@ -242,7 +242,7 @@ body {
       .navbar button.navbar__toggler[aria-expanded="true"] span {
         background: rgba(0, 0, 0, 0); }
         .navbar button.navbar__toggler[aria-expanded="true"] span:before, .navbar button.navbar__toggler[aria-expanded="true"] span:after {
-          background-color: #6c757d; }
+          background-color: #212529; }
         .navbar button.navbar__toggler[aria-expanded="true"] span:before {
           -webkit-transform: translateY(0.2rem) rotate(45deg) !important;
               -ms-transform: translateY(0.2rem) rotate(45deg) !important;
@@ -352,7 +352,7 @@ body {
               text-decoration: none; }
       .navbar .navbar-collapse ul#menu-primary a:link,
       .navbar .navbar-collapse ul#menu-primary a:visited {
-        color: #6c757d;
+        color: #212529;
         text-decoration: none;
         padding: 2.3rem 2rem;
         display: -webkit-box;

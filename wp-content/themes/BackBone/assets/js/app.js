@@ -29,3 +29,5 @@ $('#tgl-checkbox:checkbox').change(function(){
 $('.dropdown .nav-link').click(function(){
     $(this).parent().toggleClass('open');
 });
+
+

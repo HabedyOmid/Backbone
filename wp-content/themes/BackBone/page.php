@@ -1,7 +1,7 @@
 <?php get_header(); ?>
-	
-	<?php get_template_part("sections/section", "all"); // ACF Sections ?>
 
+	<?php get_template_part("sections/section", "all"); // ACF Sections ?>
+	
 	<div class="container">
 		<div class="row">
 			<div class="l3-m4-s6">
