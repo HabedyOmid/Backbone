@@ -2,3 +2,5 @@ package-lock.json
 readme.html
 .DS_Store
 node_modules
+wp-config.php
+wp-config-sample.php
