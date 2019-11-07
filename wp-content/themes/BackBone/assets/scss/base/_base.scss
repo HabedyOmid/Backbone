@@ -9,6 +9,7 @@
 html{
 	font-size: $reset-root-font-size;
 	overflow-x: hidden;
+	background-color: $white;
 }
 
 
@@ -16,8 +17,11 @@ body{
 	font-family: $font-family-base;
 	color: $body-color;
 	background: $body-bg;
-	font-size: 1.6rem;  // 1.6 * 10 (Root HTML font size) == 16px / 1rem = 10px
+	font-size: $font-size-base;  // 1.6 * 10 (Root HTML font size) == 16px / 1rem = 10px
 	box-sizing: border-box;
+	max-width: $body-width;
+	margin: 0 auto;
+	box-shadow: $box-shadow-sm;
 }
 
 
