@@ -36,13 +36,6 @@
         if($('.acf-fc-popup').length)
             $('.acf-fc-popup').hide();
         
-        if(!$layout_added)
-            return;
-        
-        // Open layout modal edition
-        if(flexible.has('acfeFlexibleModalEdition'))
-            $layout_added.find('> [data-action="acfe-flexible-modal-edit"]:first').trigger('click');
-        
     };
     
     model.acfeCloseLayoutInit = function($layout){
@@ -138,6 +131,12 @@
 				layout:		$layout.data('layout'),
 				value:		acf.serialize($layout, prefix)
 			};
+            
+            acf.doAction('acfe/fields/flexible_content/before_preview',                                                                     flexible.$el, $layout, ajaxData);
+            acf.doAction('acfe/fields/flexible_content/before_preview/name=' + flexible.get('name'),                                        flexible.$el, $layout, ajaxData);
+            acf.doAction('acfe/fields/flexible_content/before_preview/key=' + flexible.get('key'),                                          flexible.$el, $layout, ajaxData);
+            acf.doAction('acfe/fields/flexible_content/before_preview/name=' + flexible.get('name') + '&layout=' + $layout.data('layout'),  flexible.$el, $layout, ajaxData);
+            acf.doAction('acfe/fields/flexible_content/before_preview/key=' + flexible.get('key') + '&layout=' + $layout.data('layout'),    flexible.$el, $layout, ajaxData);
 			
 			// ajax
 			$.ajax({
@@ -146,6 +145,7 @@
 				dataType: 'html',
 				type: 'post',
 				success: function(response){
+                    
 					if(response){
                         
 						$placeholder.find('> .acfe-flexible-placeholder').html(response);
@@ -155,6 +155,13 @@
                         $placeholder.removeClass('acfe-flexible-collapsed-preview');
                         
                     }
+                    
+                    acf.doAction('acfe/fields/flexible_content/preview',                                                                     response, flexible.$el, $layout, ajaxData);
+                    acf.doAction('acfe/fields/flexible_content/preview/name=' + flexible.get('name'),                                        response, flexible.$el, $layout, ajaxData);
+                    acf.doAction('acfe/fields/flexible_content/preview/key=' + flexible.get('key'),                                          response, flexible.$el, $layout, ajaxData);
+                    acf.doAction('acfe/fields/flexible_content/preview/name=' + flexible.get('name') + '&layout=' + $layout.data('layout'),  response, flexible.$el, $layout, ajaxData);
+                    acf.doAction('acfe/fields/flexible_content/preview/key=' + flexible.get('key') + '&layout=' + $layout.data('layout'),    response, flexible.$el, $layout, ajaxData);
+                    
 				},
                 complete: function(){
                     
@@ -228,12 +235,20 @@
             
         }
         
+        // Flexible has Remove Collapse
+        if(flexible.has('acfeFlexibleRemoveCollapse')){
+            
+            flexible.removeEvents({'click [data-name="collapse-layout"]': 'onClickCollapse'});
+            $layout.find('> .acf-fc-layout-controls > [data-name="collapse-layout"]').remove();
+            
+        }
+        
         // Bail early if layout is clone
         if($layout.is('.acf-clone'))
             return;
             
         // Layout State: Collapse
-        if(flexible.has('acfeFlexibleCollapse')){
+        if(flexible.has('acfeFlexibleClose')){
             
             flexible.acfeCloseLayoutInit($layout);
             
@@ -269,7 +284,7 @@
     
     acf.addAction('show', function($layout, type){
         
-        if(type != 'collapse' || !$layout.is('.layout'))
+        if(type !== 'collapse' || !$layout.is('.layout'))
             return;
         
         var flexible = acf.getInstance($layout.closest('.acf-field-flexible-content'));
@@ -294,7 +309,7 @@
     
     acf.addAction('hide', function($layout, type){
         
-        if(type != 'collapse' || !$layout.is('.layout') || $layout.is('.acf-clone'))
+        if(type !== 'collapse' || !$layout.is('.layout') || $layout.is('.acf-clone'))
             return;
         
         // Get Flexible
@@ -319,6 +334,20 @@
         $('html, body').animate({
             scrollTop: parseInt($el.offset().top) - 200
         }, 200);
+        
+        // Modal Edition: Open
+        if(flexible.has('acfeFlexibleModalEdition') && !$el.is('.acfe-layout-duplicated')){
+            
+            $el.find('> [data-action="acfe-flexible-modal-edit"]:first').trigger('click');
+            
+        }
+        
+        // Normal Edition: Open
+        else if(!flexible.isLayoutClosed($el)){
+            
+            flexible.openLayout($el);
+            
+        }
         
     });
     

@@ -3,7 +3,7 @@
 if(!defined('ABSPATH'))
     exit;
 
-if (!class_exists( 'WP_List_Table'))
+if(!class_exists('WP_List_Table'))
 	require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 
 class ACFE_Admin_Options_List extends WP_List_Table{
@@ -55,9 +55,13 @@ class ACFE_Admin_Options_List extends WP_List_Table{
 			$sql .= !empty($_REQUEST['order']) ? ' ' . esc_sql($_REQUEST['order']) : ' ASC';
             
 		}
-
-		$sql .= " LIMIT $per_page";
-		$sql .= ' OFFSET ' . ($page_number - 1) * $per_page;
+        
+        if(empty($search)){
+            
+            $sql .= " LIMIT $per_page";
+            $sql .= ' OFFSET ' . ($page_number - 1) * $per_page;
+            
+        }
 
 
 		$result = $wpdb->get_results($sql, 'ARRAY_A');

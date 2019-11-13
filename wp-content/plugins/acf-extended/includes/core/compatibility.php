@@ -4,6 +4,83 @@ if(!defined('ABSPATH'))
     exit;
 
 /**
+ * ACF Extended: 0.8
+ * Settings: Renamed acfe_php* to acfe/php*
+ */
+if(acf_get_setting('acfe_php') !== null){
+    acf_update_setting('acfe/php', acf_get_setting('acfe_php'));
+}
+
+if(acf_get_setting('php_save') !== null){
+    acf_update_setting('acfe/php_save', acf_get_setting('php_save'));
+}
+
+if(acf_get_setting('php_load') !== null){
+    acf_update_setting('acfe/php_load', acf_get_setting('php_load'));
+}
+
+if(acf_get_setting('php_found') !== null){
+    acf_update_setting('acfe/php_found', acf_get_setting('php_found'));
+}
+
+/**
+ * ACF Extended: 0.8
+ * Field Group Location: Archive renamed to List
+ */
+add_filter('acf/validate_field_group', 'acfe_compatibility_field_group_location_list', 20);
+function acfe_compatibility_field_group_location_list($field_group){
+    
+    if(!acf_maybe_get($field_group, 'location'))
+        return $field_group;
+    
+    foreach($field_group['location'] as &$or){
+        
+        foreach($or as &$and){
+            
+            if(!isset($and['value']))
+                continue;
+            
+            // Post Type List
+            if($and['param'] === 'post_type' && acfe_ends_with($and['value'], '_archive')){
+            
+                $and['param'] = 'post_type_list';
+                $and['value'] = substr_replace($and['value'], '', -8);
+            
+            }
+            
+            // Taxonomy List
+            elseif($and['param'] === 'taxonomy' && acfe_ends_with($and['value'], '_archive')){
+                
+                $and['param'] = 'taxonomy_list';
+                $and['value'] = substr_replace($and['value'], '', -8);
+                
+            }
+            
+        }
+        
+    }
+    
+    return $field_group;
+    
+}
+
+/**
+ * ACF Extended: 0.8
+ * Field Filter Value: Removed from this version
+ */
+add_filter('acf/validate_field', 'acfe_compatibility_field_acfe_update', 20);
+function acfe_compatibility_field_acfe_update($field){
+    
+    if(!acf_maybe_get($field, 'acfe_update'))
+        return $field;
+    
+    unset($field['acfe_update']);
+    
+    return $field;
+    
+}
+
+/**
  * Plugin: Post Types Order
  * https://wordpress.org/plugins/post-types-order/
  * The plugin apply custom order to 'acf-field-group' Post Type. We have to fix this
