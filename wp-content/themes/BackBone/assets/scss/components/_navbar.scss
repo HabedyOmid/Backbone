@@ -2,17 +2,18 @@
 	display: flex;
 	flex-wrap: wrap;
 	list-style: none;
+	background: transparent;
 	height: auto;
 	padding: 0 !important;
-	background-color: $white;
-	font-size: $font-size-md;
+	position: relative;
 	position: fixed;
 	top: 0;
-	left: 50%;
+	left: 0;
 	width: 100%;
-	max-width: $body-width;
-	transform: translateX(-50%);
-	box-shadow: $box-shadow-sm;
+	z-index: 5000;
+	background-color: $navbar-bg;
+	font-size: $font-size-md;
+	border-bottom: 1px solid $border-color;
 
   	.container {
 		min-width: 100% !important;
@@ -20,7 +21,7 @@
 		position: relative;
 		@include flex;
 		align-items: center;
-		padding: 0 !important;
+		padding: 0 0 0 3rem !important;
     }
 
   	// Menu Toggle on mobile
@@ -105,11 +106,9 @@
 			align-self: center;
 			margin: 0;
 		}
-		img, svg{ 
-			width: auto; 
-			height: 6rem 
-		}
+		img, svg{ width: 100%; max-height: 5rem; }
   	}
+
 
 	// Navbar Links
    .navbar-collapse{
@@ -186,23 +185,15 @@
 				padding: 2.3rem 2rem;
 				display: flex;
 				align-items: center;
-				text-transform: uppercase;
-				font-weight: $bold-2;
-				letter-spacing: 2px;
 
 				&:hover,
 				&:active{
-					background-color: transparent;
+					background-color: $navbar-bg-hover;
 					color: $nav-link-hover-color;
 					text-decoration: $nav-link-hover-decoration;
 				}
 			}
-  		}
-  	}
-
-  	@include media-breakpoint-down(md){
-  		transform: none;
-  		left: 0;
+  		 }
   	}
 }
 
@@ -210,6 +201,7 @@ nav.navbar + header,
 nav.navbar + main{
 	margin-top: $navbar-height !important;
 }
+
 
 
 // small navbar
@@ -228,9 +220,13 @@ nav.navbar + main{
 			padding-top: 8rem;
 			flex-direction: column;
 
-			a{ background-color: transparent !important; }
+			a{
+				background-color: transparent !important;
+			}
 
-			&.show { right: 0; }
+			&.show {
+				right: 0;
+			}
 
 			& > li {
 				width: 90% !important;
@@ -254,7 +250,9 @@ nav.navbar + main{
 					}
 				}
 
-				&:last-child { margin: 1rem auto !important; }
+				&:last-child {
+					margin: 1rem auto !important;
+				}
 
 				& > ul {
 					position: static !important;
