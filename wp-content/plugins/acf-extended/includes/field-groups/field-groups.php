@@ -39,7 +39,7 @@ function acfe_field_groups_column($columns){
     $columns['acfe-local'] = __('Load');
     
     // PHP sync
-    if(acf_get_setting('acfe_php'))
+    if(acf_get_setting('acfe/php'))
         $columns['acfe-autosync-php'] = __('PHP sync');
     
     // Json sync
@@ -65,15 +65,13 @@ function acfe_field_groups_column($columns){
     // Fix 'Third party' screen columns
     elseif(acf_maybe_get_GET('post_status') === 'acfe-third-party'){
         
-        unset($columns['cb']);
-        unset($columns['acf-field-group-category']);
-        unset($columns['acf-fg-status']);
-        
-        if(isset($columns['acfe-autosync-php']))
-            unset($columns['acfe-autosync-php']);
-        
-        if(isset($columns['acfe-autosync-json']))
-            unset($columns['acfe-autosync-json']);
+        $columns = array(
+            'title'             => __('Title', 'acf'),
+            'acfe-source'       => __('Source', 'acf'),
+            'acf-fg-count'      => __('Fields', 'acf'),
+            'acfe-locations'    => __('Locations', 'acf'),
+            'acfe-local'        => __('Load', 'acf'),
+        );
         
     }
     
@@ -83,10 +81,11 @@ function acfe_field_groups_column($columns){
         'hide_empty'    => false,
     ));
     
-    if(empty($categories))
+    if(empty($categories) && isset($columns['acf-field-group-category']))
         unset($columns['acf-field-group-category']);
     
     return $columns;
+    
 }
 
 /**
@@ -102,6 +101,41 @@ function acfe_field_groups_column_html($column, $post_id){
         
         $field_group = acf_get_field_group($post_id);
         echo esc_html(acf_get_field_count($field_group));
+    
+    }
+    
+    /**
+     * Count
+     */
+    elseif($column === 'acfe-source'){
+        
+        $field_group = acf_get_field_group($post_id);
+        
+        $source = false;
+        
+        // ACF Extended
+        if(strpos($post_id, 'group_acfe_') === 0){
+            
+            $source = 'ACF Extended';
+            
+        }
+        
+        // Advanced Forms
+        elseif($post_id === 'group_form_settings' || $post_id === 'group_entry_data'){
+            
+            $source = 'Advanced Forms';
+            
+        }
+        
+        else{
+            
+            $source = '<span style="color:#aaa;">' . __('Unknown', 'acf') . '</span>';
+            
+        }
+        
+        $source = apply_filters('acfe/field_groups_third_party/source', $source, $post_id, $field_group);
+        
+        echo $source;
     
     }
     
@@ -194,7 +228,7 @@ function acfe_field_groups_column_html($column, $post_id){
             
             foreach($or as $and){
                 
-                if(!isset($final[$and['param']]))
+                if(!isset($final[$and['param']])|| !isset($and['value']))
                     continue;
                 
                 $final_name = $and['value'];
@@ -294,7 +328,7 @@ function acfe_field_groups_column_html($column, $post_id){
             
         }
         
-        if(!acf_get_setting('acfe_php_found')){
+        if(!acf_get_setting('acfe/php_found')){
             
             echo '<span style="color:#ccc" class="dashicons dashicons-yes"></span>';
             
