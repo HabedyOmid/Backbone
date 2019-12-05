@@ -49,7 +49,7 @@ $child-dropdown-width: 15%;
 		// Dropdown has NO child <ul>
 		&:not(.parent__dropdown){
 			margin-top: -1rem;
-			background-color: $navbar-bg-hover;
+			background-color: $navbar-bg;
 		}
 		&:not(.parent__dropdown) li a{
 			padding: 1rem 2rem !important;
@@ -72,7 +72,7 @@ $child-dropdown-width: 15%;
 			flex-wrap: wrap;
 			padding: 0;
 			transition: $transition-md;
-			background-color: $navbar-bg-hover;
+			background-color: $navbar-bg;
 			max-height: calc(100% - #{$navbar-height}) !important;
 			overflow: auto;
 
@@ -141,7 +141,7 @@ $child-dropdown-width: 15%;
 				ul.dropdown-menu{
 					position: static;
 					width: auto;
-					background-color: $navbar-bg-hover;
+					background-color: $navbar-bg;
 					box-sizing: border-box;
 
 					li.menu-item{

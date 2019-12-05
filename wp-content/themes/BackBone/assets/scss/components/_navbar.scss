@@ -60,12 +60,8 @@
 				border-radius: 0rem;
 				transition: $transition-sm;
 			}
-			&:before {
-				transform: translateY(-.8rem);
-			}
-			&:after {
-				transform: translateY(.7rem);
-			}
+			&:before { transform: translateY(-.8rem); }
+			&:after { transform: translateY(.7rem); }
 		}
 
 		// Hamburger's style When Toggled
@@ -77,38 +73,32 @@
 			span {
 				background: rgba(0,0,0, 0);
 				&:before,
-				&:after {
-					background-color: $body-color;
-				}
-				&:before {
-					transform: translateY(0.2rem) rotate(45deg) !important;
-				}
-				&:after {
-					transform: rotate(-45deg);
-				}
+				&:after { background-color: $body-color; }
+				&:before { transform: translateY(0.2rem) rotate(45deg) !important; }
+				&:after { transform: rotate(-45deg); }
 			}
 		}
 
-		@media screen and (max-width:992px) {
-			display: block;
-		}
+		@include media-breakpoint-down(md) { display: block; }
 	}
 
+  	// Logo
   	.navbar__brand{
 		float: left;
 		height: 100%;
 		display: flex;
-		padding: 0;
-		margin: 0;
+		justify-content: center;
+		align-items: center;
+		padding: 0 0 0 1rem;
 		a{
-			width: 14rem;
-			display: flex;
-			align-self: center;
-			margin: 0;
+			width: auto;
+			line-height: 0;
+			img, svg{ 
+				width: 18rem; 
+				height: auto; 
+			}
 		}
-		img, svg{ width: 100%; max-height: 5rem; }
   	}
-
 
 	// Navbar Links
    .navbar-collapse{
@@ -139,17 +129,8 @@
 				// Active Items
 				&.active{
 					> a:link,
-					> a:visited{
-						display: flex;
-    					align-items: center;
-						background-color: $navbar-bg-hover;
-						color: $nav-link-hover-color;
-						text-decoration: $nav-link-hover-decoration;
-					}
-
-					a.active{
-						color: $nav-link-hover-color;
-					}
+					> a:visited,
+					a.active{ color: $nav-link-hover-color; }
 				}
 
 				// CTA-LINK
@@ -163,15 +144,11 @@
 
 					a:link,
 					a:visited{
-						background-color: transparent;
 						color: $white;
-						text-decoration: $nav-link-decoration;
 
 						&:hover,
 						&:active{
-							color: $white;
-							background-color: transparent;
-							text-decoration: $nav-link-hover-decoration;
+						
 						}
 					}
 				}
@@ -188,7 +165,6 @@
 
 				&:hover,
 				&:active{
-					background-color: $navbar-bg-hover;
 					color: $nav-link-hover-color;
 					text-decoration: $nav-link-hover-decoration;
 				}
@@ -197,15 +173,28 @@
   	}
 }
 
+
+// Hide & Show on Scroll
+.hideShowOnScroll{
+	height: $navbar-height;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 5000;
+	transition: $transition-sm;
+	&.scrollUp { transform: translateY(-$navbar-height); }
+}
+
+
 nav.navbar + header,
 nav.navbar + main{
 	margin-top: $navbar-height !important;
 }
 
 
-
 // small navbar
-@media screen and(max-width:992px) {
+@include media-breakpoint-down(md) {
 	nav.navbar {
 		#menu-primary {
 			position: fixed;
@@ -220,13 +209,9 @@ nav.navbar + main{
 			padding-top: 8rem;
 			flex-direction: column;
 
-			a{
-				background-color: transparent !important;
-			}
+			a{ background-color: transparent !important;}
 
-			&.show {
-				right: 0;
-			}
+			&.show { right: 0; }
 
 			& > li {
 				width: 90% !important;
@@ -250,9 +235,7 @@ nav.navbar + main{
 					}
 				}
 
-				&:last-child {
-					margin: 1rem auto !important;
-				}
+				&:last-child { margin: 1rem auto !important; }
 
 				& > ul {
 					position: static !important;
