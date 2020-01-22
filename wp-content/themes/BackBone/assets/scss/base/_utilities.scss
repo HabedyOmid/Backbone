@@ -1,12 +1,117 @@
-// Background Colors
-.u_bg_white { background-color: $white; color: $dark; }
-.u_bg_black { background-color: $black; color: $light; }
-.u_bg_red { background-color: $red; color: $white; }
-.u_bg_green { background-color: $green; color: $white; }
-.u_bg_blue { background-color: $blue; color: $white; }
+// Font Size
+.text-size-xs {
+	font-size: $font-size-xs;
+}
+.text-size-sm {
+	font-size: $font-size-sm;
+}
+.text-size-md {
+	font-size: $font-size-md;
+}
+.text-size-lg {
+	font-size: $font-size-lg;
+}
 
-// Justify Alignment
-.u_justify_left { justify-content: flex-start; }
-.u_justify_right { justify-content: flex-end; }
-.u_justify_center { justify-content: center; }
+// Font Family
+.font-family-base {
+	font-family: $font-family-base;
+}
+.font-family-monospace {
+	font-family: $font-family-monospace;
+}
 
+.absolute-center {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+//
+.hide-mobile,
+.hide-mobile * {
+	@include media-breakpoint-down(sm) {
+		display: none !important;
+		visibility: hidden !important;
+	}
+}
+
+//
+.hide-tablet,
+.hide-tablet * {
+	@include media-breakpoint-down(md) {
+		display: none !important;
+		visibility: hidden !important;
+	}
+}
+
+.letter-spacing-sm {
+	letter-spacing: 1px;
+}
+.letter-spacing-md {
+	letter-spacing: 2px;
+}
+.letter-spacing-lg {
+	letter-spacing: 5px;
+}
+.line-height-xs {
+	line-height: 15px !important;
+}
+
+.line-height-sm {
+	line-height: 20px !important;
+}
+
+.line-height-md {
+	line-height: 30px !important;
+}
+
+.line-height-lg {
+	line-height: 35px !important;
+}
+
+.font-weight-bold {
+	font-weight: $font-weight-bold !important;
+}
+
+// Background Color
+.bg-light-45 {
+	position: relative;
+	&::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 45%;
+		height: 100%;
+		background-color: $light;
+		z-index: 1;
+
+		@include media-breakpoint-down(md) {
+			width: 100%;
+		}
+	}
+}
+
+.bg-transparent {
+	background-color: transparent;
+}
+
+.z-index-0 {
+	z-index: -1;
+	position: relative;
+}
+.z-index-1 {
+	position: relative;
+	z-index: 10;
+}
+
+.z-index-2 {
+	position: relative;
+	z-index: 20;
+}
+
+.fill-white {
+	svg {
+		fill: $white;
+	}
+}
