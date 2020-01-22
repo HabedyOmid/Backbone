@@ -1,12 +1,12 @@
-// @import "functions";
-// @import "variables";
-// @import "mixins";
+@import "functions";
+@import "variables";
+@import "mixins";
 // @import "root";
 // @import "reboot";
-// @import "type";
-// @import "images";
+@import "type";
+@import "images";
 // @import "code";
-// @import "grid";
+@import "grid";
 // @import "tables";
 // @import "forms";
 // @import "buttons";
@@ -33,5 +33,5 @@
 // @import "popover";
 // @import "carousel";
 // @import "spinners";
-// @import "utilities";
+@import "utilities";
 // @import "print";

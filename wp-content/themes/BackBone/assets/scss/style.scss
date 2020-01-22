@@ -14,14 +14,17 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Ar
 =========================================================
 */
 
-// Overrides
-@import "vendors/bootstrap4/functions";
-@import "abstracts/variables";
-@import "abstracts/mixins";
-
 // Boostrap 4.x Core
 @import "vendors/bootstrap4/bootstrap";
 
 // Custom
+@import "abstracts/variables";
+@import "abstracts/mixins";
+
+@import "base/typography";
+@import "base/base";
 @import "base/utilities";
 
+@import "components/navbar";
+@import "components/dropdown";
+@import "components/footer";
