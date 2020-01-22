@@ -59,29 +59,66 @@ code, kbd, pre, samp{
 /* 
  * ACFE: Dynamic Post Type
  */
-body.post-type-acfe-dpt #minor-publishing{
+body.post-type-acfe-dpt.post-new-php #misc-publishing-actions,
+body.post-type-acfe-dpt .misc-pub-post-status,
+body.post-type-acfe-dpt .misc-pub-visibility{
     display:none;
+}
+
+body.post-type-acfe-dpt.post-new-php #major-publishing-actions{
+    border-top:0;
 }
 
 /* 
  * ACFE: Dynamic Taxonomy
  */
-body.post-type-acfe-dt #minor-publishing{
+body.post-type-acfe-dt.post-new-php #misc-publishing-actions,
+body.post-type-acfe-dt .misc-pub-post-status,
+body.post-type-acfe-dt .misc-pub-visibility{
     display:none;
+}
+
+body.post-type-acfe-dt.post-new-php #major-publishing-actions{
+    border-top:0;
 }
 
 /* 
  * ACFE: Dynamic Options Page
  */
-body.post-type-acfe-dop #minor-publishing{
+body.post-type-acfe-dop.post-new-php #misc-publishing-actions,
+body.post-type-acfe-dop .misc-pub-post-status,
+body.post-type-acfe-dop .misc-pub-visibility{
     display:none;
+}
+
+body.post-type-acfe-dop.post-new-php #major-publishing-actions{
+    border-top:0;
 }
 
 /* 
  * ACFE: Dynamic Block Type
  */
-body.post-type-acfe-dbt #minor-publishing{
+body.post-type-acfe-dbt.post-new-php #misc-publishing-actions,
+body.post-type-acfe-dbt .misc-pub-post-status,
+body.post-type-acfe-dbt .misc-pub-visibility{
     display:none;
+}
+
+body.post-type-acfe-dbt.post-new-php #major-publishing-actions{
+    border-top:0;
+}
+
+/* 
+ * ACFE: Dynamic Forms
+ */
+body.post-type-acfe-form.post-new-php #misc-publishing-actions,
+body.post-type-acfe-form .misc-pub-post-status,
+body.post-type-acfe-form .misc-pub-visibility{
+    display:none;
+}
+
+body.post-type-acfe-form.post-new-php #major-publishing-actions{
+    border-top:0;
 }
 
 /* 
@@ -179,14 +216,6 @@ body.post-type-acfe-dbt #minor-publishing{
     text-align:left;
 }
 
-.acf-field-repeater.acf-field-acfe-form-email-files > .acf-input > .acf-repeater > .acf-actions > .acf-button{
-    color: #555;
-    border-color: #ccc;
-    background: #f7f7f7;
-    box-shadow: 0 1px 0 #ccc;
-    text-shadow:none;
-}
-
 /*
  * ACFE Dev Mode
  */
@@ -194,4 +223,73 @@ body.post-type-acfe-dbt #minor-publishing{
 .postbox#acfe-acf-custom-fields > .inside{
     padding:0;
     margin:0;
+}
+
+/* 
+ * ACF Field: Select2 Fix
+ */
+body:not(.acf-admin-5-3) .select2-container .select2-selection{
+    border-color: #dfdfdf !important;
+    border-radius:0 !important;
+}
+
+body:not(.acf-admin-5-3) .select2-container .select2-selection__choice{
+    border-color: #dfdfdf !important;
+    border-radius:0 !important;
+}
+
+body:not(.acf-admin-5-3) .select2-dropdown{
+    border-color: #dfdfdf !important;
+    border-radius:0 !important;
+}
+
+body:not(.acf-admin-5-3) .select2-container .select2-search--inline .select2-search__field{
+    margin-top:0px !important;
+}
+
+.select2-container .select2-selection--single{
+	border-radius:3px !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered{
+    font-size:14px;
+    height:26px;
+    line-height: 25px !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__clear{
+	line-height:24px;
+    height:26px;
+}
+
+.select2-container .select2-search--inline .select2-search__field{
+    margin-top:3px !important;
+    font-size:14px !important;
+}
+
+.select2-container .select2-selection--multiple{
+    min-height: 28px !important;
+    line-height:1;
+    border-radius:3px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered{
+    padding:0 2px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    margin-right:2px !important;
+    margin-top:2px !important;
+    line-height:1.4;
+    border-radius:3px !important;
+    font-size:14px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+    line-height:15px;
+    font-size:15px;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple{
+    border-color:#7e8993 !important;
 }

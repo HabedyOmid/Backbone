@@ -366,7 +366,7 @@ function acfe_flexible_settings($field){
 add_action('acf/render_field', 'acfe_flexible_layouts_settings_before', 0);
 function acfe_flexible_layouts_settings_before($field){
     
-    if($field['_name'] != 'label' || stripos($field['name'], '[layouts]') === false)
+    if($field['_name'] !== 'label' || stripos($field['name'], '[layouts]') === false)
         return;
     
     echo '</li>';
@@ -384,7 +384,7 @@ function acfe_flexible_layouts_settings_before($field){
 add_action('acf/render_field', 'acfe_flexible_layouts_settings', 10);
 function acfe_flexible_layouts_settings($field){
     
-    if($field['_name'] != 'max' || stripos($field['name'], '[layouts]') === false)
+    if($field['_name'] !== 'max' || stripos($field['name'], '[layouts]') === false)
         return;
     
     $layout_prefix = $field['prefix'];
@@ -659,9 +659,9 @@ function acfe_flexible_wrapper($wrapper, $field){
     
     // Placeholder Icon
     $layout_placeholder_icon = false;
-    $layout_placeholder_icon = apply_filters('acfe/flexible/placeholder/icon', $layout_placeholder_icon, $field);
-    $layout_placeholder_icon = apply_filters('acfe/flexible/placeholder/icon/name=' . $field['_name'], $layout_placeholder_icon, $field);
-    $layout_placeholder_icon = apply_filters('acfe/flexible/placeholder/icon/key=' . $field['key'], $layout_placeholder_icon, $field);
+    $layout_placeholder_icon = apply_filters('acfe/flexible/placeholder/icon',                          $layout_placeholder_icon, $field);
+    $layout_placeholder_icon = apply_filters('acfe/flexible/placeholder/icon/name=' . $field['_name'],  $layout_placeholder_icon, $field);
+    $layout_placeholder_icon = apply_filters('acfe/flexible/placeholder/icon/key=' . $field['key'],     $layout_placeholder_icon, $field);
     
     if(!empty($layout_placeholder_icon)){
         
@@ -671,9 +671,9 @@ function acfe_flexible_wrapper($wrapper, $field){
     
     // Lock sortable
     $acfe_flexible_lock_sortable = false;
-    $acfe_flexible_lock_sortable = apply_filters('acfe/flexible/lock', $acfe_flexible_lock_sortable, $field);
-    $acfe_flexible_lock_sortable = apply_filters('acfe/flexible/lock/name=' . $field['_name'], $acfe_flexible_lock_sortable, $field);
-    $acfe_flexible_lock_sortable = apply_filters('acfe/flexible/lock/key=' . $field['key'], $acfe_flexible_lock_sortable, $field);
+    $acfe_flexible_lock_sortable = apply_filters('acfe/flexible/lock',                          $acfe_flexible_lock_sortable, $field);
+    $acfe_flexible_lock_sortable = apply_filters('acfe/flexible/lock/name=' . $field['_name'],  $acfe_flexible_lock_sortable, $field);
+    $acfe_flexible_lock_sortable = apply_filters('acfe/flexible/lock/key=' . $field['key'],     $acfe_flexible_lock_sortable, $field);
     
     if($acfe_flexible_lock_sortable){
         
@@ -683,13 +683,25 @@ function acfe_flexible_wrapper($wrapper, $field){
     
     // Remove actions
     $acfe_flexible_remove_actions = false;
-    $acfe_flexible_remove_actions = apply_filters('acfe/flexible/remove_actions', $acfe_flexible_remove_actions, $field);
-    $acfe_flexible_remove_actions = apply_filters('acfe/flexible/remove_actions/name=' . $field['_name'], $acfe_flexible_remove_actions, $field);
-    $acfe_flexible_remove_actions = apply_filters('acfe/flexible/remove_actions/key=' . $field['key'], $acfe_flexible_remove_actions, $field);
+    $acfe_flexible_remove_actions = apply_filters('acfe/flexible/remove_actions',                           $acfe_flexible_remove_actions, $field);
+    $acfe_flexible_remove_actions = apply_filters('acfe/flexible/remove_actions/name=' . $field['_name'],   $acfe_flexible_remove_actions, $field);
+    $acfe_flexible_remove_actions = apply_filters('acfe/flexible/remove_actions/key=' . $field['key'],      $acfe_flexible_remove_actions, $field);
     
     if($acfe_flexible_remove_actions){
         
         $wrapper['data-acfe-flexible-remove-actions'] = 1;
+        
+    }
+    
+    // Remove ajax 'layout_title' call
+    $acfe_flexible_remove_ajax_title = false;
+    $acfe_flexible_remove_ajax_title = apply_filters('acfe/flexible/remove_ajax_title',                           $acfe_flexible_remove_ajax_title, $field);
+    $acfe_flexible_remove_ajax_title = apply_filters('acfe/flexible/remove_ajax_title/name=' . $field['_name'],   $acfe_flexible_remove_ajax_title, $field);
+    $acfe_flexible_remove_ajax_title = apply_filters('acfe/flexible/remove_ajax_title/key=' . $field['key'],      $acfe_flexible_remove_ajax_title, $field);
+    
+    if($acfe_flexible_remove_ajax_title){
+        
+        $wrapper['data-acfe-flexible-remove-ajax-title'] = 1;
         
     }
     
@@ -700,7 +712,7 @@ function acfe_flexible_wrapper($wrapper, $field){
 add_filter('acf/fields/flexible_content/no_value_message', 'acfe_flexible_empty_message', 10, 2);
 function acfe_flexible_empty_message($message, $field){
     
-    if(!isset($field['acfe_flexible_empty_message']) || empty($field['acfe_flexible_empty_message']))
+    if(!acf_maybe_get($field, 'acfe_flexible_empty_message'))
         return $message;
     
     return $field['acfe_flexible_empty_message'];
@@ -720,7 +732,7 @@ function acfe_flexible_layout_title_prepare($field){
         $span_class = false;
         
         // thumbnail
-        if(isset($field['acfe_flexible_layouts_thumbnails']) && !empty($field['acfe_flexible_layouts_thumbnails'])){
+        if(acf_maybe_get($field, 'acfe_flexible_layouts_thumbnails')){
             
             $class = $style = array();
             $class[] = 'acfe-flexible-layout-thumbnail';
@@ -733,7 +745,7 @@ function acfe_flexible_layout_title_prepare($field){
             $thumbnail_found = false;
             
             $acfe_flexible_thumbnail = false;
-            if(isset($layout['acfe_flexible_thumbnail']) && !empty($layout['acfe_flexible_thumbnail']))
+            if(acf_maybe_get($layout, 'acfe_flexible_thumbnail'))
                 $acfe_flexible_thumbnail = $layout['acfe_flexible_thumbnail'];
             
             // Filter: acfe/flexible/layout/thumbnail/name={field:flexible:name}&layout={field:flexible:layout_name}
@@ -789,7 +801,7 @@ function acfe_flexible_layout_title_prepare($field){
         
         // Category
         $category = '';
-        if(isset($layout['acfe_flexible_category']) && !empty($layout['acfe_flexible_category'])){
+        if(isset($field['acfe_flexible_modal']['acfe_flexible_modal_categories']) && !empty($field['acfe_flexible_modal']['acfe_flexible_modal_categories']) && acf_maybe_get($layout, 'acfe_flexible_category')){
             
             $category = 'data-acfe-flexible-category="' . $layout['acfe_flexible_category'] . '"';
             
@@ -810,7 +822,7 @@ function acfe_flexible_layout_title_ajax($title, $field, $layout, $i){
     $title = preg_replace('#<div class="acfe-flexible-layout-thumbnail(.*?)</div>#', '', $title);
     
     // Title Edition
-    if(isset($field['acfe_flexible_title_edition']) && !empty($field['acfe_flexible_title_edition'])){
+    if(acf_maybe_get($field, 'acfe_flexible_title_edition')){
         
         // Get Layout Title
         $acfe_flexible_layout_title = get_sub_field('acfe_flexible_layout_title');
@@ -830,7 +842,7 @@ function acfe_flexible_layout_title_ajax($title, $field, $layout, $i){
 add_action('acf/render_field/type=flexible_content', 'acfe_flexible_render_field');
 function acfe_flexible_render_field($field){
     
-    if(!isset($field['acfe_flexible_layouts_templates']) || empty($field['acfe_flexible_layouts_templates']) || !isset($field['acfe_flexible_layouts_previews']) || empty($field['acfe_flexible_layouts_previews']) || empty($field['layouts']))
+    if(!acf_maybe_get($field, 'acfe_flexible_layouts_templates') || !acf_maybe_get($field, 'acfe_flexible_layouts_previews') || empty($field['layouts']))
         return;
     
     // Vars
@@ -941,7 +953,7 @@ function acfe_flexible_layout_preview_render($field, $layout){
 add_filter('acfe/flexible/render/template', 'acfe_flexible_layout_render_template_setting', 0, 4);
 function acfe_flexible_layout_render_template_setting($return, $field, $layout, $is_preview){
     
-    if(isset($layout['acfe_flexible_render_template']) && !empty($layout['acfe_flexible_render_template']))
+    if(acf_maybe_get($layout, 'acfe_flexible_render_template'))
         $return = $layout['acfe_flexible_render_template'];
     
     return $return;
@@ -951,7 +963,7 @@ function acfe_flexible_layout_render_template_setting($return, $field, $layout, 
 add_filter('acfe/flexible/render/style', 'acfe_flexible_layout_render_style_setting', 0, 4);
 function acfe_flexible_layout_render_style_setting($return, $field, $layout, $is_preview){
     
-    if(isset($layout['acfe_flexible_render_style']) && !empty($layout['acfe_flexible_render_style']))
+    if(acf_maybe_get($layout, 'acfe_flexible_render_style'))
         $return = $layout['acfe_flexible_render_style'];
     
     return $return;
@@ -961,7 +973,7 @@ function acfe_flexible_layout_render_style_setting($return, $field, $layout, $is
 add_filter('acfe/flexible/render/script', 'acfe_flexible_layout_render_script_setting', 0, 4);
 function acfe_flexible_layout_render_script_setting($return, $field, $layout, $is_preview){
     
-    if(isset($layout['acfe_flexible_render_script']) && !empty($layout['acfe_flexible_render_script']))
+    if(acf_maybe_get($layout, 'acfe_flexible_render_script'))
         $return = $layout['acfe_flexible_render_script'];
     
     return $return;
@@ -976,10 +988,10 @@ function acfe_flexible_layout_title_subfield($field){
     if(acf_is_screen(array('edit-acf-field-group', 'acf-field-group')) || (isset($typenow) && $typenow === 'acf-field-group'))
         return $field;
     
-    if(!isset($field['layouts']) || empty($field['layouts']))
+    if(!acf_maybe_get($field, 'layouts'))
         return $field;
     
-    if(!isset($field['acfe_flexible_title_edition']) || empty($field['acfe_flexible_title_edition']))
+    if(!acf_maybe_get($field, 'acfe_flexible_title_edition'))
         return $field;
     
     foreach($field['layouts'] as $layout_key => &$layout){

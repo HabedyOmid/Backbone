@@ -189,6 +189,7 @@ class acfe_form_front{
 			'form_id'               => $form_id,
 			'post_id'               => acf_get_valid_post_id(),
 			'field_groups'          => false,
+			'post_field_groups'     => false,
 			'form'                  => true,
 			'form_attributes'       => array(),
 			'fields_attributes'     => array(),
@@ -241,6 +242,7 @@ class acfe_form_front{
 
         // Field Groups
         $defaults['field_groups'] = get_field('acfe_form_field_groups', $form_id);
+        $defaults['post_field_groups'] = get_field('acfe_form_post_field_groups', $form_id);
         
         // General
         $defaults['form'] = get_field('acfe_form_form_element', $form_id);
@@ -327,6 +329,9 @@ class acfe_form_front{
                 }
                 
                 $alias = get_sub_field('acfe_form_custom_alias');
+                
+                if(!empty($alias))
+                    $args = apply_filters('acfe/form/load/action=' . $alias,  $args, $args['post_id']);
             
                 $args = apply_filters('acfe/form/load/' . $action,                          $args, $args['post_id'], $alias);
                 $args = apply_filters('acfe/form/load/' . $action . '/form=' . $form_name,  $args, $args['post_id'], $alias);
@@ -357,16 +362,34 @@ class acfe_form_front{
         $field_groups = array();
         $fields = array();
         
+        // Post Field groups
+        if($args['post_field_groups']){
+            
+            // Override Field Groups
+            $post_field_groups = acf_get_field_groups(array(
+                'post_id' => $args['post_field_groups']
+            ));
+            
+            $args['field_groups'] = wp_list_pluck($post_field_groups, 'key');
+            
+        }
+        
         // Field groups
         if($args['field_groups']){
             
             foreach($args['field_groups'] as $selector){
+                
+                // Bypass Author Module
+                if($selector === 'group_acfe_author')
+                    continue;
             
                 $field_groups[] = acf_get_field_group($selector);
                 
             }
             
         }
+        
+        
         
         
         //load fields based on field groups
@@ -403,16 +426,36 @@ class acfe_form_front{
             $form = json_decode(acf_decrypt($_POST['_acf_form']), true);
             
             if(acf_maybe_get($form, 'form_name') === $args['form_name']){
+                
+                ?>
+                <script>
+                jQuery(document).ready(function($){
+                    
+                    if(typeof acf !== 'undefined'){
+                    
+                        acf.doAction('acfe/form/submit/success');
+                        acf.doAction('acfe/form/submit/success/name=<?php echo $args['form_name']; ?>');
+                        
+                    }
+
+                });
+                </script>
+                <?php
             
                 if(!empty($args['updated_message'])){
                     
+                    $message = $args['updated_message'];
+                    
+                    if(acf_maybe_get_POST('acf'))
+                        $message = acfe_form_map_field_value($args['updated_message'], $_POST['acf']);
+                    
                     if(!empty($args['html_updated_message'])){
                         
-                        printf($args['html_updated_message'], $args['updated_message']);
+                        printf($args['html_updated_message'], $message);
                         
                     }else{
                         
-                        echo $args['updated_message'];
+                        echo $message;
                         
                     }
                     
@@ -423,7 +466,7 @@ class acfe_form_front{
                     ?>
                     <script>
                     if(window.history.replaceState){
-                        window.history.replaceState( null, null, window.location.href );
+                        window.history.replaceState(null, null, window.location.href);
                     }
                     </script>
                     <?php
@@ -521,7 +564,7 @@ class acfe_form_front{
                 
             </div>
             
-            <?php if($args['form'] || $args['form_submit']): ?>
+            <?php if($args['form_submit']): ?>
             
                 <div class="acf-form-submit">
                     
@@ -537,7 +580,7 @@ class acfe_form_front{
         <?php endif; ?>
         <script>
         if(window.history.replaceState){
-            window.history.replaceState( null, null, window.location.href );
+            window.history.replaceState(null, null, window.location.href);
         }
         </script>
         <?php
