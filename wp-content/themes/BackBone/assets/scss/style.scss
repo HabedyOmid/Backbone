@@ -14,12 +14,12 @@ Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowserSync, AutoPreFixer, SASS, CSS Arc
 =========================================================
 */
 
-// Bootstrap.x Core
-@import "vendors/bootstrap/bootstrap";
-
 // Custom
 @import "abstracts/variables";
 @import "abstracts/mixins";
+
+// Bootstrap.x Core
+@import "vendors/bootstrap/bootstrap";
 
 @import "base/typography";
 @import "base/base";
