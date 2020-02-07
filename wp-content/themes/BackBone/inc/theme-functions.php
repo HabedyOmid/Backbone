@@ -1,5 +1,93 @@
 <?php
 
+
+if ( ! function_exists( 'backbone_setup' ) ) :
+
+	function backbone_setup() {
+		
+		load_theme_textdomain( 'backbone', get_template_directory() . '/languages' );
+
+		// Add default posts and comments RSS feed links to head.
+		add_theme_support( 'automatic-feed-links' );
+
+		add_theme_support( 'title-tag' );
+
+		add_theme_support( 'post-thumbnails' );
+
+		// This theme uses wp_nav_menu() in one location.
+		register_nav_menus( array(
+			'primary-menu' => esc_html__( 'Primary', 'backbone' ),
+		) );
+
+		add_theme_support( 'html5', array(
+			'search-form',
+			'comment-form',
+			'comment-list',
+			'gallery',
+			'caption',
+		) );
+
+		// Set up the WordPress core custom background feature.
+		add_theme_support( 'custom-background', apply_filters( 'backbone_custom_background_args', array(
+			'default-color' => 'ffffff',
+			'default-image' => '',
+		) ) );
+
+		// Add theme support for selective refresh for widgets.
+		add_theme_support( 'customize-selective-refresh-widgets' );
+
+		add_theme_support( 'custom-logo', array(
+			'height'      => 250,
+			'width'       => 250,
+			'flex-width'  => true,
+			'flex-height' => true,
+		) );
+	}
+endif;
+add_action( 'after_setup_theme', 'backbone_setup' );
+
+
+//
+// Register widget area.
+//
+function backbone_widgets_init() {
+	register_sidebar( array(
+		'name'          => esc_html__( 'Sidebar', 'backbone' ),
+		'id'            => 'sidebar-1',
+		'description'   => esc_html__( 'Add widgets here.', 'backbone' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	) );
+}
+add_action( 'widgets_init', 'backbone_widgets_init' );
+
+
+
+//
+// Stylesheets
+//
+function load_stylesheets()
+{
+	wp_register_style('stylesheet', get_template_directory_uri() . '/style.css', '', 1, 'all');
+	wp_enqueue_style('stylesheet');
+}
+add_action('wp_enqueue_scripts', 'load_stylesheets');
+
+
+//
+// JavaScripts
+//
+function load_javaScripts()
+{
+	wp_register_script('custom', get_template_directory_uri() . '/app.js', '', 1, true);
+	wp_enqueue_script('custom');
+}
+add_action('wp_enqueue_scripts', 'load_javaScripts');
+
+
+
 //
 // Adds custom classes to the array of body classes.
 // 
@@ -18,6 +106,8 @@ function backbone_body_classes( $classes ) {
 add_filter( 'body_class', 'backbone_body_classes' );
 
 
+
+
 //
 // Add a pingback url auto-discovery header for single posts, pages, or attachments.
 // 
@@ -30,6 +120,7 @@ add_action( 'wp_head', 'backbone_pingback_header' );
 
 
 
+
 //
 // Get Post Type
 // 
@@ -38,6 +129,8 @@ function is_post_type($type){
     if($type == get_post_type($wp_query->post->ID)) return true;
     return false;
 }
+
+
 
 
 //
@@ -81,6 +174,7 @@ function backbone_the_post_navigation( $args = array() ) {
 }
 
 
+
 //
 // Advance Numeric Pagination
 // 
@@ -113,6 +207,8 @@ function dequeue_jquery_migrate( &$scripts){
     }
 }
 add_filter( 'wp_default_scripts', 'dequeue_jquery_migrate' );
+
+
 
 
 //
@@ -176,6 +272,8 @@ function my_login_logo() {  $upload_dir = wp_upload_dir();  ?>
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
 
 
+
+
 //
 // Get Image Different Sizes by ID
 //
@@ -203,6 +301,8 @@ function get_image_src($id, $size = "lg") {
         return "Make sure to add ID and SIZE 'PARAMS'";
     }
 }
+
+
 
 
 
