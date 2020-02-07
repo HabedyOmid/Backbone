@@ -1,6 +1,13 @@
+$primary: blue;
+$black: #000;
+$white: #fff;
+$dark: #202020;
+$light: #f1f1f1;
+$border-color: $light;
+
 // Typography
 $reset-root-font-size: 62.5%; // 1rem == 10px root font-size
-$font-family-base: 'Rubik', sans-serif;
+$font-family-base: "Rubik", sans-serif;
 $paragraph-line-height: 3rem;
 $paragraph-bottom-margin: 2rem;
 $bold-1: 300;
@@ -16,30 +23,30 @@ $font-size-lg: 1.8rem;
 $font-size-xl: 2.2rem;
 
 // Links
-$link-color:                $primary;
-$link-decoration:           none;
-$link-hover-color:          darken($primary, 10%);
-$link-hover-decoration:     none;
+$link-color: $primary;
+$link-decoration: none;
+$link-hover-color: darken($primary, 10%);
+$link-hover-decoration: none;
 
 // Body Settings
 $body-color: $dark;
 $body-bg: $light;
 
 // Border Radius
-$border-radius-sm: .4rem;
-$border-radius-md: .8rem;
+$border-radius-sm: 0.4rem;
+$border-radius-md: 0.8rem;
 $border-radius-lg: 1rem;
 
 // Transition
-$transition-sm: all .3s;
-$transition-md: all .5s;
-$transition-lg: all .8s;
-$transition-timing-bezier: cubic-bezier(1.000, 0.000, 0.000, 1.000);
+$transition-sm: all 0.3s;
+$transition-md: all 0.5s;
+$transition-lg: all 0.8s;
+$transition-timing-bezier: cubic-bezier(1, 0, 0, 1);
 
 // Shadow
-$box-shadow-sm:  0 .125rem .25rem rgba($black, .075);
-$box-shadow-md:  0 .5rem 1rem rgba($black, .15);
-$box-shadow-lg:  0 1rem 3rem rgba($black, .175);
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075);
+$box-shadow-md: 0 0.5rem 1rem rgba($black, 0.15);
+$box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
 
 // Navbar Settings
 $navbar-bg: $white;
