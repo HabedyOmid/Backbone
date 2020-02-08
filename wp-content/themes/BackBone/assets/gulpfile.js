@@ -13,7 +13,7 @@ const jpgRecompress = require("imagemin-jpeg-recompress");
 // Paths
 var paths = {
   src: {
-    css: "css/",
+    css: "css/*.css",
     php: "../**/*.php",
     js: "js/**/*.js",
     scss: "scss/**/*.scss",
@@ -21,7 +21,7 @@ var paths = {
   },
   dist: {
     root: "../",
-    css: "../*.css",
+    css: "css",
     img: "../../../uploads/"
   }
 };
@@ -30,15 +30,16 @@ var paths = {
 gulp.task("sass", () => {
   return gulp
     .src(paths.src.scss)
-    .pipe(sass().on("error", sass.logError))
+    .pipe(sass({ outputStyle: "expanded" }).on("error", sass.logError))
     .pipe(autoprefixer())
-    .pipe(gulp.dest(paths.src.css));
+    .pipe(gulp.dest(paths.dist.css))
+    .pipe(browserSync.stream());
 });
 
 // Minify + AutoPreFixer + Combine CSS
 gulp.task("css", () => {
   return gulp
-    .src(paths.src.css + "/*.css")
+    .src(paths.src.css)
     .pipe(cleanCSS({ compatibility: "ie8" }))
     .pipe(concat("style.css"))
     .pipe(gulp.dest(paths.dist.root));
@@ -79,12 +80,9 @@ gulp.task("watch", () => {
     proxy: "https://wordpress.test",
     notify: true
   });
-  gulp
-    .watch(paths.src.scss, gulp.series("sass"))
-    .on("change", browserSync.reload);
-  gulp
-    .watch(paths.src.css, gulp.series("css"))
-    .on("change", browserSync.reload);
-  gulp.watch(paths.src.js, gulp.series("js")).on("change", browserSync.reload);
+
+  gulp.watch(paths.src.scss, gulp.series("sass"));
+  gulp.watch(paths.src.css, gulp.series("css"));
+  gulp.watch(paths.src.js, gulp.series("js"));
   gulp.watch(paths.src.php).on("change", browserSync.reload);
 });
