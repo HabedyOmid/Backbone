@@ -13,51 +13,50 @@ const jpgRecompress = require("imagemin-jpeg-recompress");
 // Paths
 var paths = {
   src: {
-    css: "css/*.css",
+    css: "css/",
     php: "../**/*.php",
     js: "js/**/*.js",
     scss: "scss/**/*.scss",
-    img: "../../../uploads/**/*.+(png|jpg|gif|svg)"
+    imgs: "../../../uploads/**/*.+(png|jpg|gif|svg)"
   },
   dist: {
     root: "../",
-    css: "css",
-    img: "../../../uploads/"
+    imgs: "../../../uploads/"
   }
 };
 
 // Compile SCSS
-gulp.task("sass", () => {
+gulp.task("sass", function() {
   return gulp
     .src(paths.src.scss)
     .pipe(sass({ outputStyle: "expanded" }).on("error", sass.logError))
     .pipe(autoprefixer())
-    .pipe(gulp.dest(paths.dist.css))
+    .pipe(gulp.dest(paths.src.css))
     .pipe(browserSync.stream());
 });
 
-// Minify + AutoPreFixer + Combine CSS
-gulp.task("css", () => {
+// Minify + Combine CSS
+gulp.task("css", function() {
   return gulp
-    .src(paths.src.css)
+    .src(paths.src.css + "*.css")
     .pipe(cleanCSS({ compatibility: "ie8" }))
-    .pipe(concat("style.css"))
     .pipe(gulp.dest(paths.dist.root));
 });
 
 // Minify + Combine JS
-gulp.task("js", () => {
+gulp.task("js", function() {
   return gulp
     .src(paths.src.js)
     .pipe(uglify())
     .pipe(concat("app.js"))
-    .pipe(gulp.dest(paths.dist.root));
+    .pipe(gulp.dest(paths.dist.root))
+    .pipe(browserSync.stream());
 });
 
-// Compress (JPEG, PNG, GIF, SVG)
-gulp.task("img", () => {
+// Compress (JPEG, PNG, GIF, SVG, JPG)
+gulp.task("img", function() {
   return gulp
-    .src(paths.src.img)
+    .src(paths.src.imgs)
     .pipe(
       imageMin([
         imageMin.gifsicle(),
@@ -68,21 +67,30 @@ gulp.task("img", () => {
         jpgRecompress()
       ])
     )
-    .pipe(gulp.dest(paths.dist.img));
+    .pipe(gulp.dest(paths.dist.imgs));
+});
+
+// copy vendors to dist
+gulp.task("vendors", function() {
+  return gulp.src(paths.src.vendors).pipe(gulp.dest(paths.dist.vendors));
+});
+
+// clean dist
+gulp.task("clean", function() {
+  return gulp.src(paths.dist.root).pipe(clean());
 });
 
 // Prepare all assets for production
 gulp.task("build", gulp.series("sass", "css", "js", "img"));
 
 // Watch (SASS, CSS, JS, and HTML) reload browser on change
-gulp.task("watch", () => {
+gulp.task("watch", function() {
   browserSync.init({
     proxy: "https://wordpress.test",
     notify: true
   });
 
-  gulp.watch(paths.src.scss, gulp.series("sass"));
-  gulp.watch(paths.src.css, gulp.series("css"));
+  gulp.watch(paths.src.scss, gulp.series("sass", "css"));
   gulp.watch(paths.src.js, gulp.series("js"));
   gulp.watch(paths.src.php).on("change", browserSync.reload);
 });
