@@ -3,4 +3,14 @@ readme.html
 .DS_Store
 node_modules
 wp-config.php
-wp-config-sample.php
+wflogs*
+backup*
+*backups*
+backwpup*
+wp-clone*
+snapshots
+upgrade
+cache
+updraft
+*debug.log
+*.log
