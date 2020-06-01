@@ -22,7 +22,8 @@ class acfe_field_code_editor extends acf_field{
 			'lines'         => true,
 			'indent_unit'   => 4,
 			'maxlength'		=> '',
-			'rows'			=> ''
+			'rows'			=> '',
+			'max_rows'      => ''
         );
         
         $this->textarea = acf_get_field_type('textarea');
@@ -37,7 +38,9 @@ class acfe_field_code_editor extends acf_field{
             'class'             => 'acf-input-wrap acfe-field-code-editor',
             'data-mode'         => $field['mode'],
             'data-lines'        => $field['lines'],
-            'data-indent_unit'  => $field['indent_unit'],
+            'data-indent-unit'  => $field['indent_unit'],
+            'data-rows'         => $field['rows'],
+            'data-max-rows'     => $field['max_rows'],
         );
         
         $field['type'] = 'textarea';
@@ -58,6 +61,7 @@ class acfe_field_code_editor extends acf_field{
             'instructions'	=> __('Appears when creating a new post','acf'),
             'type'			=> 'acfe_code_editor',
             'name'			=> 'default_value',
+            'rows'          => 4
         ));
         
         // placeholder
@@ -66,6 +70,7 @@ class acfe_field_code_editor extends acf_field{
             'instructions'	=> __('Appears within the input','acf'),
             'type'			=> 'acfe_code_editor',
             'name'			=> 'placeholder',
+            'rows'          => 4
         ));
         
         // Mode
@@ -116,6 +121,15 @@ class acfe_field_code_editor extends acf_field{
             'type'			=> 'number',
             'name'			=> 'rows',
             'placeholder'	=> 8
+        ));
+        
+        // max rows
+        acf_render_field_setting($field, array(
+            'label'			=> __('Max rows','acf'),
+            'instructions'	=> __('Sets the textarea max height','acf'),
+            'type'			=> 'number',
+            'name'			=> 'max_rows',
+            'placeholder'	=> ''
         ));
         
     }

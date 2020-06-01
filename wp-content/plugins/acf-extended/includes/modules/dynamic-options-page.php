@@ -106,8 +106,9 @@ function acfe_dop_menu_sub_highlight($submenu_file){
  */
 add_action('init', 'acfe_dop_registers');
 function acfe_dop_registers(){
+	
+	$dynamic_options_pages = acfe_settings('modules.dynamic_option.data');
     
-    $dynamic_options_pages = get_option('acfe_dynamic_options_pages', array());
     if(empty($dynamic_options_pages))
         return;
     
@@ -238,6 +239,20 @@ function acfe_dop_filter_save($post_id){
     $update_button = get_field('update_button', $post_id);
     $updated_message = get_field('updated_message', $post_id);
     
+    if(empty($menu_title)){
+        
+        $menu_title = $page_title;
+        update_field('menu_title', $menu_title, $post_id);
+        
+    }
+    
+    if(empty($menu_slug)){
+        
+        $menu_slug = sanitize_title($menu_title);
+        update_field('menu_slug', $menu_slug, $post_id);
+        
+    }
+    
     // Register: Args
     $register_args = array(
         'page_title'        => $page_title,
@@ -277,7 +292,7 @@ function acfe_dop_filter_save($post_id){
         $register_args['autoload'] = false;
         
     // Get ACFE option
-    $option = get_option('acfe_dynamic_options_pages', array());
+	$option = acfe_settings('modules.dynamic_option.data');
     
     // Create ACFE option
     $option[$name] = $register_args;
@@ -286,7 +301,7 @@ function acfe_dop_filter_save($post_id){
     ksort($option);
     
     // Update ACFE option
-    update_option('acfe_dynamic_options_pages', $option);
+	acfe_settings('modules.dynamic_option.data', $option, true);
     
 }
 
@@ -304,14 +319,14 @@ function acfe_dop_filter_status_trash($post){
     $name = get_field('acfe_dop_name', $post_id);
     
     // Get ACFE option
-    $option = get_option('acfe_dynamic_options_pages', array());
+	$option = acfe_settings('modules.dynamic_option.data');
     
     // Check ACFE option
     if(isset($option[$name]))
         unset($option[$name]);
     
     // Update ACFE option
-    update_option('acfe_dynamic_options_pages', $option);
+	acfe_settings('modules.dynamic_option.data', $option, true);
     
 }
 
@@ -395,7 +410,7 @@ function acfe_dop_admin_columns_html($column, $post_id){
         
         $name = get_field('acfe_dop_name', $post_id);
         
-        echo '<code style="-webkit-user-select: all;-moz-user-select: all;-ms-user-select: all;user-select: all;font-size: 12px;">' . $name . '</code>';
+        echo '<code style="font-size: 12px;">' . $name . '</code>';
         
     }
     
@@ -406,7 +421,7 @@ function acfe_dop_admin_columns_html($column, $post_id){
         if(empty($p_id))
             $p_id = 'options';
         
-        echo '<code style="-webkit-user-select: all;-moz-user-select: all;-ms-user-select: all;user-select: all;font-size: 12px;">' . $p_id. '</code>';
+        echo '<code style="font-size: 12px;">' . $p_id. '</code>';
         
     }
     

@@ -322,7 +322,7 @@ function cptui_manage_post_types() {
 						 * @param string $value Text to use for the button.
 						 */
 						?>
-						<input type="submit" class="button-secondary" name="cpt_delete" id="cpt_submit_delete" value="<?php echo esc_attr( apply_filters( 'cptui_post_type_submit_delete', __( 'Delete Post Type', 'custom-post-type-ui' ) ) ); ?>" />
+						<input type="submit" class="button-secondary cptui-delete-top" name="cpt_delete" id="cpt_submit_delete" value="<?php echo esc_attr( apply_filters( 'cptui_post_type_submit_delete', __( 'Delete Post Type', 'custom-post-type-ui' ) ) ); ?>" />
 						<?php } else { ?>
 						<?php
 
@@ -1384,7 +1384,7 @@ function cptui_manage_post_types() {
 					 * @param string $value Text to use for the button.
 					 */
 					?>
-					<input type="submit" class="button-secondary" name="cpt_delete" id="cpt_submit_delete" value="<?php echo esc_attr( apply_filters( 'cptui_post_type_submit_delete', __( 'Delete Post Type', 'custom-post-type-ui' ) ) ); ?>" />
+					<input type="submit" class="button-secondary cptui-delete-bottom" name="cpt_delete" id="cpt_submit_delete" value="<?php echo esc_attr( apply_filters( 'cptui_post_type_submit_delete', __( 'Delete Post Type', 'custom-post-type-ui' ) ) ); ?>" />
 			<?php
 				} else {
 
@@ -1421,8 +1421,8 @@ function cptui_post_types_dropdown( $post_types = [] ) {
 		$select['options'] = [];
 
 		foreach ( $post_types as $type ) {
-			$text = ! empty( $type['label'] ) ? $type['label'] : $type['name'];
-			$select['options'][] = [ 'attr' => $type['name'], 'text' => $text ];
+			$text                = ! empty( $type['label'] ) ? esc_html( $type['label'] ) : esc_html( $type['name'] );
+			$select['options'][] = [ 'attr' => esc_html( $type['name'] ), 'text' => $text ];
 		}
 
 		$current = cptui_get_current_post_type();

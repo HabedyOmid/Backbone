@@ -5,6 +5,8 @@ if(!defined('ABSPATH'))
 
 /**
  * ACFE: Include
+ *
+ * @param string $filename
  */
 function acfe_include($filename = ''){
     
@@ -19,7 +21,29 @@ function acfe_include($filename = ''){
 }
 
 /**
+ * ACFE: Get URL
+ *
+ * @param string $filename
+ *
+ * @return string
+ */
+function acfe_get_url($filename = ''){
+    
+	if(!defined('ACFE_URL')){
+        
+		define('ACFE_URL', acf_get_setting('acfe/url'));
+        
+	}
+    
+	return ACFE_URL . ltrim($filename, '/');
+}
+
+/**
  * ACFE: ACF Pro Check
+ *
+ * @param $plugin_file
+ * @param $plugin_data
+ * @param $status
  */
 add_action('after_plugin_row_' . ACFE_BASENAME, 'acfe_plugin_row', 5, 3);
 function acfe_plugin_row($plugin_file, $plugin_data, $status){

@@ -7,9 +7,9 @@ add_action('acf/render_field_settings/type=group', 'acfe_field_group_settings');
 function acfe_field_group_settings($field){
     
     acf_render_field_setting($field, array(
-        'label'         => __('Seemless Style'),
-        'name'          => 'acfe_seemless_style',
-        'key'           => 'acfe_seemless_style',
+        'label'         => __('Seamless Style', 'acfe'),
+        'name'          => 'acfe_seamless_style',
+        'key'           => 'acfe_seamless_style',
         'instructions'  => __('Enable better CSS integration: remove borders and padding'),
         'type'              => 'true_false',
         'message'           => '',
@@ -47,12 +47,66 @@ function acfe_field_group_settings($field){
     ));
     
     acf_render_field_setting($field, array(
-        'label'         => __('Edition modal button'),
+        'label'         => __('Edition modal: Close button'),
+        'name'          => 'acfe_group_modal_close',
+        'key'           => 'acfe_group_modal_close',
+        'instructions'  => __('Display close button'),
+        'type'          => 'true_false',
+        'message'       => '',
+        'default_value' => false,
+        'ui'            => true,
+        'conditional_logic' => array(
+            array(
+                array(
+                    'field'     => 'display',
+                    'operator'  => '==',
+                    'value'     => 'group',
+                ),
+                array(
+                    'field'     => 'acfe_group_modal',
+                    'operator'  => '==',
+                    'value'     => '1',
+                ),
+            )
+        )
+    ));
+    
+    acf_render_field_setting($field, array(
+        'label'         => __('Edition modal: Text button'),
         'name'          => 'acfe_group_modal_button',
         'key'           => 'acfe_group_modal_button',
         'instructions'  => __('Text displayed in the edition modal button'),
         'type'          => 'text',
         'placeholder'   => __('Edit', 'acf'),
+        'conditional_logic' => array(
+            array(
+                array(
+                    'field'     => 'display',
+                    'operator'  => '==',
+                    'value'     => 'group',
+                ),
+                array(
+                    'field'     => 'acfe_group_modal',
+                    'operator'  => '==',
+                    'value'     => '1',
+                ),
+            )
+        )
+    ));
+    
+    acf_render_field_setting($field, array(
+        'label'         => __('Edition modal: Size'),
+        'name'          => 'acfe_group_modal_size',
+        'key'           => 'acfe_group_modal_size',
+        'instructions'  => __('Choose the modal size'),
+        'type'          => 'select',
+        'choices'       => array(
+            'small'     => 'Small',
+            'medium'    => 'Medium',
+            'large'     => 'Large',
+            'full'      => 'Full',
+        ),
+        'default_value' => 'large',
         'conditional_logic' => array(
             array(
                 array(
@@ -85,6 +139,18 @@ function acfe_field_group_wrapper($wrapper, $field){
             
         }
         
+        if(acf_maybe_get($field, 'acfe_group_modal_close')){
+            
+            $wrapper['data-acfe-group-modal-close'] = $field['acfe_group_modal_close'];
+            
+        }
+        
+        if(acf_maybe_get($field, 'acfe_group_modal_size')){
+            
+            $wrapper['data-acfe-group-modal-size'] = $field['acfe_group_modal_size'];
+            
+        }
+        
     }
     
     return $wrapper;
@@ -94,9 +160,9 @@ function acfe_field_group_wrapper($wrapper, $field){
 add_filter('acf/prepare_field/type=group', 'acfe_field_group_type_class', 99);
 function acfe_field_group_type_class($field){
     
-    if(acf_maybe_get($field, 'acfe_seemless_style')){
+    if(acf_maybe_get($field, 'acfe_seamless_style')){
         
-        $field['wrapper']['class'] .= ' acfe-seemless-style';
+        $field['wrapper']['class'] .= ' acfe-seamless-style';
         
     }
     

@@ -16,6 +16,8 @@ function get_flexible($selector, $post_id = false){
     // Vars
     $field = acf_get_field($selector);
     $flexible = acf_get_field_type('flexible_content');
+
+    global $is_preview;
     $is_preview = false;
     
     // Actions
@@ -72,6 +74,86 @@ function has_flexible($selector, $post_id = false){
     
 }
 
+}
+
+/**
+ * Flexible: have_settings()
+ */
+if(!function_exists('have_settings')){
+    
+function have_settings(){
+    
+    return have_rows('layout_settings');
+    
+}
+
+}
+
+/**
+ * Flexible: the_settings()
+ */
+if(!function_exists('the_setting')){
+    
+function the_setting(){
+    
+    return the_row();
+    
+}
+
+}
+
+/**
+ * have_archive()
+ */
+if(!function_exists('have_archive')){
+
+$acfe_archive_i = 0;
+function have_archive(){
+    
+    global $acfe_archive_i;
+    
+    if($acfe_archive_i == 0)
+        return true;
+    
+    remove_filter('acf/pre_load_post_id', 'acfe_the_archive_post_id');
+    
+    return false;
+    
+}
+
+}
+
+/**
+ * the_archive()
+ */
+if(!function_exists('the_archive')){
+    
+function the_archive(){
+    
+    global $acfe_archive_i;
+    
+    add_filter('acf/pre_load_post_id', 'acfe_the_archive_post_id', 10, 2);
+    
+    $acfe_archive_i++;
+    
+}
+
+}
+
+function acfe_the_archive_post_id($null, $post_id){
+    
+    if($post_id !== false)
+        return $null;
+    
+    $post_type = get_post_type();
+    
+    if(empty($post_type))
+        return $null;
+    
+    $null = $post_type . '_archive';
+    
+    return $null;
+    
 }
 
 /**
@@ -260,6 +342,40 @@ function acfe_get_field_group_from_field($field){
 }
 
 /**
+ * Add fields isntructions tooltip
+ */
+function acfe_add_fields_instructions_tooltip(&$field){
+	
+	$instructions = '';
+	
+	if(acf_maybe_get($field, 'instructions'))
+		$instructions = acf_esc_html($field['instructions']);
+    
+    if(isset($field['sub_fields'])){
+        
+        foreach($field['sub_fields'] as &$sub_field){
+	
+	        acfe_add_fields_instructions_tooltip($sub_field);
+            
+        }
+        
+    }
+    
+    elseif(isset($field['layouts'])){
+        
+        foreach($field['layouts'] as &$layout){
+	
+	        acfe_add_fields_instructions_tooltip($layout);
+            
+        }
+        
+    }
+    
+    $field['acfe_instructions_tooltip'] = $instructions;
+    
+}
+
+/**
  * Add custom key to fields and all sub fields
  */
 function acfe_field_add_key_recursive(&$field, $key, $value){
@@ -362,24 +478,38 @@ function acfe_locate_file_url($filenames){
 /**
  * Get Roles
  */
-function acfe_get_roles($user_roles = array()){
+function acfe_get_roles($filtered_user_roles = array()){
     
-	if(empty($user_roles)){
+    
+    $list = array();
+    
+    global $wp_roles;
+    
+    if(is_multisite())
+        $list['super_admin'] = __('Super Admin');
+    
+    foreach($wp_roles->roles as $role => $settings){
         
+        $list[$role] = $settings['name'];
+        
+    }
+    
+    $user_roles = $list;
+    
+    if(!empty($filtered_user_roles)){
+    
         $user_roles = array();
         
-        global $wp_roles;
-        
-        if(is_multisite())
-            $user_roles['super_admin'] = __('Super Admin');
-        
-        foreach($wp_roles->roles as $role => $settings){
+        foreach($list as $role => $role_label){
             
-            $user_roles[$role] = $settings['name'];
+            if(!in_array($role, $filtered_user_roles))
+                continue;
+            
+            $user_roles[$role] = $role_label;
             
         }
-		
-	}
+    
+    }
     
     return $user_roles;
     
@@ -545,41 +675,6 @@ function acfe_ends_with($haystack, $needle){
         return true;
 
     return (substr($haystack, -$length) === $needle);
-    
-}
-
-add_filter('acf/load_field', 'acfe_load_field');
-function acfe_load_field($field){
-    
-    if(acf_is_screen(array('edit-acf-field-group', 'acf-field-group', 'acf_page_acf-tools')))
-        return $field;
-    
-    // Everywhere
-    $field = apply_filters('acfe/load_field', $field);
-    
-    // Admin
-    if(acfe_form_is_admin()){
-        
-        $field = apply_filters('acfe/load_field_admin', $field);
-        
-    }
-    
-    // Front
-    elseif(acfe_form_is_front()){
-        
-        $field = apply_filters('acfe/load_field_front', $field);
-        
-    }
-    
-    return $field;
-    
-}
-
-if(function_exists('acf_add_filter_variations')){
-    
-    acf_add_filter_variations('acfe/load_field', array('type', 'name', 'key'), 0);
-    acf_add_filter_variations('acfe/load_field_front', array('type', 'name', 'key'), 0);
-    acf_add_filter_variations('acfe/load_field_admin', array('type', 'name', 'key'), 0);
     
 }
 
@@ -770,4 +865,103 @@ function acfe_number_suffix($num){
     
     return $num . 'th';
     
+}
+
+function acfe_array_to_string($array = array()){
+	
+	if(!is_array($array))
+		return $array;
+	
+	if(empty($array))
+		return false;
+	
+	if(acf_is_sequential_array($array)){
+		
+		foreach($array as $k => $v){
+			
+			if(!is_string($v))
+				continue;
+			
+			return $v;
+			
+		}
+		
+	}elseif(acf_is_associative_array($array)){
+		
+		foreach($array as $k => $v){
+			
+			if(!is_string($v))
+				continue;
+			
+			return $v;
+			
+		}
+		
+	}
+	
+	return false;
+	
+}
+
+function acfe_get_acf_screen_id($page = ''){
+
+    $prefix = sanitize_title( __("Custom Fields", 'acf') );
+    
+    if(empty($page))
+        return $prefix;
+    
+    return $prefix . '_page_' . $page;
+    
+}
+
+function acfe_is_admin_screen($modules = false){
+
+    // bail early if not defined
+    if(!function_exists('get_current_screen'))
+        return false;
+
+    // vars
+    $screen = get_current_screen();
+
+    // no screen
+    if(!$screen)
+        return false;
+    
+    $post_types = array(
+        'acf-field-group',  // ACF
+    );
+    
+    $field_group_category = false;
+    
+    // include ACF Extended Modules?
+    if($modules){
+        
+        $post_types[] = 'acfe-dbt';     // Dynamic Block Type
+        $post_types[] = 'acfe-dop';     // Dynamic Option Page
+        $post_types[] = 'acfe-dpt';     // Dynamic Post Type
+        $post_types[] = 'acfe-dt';      // Dynamic Taxonomy
+        $post_types[] = 'acfe-form';    // Dynamic Form
+        
+        // Field Group Category
+        $field_group_category = $screen->post_type === 'post' && $screen->taxonomy === 'acf-field-group-category';
+        
+    }
+    
+    if(in_array($screen->post_type, $post_types) || $field_group_category)
+        return true;
+    
+    return false;
+    
+}
+
+function acfe_is_dev(){
+	
+	return acf_get_setting('acfe/dev', false) || (defined('ACFE_dev') && ACFE_dev);
+	
+}
+
+function acfe_is_super_dev(){
+	
+	return acf_get_setting('acfe/super_dev', false) || (defined('ACFE_super_dev') && ACFE_super_dev);
+	
 }

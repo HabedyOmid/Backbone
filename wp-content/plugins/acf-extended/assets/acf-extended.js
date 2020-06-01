@@ -2,8 +2,8 @@
     
     // init
     var acfe = {};
-	
-	window.acfe = acfe;
+
+    window.acfe = acfe;
     
     acfe.modal = {
         
@@ -19,6 +19,7 @@
                 footer: false,
                 size: false,
                 destroy: false,
+                onOpen: false,
                 onClose: false,
             });
             
@@ -97,6 +98,8 @@
             
             acfe.modal.multiple();
             
+            acfe.modal.onOpen($target, args);
+            
             return $target;
 			
 		},
@@ -117,7 +120,8 @@
             
 			$target.removeAttr('style');
             
-			$target.removeClass('-open -small -full');
+			//$target.removeClass('-open -small -medium -full');
+			$target.removeClass('-open');
             
             if(args.destroy){
                 
@@ -156,6 +160,15 @@
             
         },
         
+        onOpen: function($target, args){
+            
+            if(!args.onOpen || !(args.onOpen instanceof Function))
+                return;
+            
+            args.onOpen($target);
+            
+        },
+        
         onClose: function($target, args){
             
             if(!args.onClose || !(args.onClose instanceof Function))
@@ -165,6 +178,8 @@
             
         }
         
+        
+        
     };
     
     acf.addAction('ready_field', function(field){
@@ -172,25 +187,63 @@
         if(!field.has('acfeInstructionsTooltip'))
             return;
         
-        var $label = field.$el.find('> .acf-label > label');
-        
-        if($label.length){
-            
-            $label.before('<span class="acf-js-tooltip dashicons dashicons-info" style="float:right; font-size:16px; color:#ccc;" title="' + _.escape(field.get('acfeInstructionsTooltip')) + '"></span>');
-            
+        var $label = field.$labelWrap().find('> label');
+        var $instructions = field.$labelWrap().find('> .description');
+        var instructions_html = $instructions.html();
+        var instructions_html_2 = field.get('acfeInstructionsTooltip');
+
+        var instructions = instructions_html_2;
+
+        if($instructions.length){
+
+            $instructions.remove();
+            instructions = instructions_html;
+
         }
+        $label.before('<span class="acfe-field-tooltip acf-js-tooltip dashicons dashicons-info" title="' + _.escape(instructions) + '"></span>');
             
     });
     
-    acf.addAction('new_field/name=acfe_form_custom_action', function(field){
+    acfe_form_move_instructions_above = function(field){
+        
+        var $instructions = field.$el.find('> .acf-label > .description');
+        
+        field.$el.find('> .acf-input').prepend($instructions);
+            
+    }
+    
+    acfe_form_move_instructions_below = function(field){
         
         var $instructions = field.$el.find('> .acf-label > .description');
         
         field.$el.find('> .acf-input').append($instructions);
             
-    });
+    }
+    
+    acf.addAction('new_field/name=acfe_form_updated_message',   acfe_form_move_instructions_below);
+    acf.addAction('new_field/name=acfe_form_return',            acfe_form_move_instructions_below);
+    
+    acf.addAction('new_field/name=acfe_form_custom_alias',      acfe_form_move_instructions_below);
+    acf.addAction('new_field/name=acfe_form_custom_query_var',  acfe_form_move_instructions_below);
+    
+    acf.addAction('new_field/name=acfe_form_email_content',     acfe_form_move_instructions_below);
+    
+    acf.addAction('new_field/name=acfe_form_post_save_target',  acfe_form_move_instructions_below);
+    acf.addAction('new_field/name=acfe_form_post_load_source',  acfe_form_move_instructions_below);
+    
+    acf.addAction('new_field/name=acfe_form_term_save_target',  acfe_form_move_instructions_below);
+    acf.addAction('new_field/name=acfe_form_term_load_source',  acfe_form_move_instructions_below);
+    
+    acf.addAction('new_field/name=acfe_form_user_save_target',  acfe_form_move_instructions_below);
+    acf.addAction('new_field/name=acfe_form_user_load_source',  acfe_form_move_instructions_below);
     
     acf.addAction('new_field/name=acfe_form_email_files', function(field){
+        
+        field.$el.find('> .acf-input > .acf-repeater > .acf-actions > .acf-button').removeClass('button-primary');
+            
+    });
+    
+    acf.addAction('new_field/name=acfe_form_email_files_static', function(field){
         
         field.$el.find('> .acf-input > .acf-repeater > .acf-actions > .acf-button').removeClass('button-primary');
             

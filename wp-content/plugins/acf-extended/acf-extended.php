@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Advanced Custom Fields: Extended
  * Description: Enhancement Suite which improves Advanced Custom Fields administration
- * Version:     0.8.3.1
+ * Version:     0.8.5.5
  * Author:      ACF Extended
  * Author URI:  https://www.acf-extended.com
  * Text Domain: acfe
@@ -16,7 +16,7 @@ if(!class_exists('ACFE')):
 class ACFE{
     
     // Version
-    var $version = '0.8.3.1';
+    var $version = '0.8.5.5';
     
     // Settings
     var $settings = array();
@@ -40,7 +40,6 @@ class ACFE{
         $this->define('ACFE',               true);
         $this->define('ACFE_FILE',          __FILE__);
         $this->define('ACFE_PATH',          plugin_dir_path(__FILE__));
-        $this->define('ACFE_URL',           plugin_dir_url(__FILE__));
         $this->define('ACFE_VERSION',       $this->version);
         $this->define('ACFE_BASENAME',      plugin_basename(__FILE__));
         $this->define('ACFE_THEME_PATH',    get_stylesheet_directory());
@@ -48,6 +47,7 @@ class ACFE{
         
         // Define settings
         $this->settings = array(
+            'acfe/url'                              => plugin_dir_url(__FILE__),
             'acfe/php'                              => true,
             'acfe/php_save'                         => ACFE_THEME_PATH . '/acfe-php',
             'acfe/php_load'                         => array(ACFE_THEME_PATH . '/acfe-php'),
@@ -61,6 +61,7 @@ class ACFE{
             'acfe/modules/dynamic_post_types'       => true,
             'acfe/modules/dynamic_taxonomies'       => true,
             'acfe/modules/options'                  => true,
+            'acfe/modules/single_meta'              => false,
             'acfe/modules/taxonomies'               => true,
         );
         
@@ -68,7 +69,7 @@ class ACFE{
         include_once(ACFE_PATH . 'init.php');
         
         // Load
-        add_action('plugins_loaded', array($this, 'load'));
+        add_action('acf/include_field_types', array($this, 'load'));
         
     }
     
@@ -94,14 +95,16 @@ class ACFE{
         add_action('acf/include_fields',        array($this, 'autosync'), 5);
         
         // Fields
-        add_action('acf/include_field_types',   array($this, 'fields'));
+        add_action('acf/include_field_types',   array($this, 'fields'), 99);
         
         // Tools
         add_action('acf/include_admin_tools',   array($this, 'tools'));
         
-        // Compatibility
+        // Additional
+        acfe_include('includes/core/settings.php');
         acfe_include('includes/core/compatibility.php');
-        
+	    acfe_include('includes/core/upgrades.php');
+
     }
     
     /**
@@ -152,7 +155,7 @@ class ACFE{
         acfe_include('includes/field-groups/field-group.php');
         acfe_include('includes/field-groups/field-group-category.php');
         acfe_include('includes/field-groups/field-groups.php');
-        acfe_include('includes/field-groups/field-groups-third-party.php');
+        acfe_include('includes/field-groups/field-groups-local.php');
         
         /**
          * Locations
@@ -172,6 +175,7 @@ class ACFE{
         acfe_include('includes/modules/dynamic-options-page.php');
         acfe_include('includes/modules/dynamic-post-type.php');
         acfe_include('includes/modules/dynamic-taxonomy.php');
+        acfe_include('includes/modules/single-meta.php');
         acfe_include('includes/modules/taxonomy.php');
         
     }
@@ -227,10 +231,13 @@ class ACFE{
         acfe_include('includes/admin/tools/fg-export.php');
         
     }
-    
-    /**
-     * ACFE: Define
-     */
+
+	/**
+	 * ACFE: Define
+	 *
+	 * @param $name
+	 * @param bool $value
+	 */
     function define($name, $value = true){
         
         if(!defined($name))

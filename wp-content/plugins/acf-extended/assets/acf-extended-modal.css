@@ -79,7 +79,7 @@ body.acfe-modal-opened{
 
 .acfe-modal.-open.acfe-modal-sub > .acfe-modal-wrapper > .acfe-modal-wrapper-overlay{
     position:absolute;
-    z-index:1;
+    z-index:10;
     background:rgba(0,0,0,0.7);
     height:100%;
     width:100%;
@@ -90,7 +90,19 @@ body.acfe-modal-opened{
  * ACFE Modal: Sizes
  */
 .acfe-modal.-open.-small > .acfe-modal-wrapper{
+    max-width:450px;
+}
+
+.acfe-modal.-open.-medium > .acfe-modal-wrapper{
     max-width:700px;
+}
+
+.acfe-modal.-open.-large > .acfe-modal-wrapper{
+    max-width:1100px;
+}
+
+.acfe-modal.-open.-xlarge > .acfe-modal-wrapper{
+    max-width:1400px;
 }
 
 .acfe-modal.-open.-full > .acfe-modal-wrapper{
@@ -101,9 +113,63 @@ body.acfe-modal-opened{
 }
 
 /*
+ * ACFE Modal Full: Fix left fields background
+ */
+.acfe-modal.-open.-full > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields.-left {
+    height:100%;
+}
+
+.acfe-modal.-open.-full > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields.-left:before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    background: #F9F9F9;
+    border-color: #E1E1E1;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 20%;
+}
+
+/*
+ * ACFE Modal Full: Fix Layout Settings background
+ */
+.acfe-modal.-settings.-open.-full > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields,
+.acfe-modal.-settings.-open.-full > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields > .acf-field-clone,
+.acfe-modal.-settings.-open.-full > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields > .acf-field-clone > .acf-input,
+.acfe-modal.-settings.-open.-full > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields > .acf-field-clone > .acf-input > .acf-clone-fields.acf-fields.-left{
+    height:100%;
+}
+
+.acfe-modal.-settings.-open.-full > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields > .acf-field-clone{
+    padding:0;
+}
+
+.acfe-modal.-settings.-open.-full > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields > .acf-field-clone > .acf-input{
+    margin:0;
+}
+
+.acfe-modal.-settings.-open.-full > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields > .acf-field-clone > .acf-input > .acf-clone-fields.acf-fields.-left:before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    background: #F9F9F9;
+    border-color: #E1E1E1;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 20%;
+}
+
+/*
  * ACFE Modal Title
  */
- 
 .acfe-modal.-open >.acfe-modal-title, 
 .acfe-modal.-open .acfe-modal-title *{
     -webkit-box-sizing:border-box;
@@ -434,7 +500,7 @@ body:not(.acf-admin-5-3) .acfe-modal.-open .acfe-modal-content .acfe-flex-contai
 }
 
 /*
- * ACFE Modal Gutenberg Fix
+ * ACFE Modal: Gutenberg Fix
  */
 body.block-editor-page .edit-post-layout .acfe-modal.-open{
     -webkit-box-pack: start;
@@ -452,9 +518,28 @@ body.block-editor-page .edit-post-layout .acfe-modal.-open > .acfe-modal-wrapper
     max-height: calc(100vh - 88px);
 }
 
+body.block-editor-page .edit-post-layout .acfe-modal.-open > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields.-left {
+    height:100%;
+}
+
+body.block-editor-page .edit-post-layout .acfe-modal.-open > .acfe-modal-wrapper > .acfe-modal-content > .acf-fields.-left:before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    background: #F9F9F9;
+    border-color: #E1E1E1;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 20%;
+}
+
 @media only screen and (max-width: 1080px) {
     body.block-editor-page .edit-post-layout .acfe-modal.-open > .acfe-modal-wrapper{
-        margin-top: 125px;
+        margin-top: 88px;
     }
 }
 
@@ -492,6 +577,27 @@ body.block-editor-page.folded .edit-post-layout.is-sidebar-opened .acfe-modal.-o
     max-width: calc(100vw - 316px);
 }
 
+@media (min-width: 600px){
+    body.block-editor-page.acfe-modal-opened .edit-post-layout__content {
+        overflow-y: hidden;
+    }
+}
+
 body.block-editor-page .acfe-modal-overlay{
     display:none;
+}
+
+/*
+ * ACFE Modal: Attachment Single Fix
+ */
+body.wp-admin.upload-php.acfe-modal-opened > div:not([style*="display: none;"]) > .media-modal.wp-core-ui:not(.acf-media-modal):before{
+    content:"";
+    display:block;
+    position:absolute;
+    background:rgba(0,0,0,.7);
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:10000;
 }
