@@ -1,14 +1,14 @@
 // node.js Packages / Dependencies
-const gulp = require("gulp");
-const sass = require("gulp-sass");
-const uglify = require("gulp-uglify");
-const concat = require("gulp-concat");
-const cleanCSS = require("gulp-clean-css");
-const imageMin = require("gulp-imagemin");
-const pngQuint = require("imagemin-pngquant");
-const browserSync = require("browser-sync").create();
-const autoprefixer = require("gulp-autoprefixer");
-const jpgRecompress = require("imagemin-jpeg-recompress");
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const concat = require('gulp-concat');
+const babel = require('gulp-babel');
+const cleanCSS = require('gulp-clean-css');
+const imagemin = require('gulp-imagemin');
+const browserSync = require('browser-sync').create();
+const autoprefixer = require('gulp-autoprefixer');
 
 // Paths
 var paths = {
@@ -47,37 +47,43 @@ gulp.task("css", function() {
 gulp.task("js", function() {
   return gulp
     .src(paths.src.js)
-    .pipe(uglify())
-    .pipe(concat("app.js"))
-    .pipe(gulp.dest(paths.dist.root))
-    .pipe(browserSync.stream());
+		.pipe(
+			babel({
+				presets: ['@babel/preset-env'],
+			}),
+		)
+		.pipe(uglify())
+		.pipe(concat('app.js'))
+		.pipe(gulp.dest(paths.dist.js))
+		.pipe(browserSync.stream());
 });
 
 // Compress (JPEG, PNG, GIF, SVG, JPG)
-gulp.task("img", function() {
-  return gulp
-    .src(paths.src.imgs)
-    .pipe(
-      imageMin([
-        imageMin.gifsicle(),
-        imageMin.jpegtran(),
-        imageMin.optipng(),
-        imageMin.svgo(),
-        pngQuint(),
-        jpgRecompress()
-      ])
-    )
-    .pipe(gulp.dest(paths.dist.imgs));
-});
-
-// copy vendors to dist
-gulp.task("vendors", function() {
-  return gulp.src(paths.src.vendors).pipe(gulp.dest(paths.dist.vendors));
-});
-
-// clean dist
-gulp.task("clean", function() {
-  return gulp.src(paths.dist.root).pipe(clean());
+gulp.task('img', () => {
+	return gulp
+		.src(paths.src.imgs)
+		.pipe(
+			imagemin([
+				imagemin.gifsicle({
+					interlaced: true
+				}),
+				imagemin.mozjpeg({
+					quality: 75,
+					progressive: true
+				}),
+				imagemin.optipng({
+					optimizationLevel: 5
+				}),
+				imagemin.svgo({
+					plugins: [{
+						removeViewBox: true
+					}, {
+						cleanupIDs: false
+					}],
+				}),
+			]),
+		)
+		.pipe(gulp.dest(paths.dist.imgs));
 });
 
 // Prepare all assets for production
