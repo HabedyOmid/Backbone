@@ -16,6 +16,7 @@ $(document).ready(function(){
     });
 });
 
+
 // tgl checkbox for navbar collapse
 $('#tgl-checkbox:checkbox').change(function(){
     if($(this).is(":checked")) {
@@ -25,9 +26,8 @@ $('#tgl-checkbox:checkbox').change(function(){
     }
 });
 
+
 // dropdown menu toggle in medium screen size
 $('.dropdown .nav-link').click(function(){
     $(this).parent().toggleClass('open');
 });
-
-
