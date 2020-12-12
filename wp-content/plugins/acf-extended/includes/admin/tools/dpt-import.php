@@ -108,7 +108,6 @@ class ACFE_Admin_Tool_Import_DPT extends ACF_Admin_Tool{
             
             // Register Args
             update_field('acfe_dpt_name', $post_type_name, $post_id);
-            update_field('label', $args['label'], $post_id);
             update_field('description', $args['description'], $post_id);
             update_field('hierarchical', $args['hierarchical'], $post_id);
             update_field('supports', $args['supports'], $post_id);
@@ -167,7 +166,7 @@ class ACFE_Admin_Tool_Import_DPT extends ACF_Admin_Tool{
             update_field('rest_controller_class', $args['rest_controller_class'], $post_id);
             
             // Has archive: override
-            if($args['has_archive'])
+            if($args['has_archive'] && is_string($args['has_archive']))
                 update_field('has_archive_slug', $args['has_archive'], $post_id);
             
             // Rewrite: override

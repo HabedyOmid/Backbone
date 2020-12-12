@@ -3,6 +3,23 @@
 if(!defined('ABSPATH'))
     exit;
 
+add_action('current_screen', 'acfe_screen_header');
+function acfe_screen_header($screen){
+    
+    if(acf_version_compare(acf_get_setting('version'),  '<', '5.9'))
+        return;
+    
+    if(!acf_is_screen(array('edit-acf-field-group-category', 'edit-acfe-dbt', 'acfe-dbt', 'edit-acfe-dop', 'acfe-dop', 'edit-acfe-template', 'acfe-template', 'edit-acfe-form', 'acfe-form')))
+        return;
+    
+    add_action('in_admin_header', function(){
+        
+        acf_get_view('html-admin-navigation');
+        
+    });
+    
+}
+
 add_action('admin_menu', 'acfe_admin_settings_submenu_swap', 999);
 function acfe_admin_settings_submenu_swap(){
     
@@ -97,7 +114,10 @@ function acfe_admin_settings_submenu_swap(){
     $submenu['edit.php?post_type=acf-field-group'] = $array;
     
     // Add items left
-    if(!empty($_submenu))
+    if(!empty($_submenu)){
+    
         $submenu['edit.php?post_type=acf-field-group'] = array_merge($array, $_submenu);
+        
+    }
     
 }

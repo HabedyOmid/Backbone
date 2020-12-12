@@ -26,7 +26,9 @@ function acfe_admin_settings_html(){
     <div id="poststuff">
         
         <div class="postbox acf-postbox">
-            <h2 class="hndle ui-sortable-handle"><span><?php _e('Settings'); ?></span></h2>
+            <div class="postbox-header">
+                <h2 class="hndle ui-sortable-handle"><span><?php _e('Settings'); ?></span></h2>
+            </div>
             <div class="inside acf-fields -left">
             
                 <?php 
@@ -37,12 +39,6 @@ function acfe_admin_settings_html(){
                 ?>
                 
                 <?php
-                
-                $load_json = acf_get_setting('load_json');
-                $load_json_text = '';
-                
-                if(!empty($load_json))
-                    $load_json_text = implode("<br />", $load_json);
 
                 $settings = array(
                     array(
@@ -90,7 +86,7 @@ function acfe_admin_settings_html(){
                     array(
                         'name'  => 'load_json',
                         'label' => 'Json folder (load)',
-                        'value' => '<code>' . $load_json_text . '</code>',
+                        'value' => '<code>' . implode("<br />", (array) acf_get_setting('load_json')) . '</code>',
                         'description' => 'Array of absolutes paths to folders where field group json files can be read.<br />Defaults to an array containing at index 0, the ‘acf-json’ folder within current theme'
                     ),
                     array(
@@ -144,7 +140,7 @@ function acfe_admin_settings_html(){
                     array(
                         'name'  => 'l10n_textdomain',
                         'label' => 'l10n Textdomain',
-                        'value' => '<code>' . (acf_get_setting('l10n') ? __('True'): __('False')) . '</code>',
+                        'value' => '<code>' . print_r(acf_get_setting('l10n_textdomain'), true) . '</code>',
                         'description' => 'Sets the text domain used when translating field and field group settings.<br />Defaults to ”. Strings will not be translated if this setting is empty'
                     ),
                     array(
@@ -169,7 +165,7 @@ function acfe_admin_settings_html(){
                         'name'  => 'google_api_client',
                         'label' => 'Google API Key',
                         'value' => '<code>' . acf_get_setting('google_api_client') . '</code>',
-                        'description' => 'Specify a Google Maps API Client ID to prevent usage limits.<br />Not needed if using google_api_key. Defaults to ”'
+                        'description' => 'Specify a Google Maps API Client ID to prevent usage limits.<br />Not needed if using <code>google_api_key</code>. Defaults to ”'
                     ),
                     array(
                         'name'  => 'enqueue_google_maps',
@@ -238,18 +234,20 @@ function acfe_admin_settings_html(){
                 
                 <?php
                 
-                $load_php = acf_get_setting('acfe/php_load');
-                $load_php_text = '';
-                
-                if(!empty($load_php))
-                    $load_php_text = implode("<br />", $load_php);
-                
                 $settings = array(
+                    
+                    // Modules
                     array(
                         'name'  => 'acfe/modules/author',
                         'label' => 'Module: Author',
                         'value' => '<code>' . (acf_get_setting('acfe/modules/author', true) ? __('True'): __('False')) . '</code>',
                         'description' => 'Show/hide the Author module. Defaults to true'
+                    ),
+                    array(
+                        'name'  => 'acfe/modules/categories',
+                        'label' => 'Module: Categories',
+                        'value' => '<code>' . (acf_get_setting('acfe/modules/categories', true) ? __('True'): __('False')) . '</code>',
+                        'description' => 'Enable/disable the Field Group Categories taxonomy. Defaults to true'
                     ),
                     array(
                         'name'  => 'acfe/modules/dynamic_block_types',
@@ -282,17 +280,31 @@ function acfe_admin_settings_html(){
                         'description' => 'Show/hide the Options Pages module. Defaults to true'
                     ),
                     array(
+                        'name'  => 'acfe/modules/multilang',
+                        'label' => 'Module: Multilang',
+                        'value' => '<code>' . (acf_get_setting('acfe/modules/multilang', true) ? __('True'): __('False')) . '</code>',
+                        'description' => 'Enable/disable Multilang compatibility module for WPML & Polylang. Defaults to true'
+                    ),
+                    array(
                         'name'  => 'acfe/modules/options',
                         'label' => 'Module: Options',
                         'value' => '<code>' . (acf_get_setting('acfe/modules/options', true) ? __('True'): __('False')) . '</code>',
                         'description' => 'Show/hide the Options module. Defaults to true'
                     ),
                     array(
-                        'name'  => 'acfe/modules/taxonomies',
-                        'label' => 'Module: Taxonomies Enhancements',
-                        'value' => '<code>' . (acf_get_setting('acfe/modules/taxonomies', true) ? __('True'): __('False')) . '</code>',
-                        'description' => 'Show/hide the Taxonomies enhancements module. Defaults to true'
+                        'name'  => 'acfe/modules/single_meta',
+                        'label' => 'Module: Single Meta',
+                        'value' => '<code>' . (acf_get_setting('acfe/modules/single_meta', true) ? __('True'): __('False')) . '</code>',
+                        'description' => 'Enable/disable Single Meta Save module. Defaults to false'
                     ),
+                    array(
+                        'name'  => 'acfe/modules/ui',
+                        'label' => 'Module: UI Enhancements',
+                        'value' => '<code>' . (acf_get_setting('acfe/modules/ui', true) ? __('True'): __('False')) . '</code>',
+                        'description' => 'Show/hide the UI enhancements module. Defaults to true'
+                    ),
+                    
+                    // Recaptcha
                     array(
                         'name'  => 'acfe/field/recaptcha/site_key',
                         'label' => 'Field: reCaptcha site key',
@@ -335,35 +347,77 @@ function acfe_admin_settings_html(){
                         'value' => '<code>' . (acf_get_setting('acfe/dev') ? __('True'): __('False')) . '</code>',
                         'description' => 'Show/hide the advanced WP post meta box. Defaults to false'
                     ),
+                    
+                    // PHP
                     array(
                         'name'  => 'acfe/php',
                         'label' => 'PHP',
                         'value' => '<code>' . (acf_get_setting('acfe/php') ? __('True'): __('False')) . '</code>',
-                        'description' => 'Allow PHP Sync'
+                        'description' => 'Whenever PHP AutoSync is enabled'
                     ),
                     array(
                         'name'  => 'acfe/php_found',
                         'label' => 'PHP: Found',
                         'value' => '<code>' . (acf_get_setting('acfe/php_found') ? __('True'): __('False')) . '</code>',
-                        'description' => 'Found PHP Sync load folder'
+                        'description' => 'Whenever PHP AutoSync folder has been found, based on acfe/php_load setting'
                     ),
                     array(
                         'name'  => 'acfe/php_save',
                         'label' => 'PHP: Save',
                         'value' => '<code>' . acf_get_setting('acfe/php_save') . '</code>',
-                        'description' => 'Found PHP Sync save folder'
+                        'description' => 'PHP AutoSync saving path'
                     ),
                     array(
                         'name'  => 'acfe/php_load',
                         'label' => 'PHP: Load',
-                        'value' => '<code>' . $load_php_text . '</code>',
-                        'description' => 'PHP Sync Load path'
+                        'value' => '<code>' . implode("<br />", (array) acf_get_setting('acfe/php_load')) . '</code>',
+                        'description' => 'PHP AutoSync loading path'
+                    ),
+                    
+                    // Json
+                    array(
+                        'name'  => 'acfe/json',
+                        'label' => 'Json',
+                        'value' => '<code>' . (acf_get_setting('acfe/json') ? __('True'): __('False')) . '</code>',
+                        'description' => 'Whenever Json AutoSync is enabled'
                     ),
                     array(
                         'name'  => 'acfe/json_found',
                         'label' => 'Json: Found',
                         'value' => '<code>' . (acf_get_setting('acfe/json_found') ? __('True'): __('False')) . '</code>',
-                        'description' => 'Found Json Sync load folder'
+                        'description' => 'Whenever Json AutoSync folder has been found, based on acfe/json_load setting'
+                    ),
+                    array(
+                        'name'  => 'acfe/json_save',
+                        'label' => 'Json: Save',
+                        'value' => '<code>' . acf_get_setting('acfe/json_save') . '</code>',
+                        'description' => 'Json AutoSync saving path'
+                    ),
+                    array(
+                        'name'  => 'acfe/json_load',
+                        'label' => 'Json: Load',
+                        'value' => '<code>' . implode("<br />", (array) acf_get_setting('acfe/json_load')) . '</code>',
+                        'description' => 'Json AutoSync loading paths'
+                    ),
+                    
+                    // Theme
+                    array(
+                        'name'  => 'acfe/theme_path',
+                        'label' => 'Theme: Path',
+                        'value' => '<code>' . acf_get_setting('acfe/theme_path') . '</code>',
+                        'description' => 'Detected Theme Path'
+                    ),
+                    array(
+                        'name'  => 'acfe/theme_url',
+                        'label' => 'Theme: URL',
+                        'value' => '<code>' . acf_get_setting('acfe/theme_url') . '</code>',
+                        'description' => 'Detected Theme URL'
+                    ),
+                    array(
+                        'name'  => 'acfe/theme_folder',
+                        'label' => 'Theme: Folder',
+                        'value' => '<code>' . acf_get_setting('acfe/theme_folder') . '</code>',
+                        'description' => 'Detected Theme Folder'
                     ),
                 );
                 ?>

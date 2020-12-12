@@ -56,8 +56,8 @@ class acfe_field_advanced_link extends acf_field{
 			}
 			
 		}
-        
-        if(!is_array($field['value']) && !is_numeric($field['value'])){
+		
+		if(acf_maybe_get($field, '_name') === 'post' && !empty($field['value']) && !is_array($field['value']) && !is_numeric($field['value'])){
             
             $post_type = $field['value'];
             $post_type_label = acf_get_post_type_label($post_type);
@@ -376,7 +376,6 @@ function my_acf_advanced_link_sub_fields($sub_fields, $field, $value){
                 'type'          => 'acfe_taxonomy_terms',
                 'required'      => false,
                 'class'         => 'input-term',
-                'allow_null'    => 1,
                 'field_type'    => 'select',
                 'return_format' => 'id',
                 'ui'            => 1,
@@ -414,9 +413,9 @@ function my_acf_advanced_link_sub_fields($sub_fields, $field, $value){
         );
         
         // Deprecated
-        $sub_fields = apply_filters('acfe/fields/advanced_link/fields',                         $sub_fields, $field, $value);
-        $sub_fields = apply_filters('acfe/fields/advanced_link/fields/name=' . $field['_name'], $sub_fields, $field, $value);
-        $sub_fields = apply_filters('acfe/fields/advanced_link/fields/key=' . $field['key'],    $sub_fields, $field, $value);
+        $sub_fields = apply_filters_deprecated('acfe/fields/advanced_link/fields',                         array($sub_fields, $field, $value), '0.8.1', 'acfe/fields/advanced_link/sub_fields');
+        $sub_fields = apply_filters_deprecated('acfe/fields/advanced_link/fields/name=' . $field['_name'], array($sub_fields, $field, $value), '0.8.1', 'acfe/fields/advanced_link/sub_fields/name=' . $field['_name']);
+        $sub_fields = apply_filters_deprecated('acfe/fields/advanced_link/fields/key=' . $field['key'],    array($sub_fields, $field, $value), '0.8.1', 'acfe/fields/advanced_link/sub_fields/key=' . $field['key']);
         
         // Sub Fields Fitlers
         $sub_fields = apply_filters('acfe/fields/advanced_link/sub_fields',                         $sub_fields, $field, $value);
@@ -474,10 +473,10 @@ function my_acf_advanced_link_sub_fields($sub_fields, $field, $value){
 		$value = $this->get_value($value);
         
         // clean
-        unset($value['type']);
-        unset($value['post']);
-        unset($value['term']);
-        unset($value['url_title']);
+        acfe_unset($value, 'type');
+        acfe_unset($value, 'post');
+        acfe_unset($value, 'term');
+        acfe_unset($value, 'url_title');
 
 		return $value;
 		
@@ -493,7 +492,7 @@ function my_acf_advanced_link_sub_fields($sub_fields, $field, $value){
         if(empty($value))
             return false;
         
-        if((acf_maybe_get($value, 'post') || acf_maybe_get($value, 'term')) && !acf_maybe_get($value, 'url'))
+        if((acf_maybe_get($value, 'type') === 'url' && !acf_maybe_get($value, 'url')) || (acf_maybe_get($value, 'type') === 'post' && !acf_maybe_get($value, 'post')) || (acf_maybe_get($value, 'type') === 'term' && !acf_maybe_get($value, 'term')))
             return false;
         
 		// return

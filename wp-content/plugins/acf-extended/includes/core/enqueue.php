@@ -3,95 +3,90 @@
 if(!defined('ABSPATH'))
     exit;
 
-/**
- * Admin: Enqueue everywhere + conditional
- */
-add_action('admin_enqueue_scripts', 'acfe_enqueue_admin_scripts');
-function acfe_enqueue_admin_scripts(){
+if(!class_exists('acfe_enqueue')):
+
+class acfe_enqueue{
     
-    // Enqueue ACF input
-    wp_enqueue_style('acf-input');
-    wp_enqueue_script('acf-input');
+    var $suffix = '';
+    var $version = '';
     
-    // ACF Extended
-    wp_enqueue_script('acf-extended', acfe_get_url('assets/acf-extended.js'), array('jquery'), ACFE_VERSION);
-    wp_enqueue_style('acf-extended', acfe_get_url('assets/acf-extended.css'), false, ACFE_VERSION);
-    wp_enqueue_style('acf-extended-admin', acfe_get_url('assets/acf-extended-admin.css'), false, ACFE_VERSION);
+    function __construct(){
     
-    // Better Taxonomies
-    if(acf_get_setting('acfe/modules/taxonomies')){
+        // Vars
+        $this->suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
+        $this->version = ACFE_VERSION;
         
-        wp_enqueue_style('acf-extended-taxonomies', acfe_get_url('assets/acf-extended-taxonomies.css'), false, ACFE_VERSION);
+        // Hooks
+        add_action('admin_enqueue_scripts', array($this, 'admin_enqueue'));
+        add_action('acf/input/admin_enqueue_scripts', array($this, 'acf_enqueue'));
+    }
+    
+    /**
+     * Admin Enqueue
+     */
+    function admin_enqueue(){
+    
+        // Admin
+        wp_enqueue_style('acf-extended-admin', acfe_get_url('assets/css/acfe-admin' . $this->suffix . '.css'), false, $this->version);
+    
+        // Field Group
+        if(acf_is_screen(array('edit-acf-field-group', 'acf-field-group'))){
+        
+            wp_enqueue_style('acf-extended-field-group', acfe_get_url('assets/css/acfe-field-group' . $this->suffix . '.css'), false, $this->version);
+        
+        }
         
     }
-
-    // ACF Extended: Field Groups only
-    if(acf_is_screen(array('edit-acf-field-group', 'acf-field-group'))){
-        
-        wp_enqueue_script('acf-extended-fg', acfe_get_url('assets/acf-extended-fg.js'), array('jquery'), ACFE_VERSION);
-        wp_enqueue_style('acf-extended-fg', acfe_get_url('assets/acf-extended-fg.css'), false, ACFE_VERSION);
     
+    /**
+     * ACF (Front + Back) Enqueue
+     */
+    function acf_enqueue(){
+        
+        // Global
+        wp_enqueue_style('acf-extended', acfe_get_url('assets/css/acfe' . $this->suffix . '.css'), false, $this->version);
+        wp_enqueue_script('acf-extended', acfe_get_url('assets/js/acfe' . $this->suffix . '.js'), array('acf'), $this->version);
+    
+        // Input
+        wp_enqueue_style('acf-extended-input', acfe_get_url('assets/css/acfe-input' . $this->suffix . '.css'), false, $this->version);
+        wp_enqueue_script('acf-extended-input', acfe_get_url('assets/js/acfe-input' . $this->suffix . '.js'), array('acf-input'), $this->version);
+    
+        // Admin
+        if(is_admin()){
+    
+            wp_enqueue_script('acf-extended-admin', acfe_get_url('assets/js/acfe-admin' . $this->suffix . '.js'), array('acf'), $this->version);
+            
+        }
+    
+        // Field Group
+        if(acf_is_screen(array('acf-field-group'))){
+            
+            wp_enqueue_script('acf-extended-field-group', acfe_get_url('assets/js/acfe-field-group' . $this->suffix . '.js'), array('acf-field-group'), $this->version);
+        
+        }
+        
+        acf_localize_data(array(
+            'acfe_version' => ACFE_VERSION,
+            'acfe' => array(
+                'home_url'          => home_url(),
+                'is_admin'          => is_admin(),
+                'is_user_logged_in' => is_user_logged_in(),
+            )
+        ));
+        
+        $read_more = __('Read more...');
+        $read_more = str_replace('…', '', $read_more);
+        $read_more = str_replace('...', '', $read_more);
+        
+        acf_localize_text(array(
+            'Close'     => __('Close', 'acf'),
+            'Read more' => $read_more,
+        ));
+        
     }
     
 }
 
-/**
- * Admin + WP: Enqueue where ACF is loaded
- */
-add_action('acf/enqueue_scripts', 'acfe_enqueue_scripts');
-function acfe_enqueue_scripts(){
-    
-    // ACF Extended
-    wp_enqueue_script('acf-extended', acfe_get_url('assets/acf-extended.js'), array('jquery'), ACFE_VERSION);
-    wp_enqueue_style('acf-extended', acfe_get_url('assets/acf-extended.css'), false, ACFE_VERSION);
-    
-    // ACF Extended: Fields
-    wp_enqueue_script('acf-extended-fields', acfe_get_url('assets/acf-extended-fields.js'), array('jquery'), ACFE_VERSION);
-    
-    // Front only
-    if(!is_admin()){
-        
-        wp_enqueue_script('acf-extended-form', acfe_get_url('assets/acf-extended-form.js'), array('jquery'), ACFE_VERSION);
-        
-    }
-    
-}
+new acfe_enqueue();
 
-/**
- * Admin: Enqueue where ACF is loaded
- */
-add_action('acf/input/admin_enqueue_scripts', 'acfe_enqueue_admin_input_scripts');
-function acfe_enqueue_admin_input_scripts(){
-    
-    // ACF Extended: Modal
-    wp_enqueue_style('acf-extended-modal', acfe_get_url('assets/acf-extended-modal.css'), false, ACFE_VERSION);
-    
-    // Do not enqueue on ACF Field Groups views
-    if(acf_is_screen(array('edit-acf-field-group', 'acf-field-group')))
-        return;
-    
-    // ACF Extended: Repeater
-    wp_enqueue_style('acf-extended-repeater', acfe_get_url('assets/acf-extended-repeater.css'), false, ACFE_VERSION);
-    wp_enqueue_script('acf-extended-repeater', acfe_get_url('assets/acf-extended-repeater.js'), array('jquery'), ACFE_VERSION);
-    
-    // ACF Extended: Flexible Content
-    wp_enqueue_style('acf-extended-fc', acfe_get_url('assets/acf-extended-fc.css'), false, ACFE_VERSION);
-    wp_enqueue_script('acf-extended-fc', acfe_get_url('assets/acf-extended-fc.js'), array('jquery'), ACFE_VERSION);
-    
-    // ACF Extended: Flexible Content Control
-    wp_enqueue_style('acf-extended-fc-control', acfe_get_url('assets/acf-extended-fc-control.css'), false, ACFE_VERSION);
-    wp_enqueue_script('acf-extended-fc-control', acfe_get_url('assets/acf-extended-fc-control.js'), array('jquery'), ACFE_VERSION);
-    
-    // ACF Extended: Flexible Content Modal Select
-    wp_enqueue_style('acf-extended-fc-modal-select', acfe_get_url('assets/acf-extended-fc-modal-select.css'), false, ACFE_VERSION);
-    wp_enqueue_script('acf-extended-fc-modal-select', acfe_get_url('assets/acf-extended-fc-modal-select.js'), array('jquery'), ACFE_VERSION);
-    
-    // ACF Extended: Flexible Content Modal Edit
-    wp_enqueue_style('acf-extended-fc-modal-edit', acfe_get_url('assets/acf-extended-fc-modal-edit.css'), false, ACFE_VERSION);
-    wp_enqueue_script('acf-extended-fc-modal-edit', acfe_get_url('assets/acf-extended-fc-modal-edit.js'), array('jquery'), ACFE_VERSION);
-    
-    acf_localize_text(array(
-        'Close'	=> __('Close', 'acf'),
-    ));
-    
-}
+endif;

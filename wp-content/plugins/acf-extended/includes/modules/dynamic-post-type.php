@@ -23,7 +23,7 @@ function acfe_dpt_register(){
             'edit_item'     => 'Edit Post Type',
             'add_new_item'  => 'New Post Type',
         ),
-        'supports'              => false,
+        'supports'              => array('title'),
         'hierarchical'          => false,
         'public'                => false,
         'show_ui'               => true,
@@ -46,9 +46,24 @@ function acfe_dpt_register(){
             'edit_post'             => acf_get_setting('capability'),
             'delete_post'           => acf_get_setting('capability'),
             'read_post'             => acf_get_setting('capability'),
-        )
+        ),
+		'acfe_admin_orderby'    => 'title',
+		'acfe_admin_order'      => 'ASC',
+		'acfe_admin_ppp'        => 999,
     ));
 
+}
+
+
+add_action('current_screen', 'acfe_dpt_current_screen');
+function acfe_dpt_current_screen(){
+    
+    if(!acf_is_screen('acfe-dpt'))
+        return;
+    
+    // Flush Permalinks
+    flush_rewrite_rules();
+    
 }
 
 /**
@@ -62,10 +77,45 @@ function acfe_dpt_registers(){
     if(empty($dynamic_post_types))
         return;
     
-    foreach($dynamic_post_types as $name => $register_args){
+    foreach($dynamic_post_types as $name => $args){
+        
+        if(post_type_exists($name))
+            continue;
+    
+        // Textdomain
+        $textdomain = 'ACF Extended: Post Types';
+    
+        // Label
+        if(isset($args['label'])){
+        
+            acfe__($args['label'], 'Label', $textdomain);
+        
+        }
+    
+        // Description
+        if(isset($args['description'])){
+        
+            acfe__($args['description'], 'Description', $textdomain);
+        
+        }
+    
+        // Labels
+        if(isset($args['labels'])){
+        
+            foreach($args['labels'] as $label_name => &$label_text){
+            
+                acfe__($label_text, ucfirst($label_name), $textdomain);
+            
+            }
+        
+        }
         
         // Register: Execute
-        register_post_type($name, $register_args);
+        if(!empty($name)){
+    
+            register_post_type($name, $args);
+            
+        }
         
     }
 
@@ -82,7 +132,7 @@ function acfe_dpt_exclude($post_types, $args){
     
     foreach($post_types as $k => $post_type){
         
-        if($post_type != 'acfe-dpt')
+        if($post_type !== 'acfe-dpt')
             continue;
         
         unset($post_types[$k]);
@@ -118,18 +168,9 @@ function acfe_dpt_filter_save($post_id){
     if(get_post_type($post_id) !== 'acfe-dpt')
         return;
     
-    $title = get_field('label', $post_id);
-    $name = get_field('acfe_dpt_name', $post_id);
-    
-    // Update post
-    wp_update_post(array(
-        'ID'            => $post_id,
-        'post_title'    => $title,
-        'post_name'     => $name,
-    ));
-    
     // Register Args
-    $label = get_field('label', $post_id);
+	$label = get_post_field('post_title', $post_id);
+	$name = get_field('acfe_dpt_name', $post_id);
     $description = get_field('description', $post_id);
     $hierarchical = get_field('hierarchical', $post_id);
     $supports = get_field('supports', $post_id);
@@ -151,7 +192,7 @@ function acfe_dpt_filter_save($post_id){
     }
     
     // Menu
-    $menu_position = (int) get_field('menu_position', $post_id);
+    $menu_position = get_field('menu_position', $post_id);
     $menu_icon = get_field('menu_icon', $post_id);
     $show_ui = get_field('show_ui', $post_id);
     $show_in_menu = get_field('show_in_menu', $post_id);
@@ -206,7 +247,6 @@ function acfe_dpt_filter_save($post_id){
         'labels'                => $labels_args,
         
         // Menu
-        'menu_position'         => $menu_position,
         'menu_icon'             => $menu_icon,
         'show_ui'               => $show_ui,
         'show_in_menu'          => $show_in_menu,
@@ -239,6 +279,10 @@ function acfe_dpt_filter_save($post_id){
         'acfe_admin_orderby'    => $admin_orderby,
         'acfe_admin_order'      => $admin_order,
     );
+    
+    // Menu Position
+    if(!acf_is_empty($menu_position))
+        $register_args['menu_position'] = (int) $menu_position;
     
     // Has archive: override
     if($has_archive && $has_archive_slug)
@@ -288,9 +332,12 @@ function acfe_dpt_filter_save($post_id){
     
     // Update ACFE option
 	acfe_settings('modules.dynamic_post_type.data', $option, true);
-    
-    // Flush permalinks
-    flush_rewrite_rules();
+	
+	// Update post
+	wp_update_post(array(
+		'ID'            => $post_id,
+		'post_name'     => $name,
+	));
     
 }
 
@@ -300,7 +347,7 @@ function acfe_dpt_filter_save($post_id){
 add_action('publish_to_trash', 'acfe_dpt_filter_status_trash');
 function acfe_dpt_filter_status_trash($post){
     
-    if(get_post_type($post->ID) != 'acfe-dpt')
+    if(get_post_type($post->ID) !== 'acfe-dpt')
         return;
     
     $post_id = $post->ID;
@@ -327,49 +374,10 @@ function acfe_dpt_filter_status_trash($post){
 add_action('trash_to_publish', 'acfe_dpt_filter_status_publish');
 function acfe_dpt_filter_status_publish($post){
     
-    if(get_post_type($post->ID) != 'acfe-dpt')
+    if(get_post_type($post->ID) !== 'acfe-dpt')
         return;
     
     acfe_dpt_filter_save($post->ID);
-    
-}
-
-/**
- * Dynamic Post Type Admin: List
- */
-add_action('pre_get_posts', 'acfe_dpt_admin_pre_get_posts');
-function acfe_dpt_admin_pre_get_posts($query){
-    
-    if(!is_admin() || !$query->is_main_query())
-        return;
-    
-    global $pagenow;
-    if($pagenow != 'edit.php')
-        return;
-    
-    $post_type = $query->get('post_type');
-    if($post_type != 'acfe-dpt')
-        return;
-    
-    $query->set('orderby', 'name');
-    $query->set('order', 'ASC');
-    
-}
-
-/**
- * Dynamic Post Type Admin: Posts Per Page
- */
-add_filter('edit_posts_per_page', 'acfe_dpt_admin_ppp', 10, 2);
-function acfe_dpt_admin_ppp($ppp, $post_type){
-    
-    if($post_type != 'acfe-dpt')
-        return $ppp;
-    
-    global $pagenow;
-    if($pagenow != 'edit.php')
-        return $ppp;
-    
-    return 999;
     
 }
 
@@ -406,7 +414,7 @@ add_filter('edit_posts_per_page', 'acfe_dpt_filter_admin_ppp', 10, 2);
 function acfe_dpt_filter_admin_ppp($ppp, $post_type){
     
     global $pagenow;
-    if($pagenow != 'edit.php')
+    if($pagenow !== 'edit.php')
         return $ppp;
     
     $post_type_obj = get_post_type_object($post_type);
@@ -656,20 +664,63 @@ function acfe_dpt_admin_footer(){
     
 }
 
-/**
- * Admin Disable Name
- */
-add_filter('acf/prepare_field/name=acfe_dpt_name', 'acfe_dpt_admin_disable_name');
-function acfe_dpt_admin_disable_name($field){
-    
-    global $pagenow;
-    if($pagenow != 'post.php')
-        return $field;
-    
-    $field['disabled'] = true;
-    
-    return $field;
-    
+add_filter('enter_title_here', 'acfe_dpt_admin_placeholder_title', 10, 2);
+function acfe_dpt_admin_placeholder_title($placeholder, $post){
+	
+	// Get post type
+	global $typenow;
+	
+	// Check post type
+	$post_type = $typenow;
+	if($post_type !== 'acfe-dpt')
+		return $placeholder;
+	
+	return 'Post Type Label';
+	
+}
+
+add_action('admin_footer-post.php', 'acfe_dpt_admin_validate_title');
+function acfe_dpt_admin_validate_title(){
+ 
+	// Get post type
+	global $typenow;
+	
+	// Check post type
+	$post_type = $typenow;
+	if($post_type !== 'acfe-dpt')
+		return;
+	
+	?>
+    <script type="text/javascript">
+        (function($){
+
+            if(typeof acf === 'undefined')
+                return;
+
+            $('#post').submit(function(e){
+
+                // vars
+                var $title = $('#titlewrap #title');
+
+                // empty
+                if(!$title.val()){
+
+                    // prevent default
+                    e.preventDefault();
+
+                    // alert
+                    alert('Post Type Label is required.');
+
+                    // focus
+                    $title.focus();
+
+                }
+
+            });
+
+        })(jQuery);
+    </script>
+	<?php
 }
 
 /**
@@ -712,32 +763,57 @@ function acfe_dpt_admin_validate_name($valid, $value, $field, $input){
         
     );
     
+    // Reserved Names
     if(in_array($value, $excludes))
         return __('This post type name is reserved');
+	
+	// Editing Current Dynamic Post Type
+	$current_post_id = acf_maybe_get_POST('post_ID');
+	
+	if(!empty($current_post_id)){
+		
+		$current_name = get_field($field['name'], $current_post_id);
+		
+		if($value === $current_name)
+			return $valid;
+		
+	}
     
-    // Editing Current Dynamic Post Type
-    $current_post_id = $_POST['_acf_post_id'];
-    $current_post_type = false;
-    
-    if(!empty($current_post_id))
-        $current_post_type = get_field('acfe_dpt_name', $current_post_id);
-    
-    if($value === $current_post_type)
-        return $valid;
-    
-    // Listing WP Post Types
+    // Check existing WP Post Types
     global $wp_post_types;
+	
     if(!empty($wp_post_types)){
+        
         foreach($wp_post_types as $post_type){
-            if($value != $post_type->name)
+            
+            if($value !== $post_type->name)
                 continue;
             
             $valid = __('This post type name already exists');
+            
         }
+        
     }
 	
 	return $valid;
     
+}
+
+add_filter('acf/update_value/name=acfe_dpt_name', 'acfe_dpt_admin_update_name', 10, 3);
+function acfe_dpt_admin_update_name($value, $post_id, $field){
+	
+	// Previous value
+	$_value = get_field($field['name'], $post_id);
+	
+	// Value Changed. Delete option
+	if($_value !== $value){
+		
+		acfe_settings()->delete('modules.dynamic_post_type.data.' . $_value);
+		
+	}
+	
+	return $value;
+	
 }
 
 /**
@@ -779,35 +855,11 @@ acf_add_local_field_group(array(
                 'width' => '',
                 'class' => '',
                 'id' => '',
+                'data-no-preference' => true,
             ),
             'acfe_permissions' => '',
             'placement' => 'top',
             'endpoint' => 0,
-        ),
-        array(
-            'key' => 'field_acfe_dpt_label',
-            'label' => 'Label',
-            'name' => 'label',
-            'type' => 'text',
-            'instructions' => 'General name for the post type, usually plural. Default is Posts/Pages',
-            'required' => 1,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'user_roles' => array(
-                0 => 'all',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
         ),
         array(
             'key' => 'field_acfe_dpt_name',
@@ -1046,6 +1098,744 @@ acf_add_local_field_group(array(
                 'true' => 'True',
             ),
             'default_value' => array(
+            ),
+            'allow_null' => 0,
+            'multiple' => 0,
+            'ui' => 0,
+            'return_format' => 'value',
+            'ajax' => 0,
+            'placeholder' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_tab_menu',
+            'label' => 'Menu',
+            'name' => '',
+            'type' => 'tab',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_permissions' => '',
+            'placement' => 'top',
+            'endpoint' => 0,
+        ),
+        array(
+            'key' => 'field_acfe_dpt_menu_position',
+            'label' => 'Menu position',
+            'name' => 'menu_position',
+            'type' => 'number',
+            'instructions' => 'The position in the menu order the post type should appear. show_in_menu must be true',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => 0,
+            'max' => '',
+            'step' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_menu_icon',
+            'label' => 'Menu icon',
+            'name' => 'menu_icon',
+            'type' => 'text',
+            'instructions' => 'The url to the icon to be used for this menu or the name of the icon from the iconfont (<a href="https://developer.wordpress.org/resource/dashicons/" target="_blank">Dashicons</a>)',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'default_value' => 'dashicons-admin-post',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_show_ui',
+            'label' => 'Show UI',
+            'name' => 'show_ui',
+            'type' => 'true_false',
+            'instructions' => 'Whether to generate a default UI for managing this post type in the admin',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'message' => '',
+            'default_value' => 1,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_show_in_menu',
+            'label' => 'Show in menu',
+            'name' => 'show_in_menu',
+            'type' => 'true_false',
+            'instructions' => 'Where to show the post type in the admin menu. show_ui must be true',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'message' => '',
+            'default_value' => 1,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_show_in_menu_text',
+            'label' => 'Show in menu (text)',
+            'name' => 'show_in_menu_text',
+            'type' => 'text',
+            'instructions' => 'If an existing top level page such as \'tools.php\' or \'edit.php?post_type=page\', the post type will be placed as a sub menu of that page',
+            'required' => 0,
+            'conditional_logic' => array(
+                array(
+                    array(
+                        'field'     => 'field_acfe_dpt_show_in_menu',
+                        'operator'  => '==',
+                        'value'     => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_show_in_nav_menus',
+            'label' => 'Show in nav menus',
+            'name' => 'show_in_nav_menus',
+            'type' => 'true_false',
+            'instructions' => 'Whether post_type is available for selection in navigation menus',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'message' => '',
+            'default_value' => 1,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_show_in_admin_bar',
+            'label' => 'Show in admin bar',
+            'name' => 'show_in_admin_bar',
+            'type' => 'true_false',
+            'instructions' => 'Where to show the post type in the admin menu. show_ui must be true',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'message' => '',
+            'default_value' => 1,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_tab_archive',
+            'label' => 'Archive',
+            'name' => '',
+            'type' => 'tab',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_permissions' => '',
+            'placement' => 'top',
+            'endpoint' => 0,
+        ),
+        array(
+            'key' => 'field_acfe_dpt_archive_template',
+            'label' => 'Template',
+            'name' => 'acfe_dpt_archive_template',
+            'type' => 'text',
+            'instructions' => 'ACF Extended: Which template file to load for the archive query. More informations on <a href="https://developer.wordpress.org/themes/basics/template-hierarchy/">Template hierarchy</a>',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'default_value' => '',
+            'placeholder' => 'my-template.php',
+            'prepend' => trailingslashit(acfe_get_setting('theme_folder')),
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_has_archive',
+            'label' => 'Has archive',
+            'name' => 'has_archive',
+            'type' => 'true_false',
+            'instructions' => 'Enables post type archives.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'message' => '',
+            'default_value' => 1,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_has_archive_slug',
+            'label' => 'Slug',
+            'name' => 'has_archive_slug',
+            'type' => 'text',
+            'instructions' => 'Will use post type name as archive slug by default.',
+            'required' => 0,
+            'conditional_logic' => array(
+                array(
+                    array(
+                        'field' => 'field_acfe_dpt_has_archive',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'default_value' => '',
+            'placeholder' => 'Default',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_archive_posts_per_page',
+            'label' => 'Posts per page',
+            'name' => 'acfe_dpt_archive_posts_per_page',
+            'type' => 'number',
+            'instructions' => 'ACF Extended: Number of posts to display in the archive page',
+            'required' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'default_value' => 10,
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => -1,
+            'max' => '',
+            'step' => '',
+            'conditional_logic' => array(
+	            array(
+		            array(
+			            'field' => 'field_acfe_dpt_has_archive',
+			            'operator' => '==',
+			            'value' => '1',
+		            ),
+	            ),
+            ),
+        ),
+        array(
+            'key' => 'field_acfe_dpt_archive_orderby',
+            'label' => 'Order by',
+            'name' => 'acfe_dpt_archive_orderby',
+            'type' => 'text',
+            'instructions' => 'ACF Extended: Sort retrieved posts by parameter in the archive page. Defaults to \'date (post_date)\'.',
+            'required' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => array(
+                '5c9479dec93c4' => array(
+                    'acfe_update_function' => 'sanitize_title',
+                ),
+            ),
+            'acfe_permissions' => '',
+            'default_value' => 'date',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+            'conditional_logic' => array(
+	            array(
+		            array(
+			            'field' => 'field_acfe_dpt_has_archive',
+			            'operator' => '==',
+			            'value' => '1',
+		            ),
+	            ),
+            ),
+        ),
+        array(
+            'key' => 'field_acfe_dpt_archive_order',
+            'label' => 'Order',
+            'name' => 'acfe_dpt_archive_order',
+            'type' => 'select',
+            'instructions' => 'ACF Extended: Designates the ascending or descending order of the \'orderby\' parameter in the archive page. Defaults to \'DESC\'.',
+            'required' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'choices' => array(
+                'ASC' => 'ASC',
+                'DESC' => 'DESC',
+            ),
+            'default_value' => array(
+                0 => 'DESC',
+            ),
+            'allow_null' => 0,
+            'multiple' => 0,
+            'ui' => 0,
+            'return_format' => 'value',
+            'ajax' => 0,
+            'placeholder' => '',
+            'conditional_logic' => array(
+	            array(
+		            array(
+			            'field' => 'field_acfe_dpt_has_archive',
+			            'operator' => '==',
+			            'value' => '1',
+		            ),
+	            ),
+            ),
+        ),
+        array(
+            'key' => 'field_acfe_dpt_tab_single',
+            'label' => 'Single',
+            'name' => '',
+            'type' => 'tab',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_permissions' => '',
+            'placement' => 'top',
+            'endpoint' => 0,
+        ),
+        array(
+            'key' => 'field_acfe_dpt_single_template',
+            'label' => 'Template',
+            'name' => 'acfe_dpt_single_template',
+            'type' => 'text',
+            'instructions' => 'ACF Extended: Which template file to load for the single query. More informations on <a href="https://developer.wordpress.org/themes/basics/template-hierarchy/">Template hierarchy</a>',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'default_value' => '',
+            'placeholder' => 'my-template.php',
+            'prepend' => trailingslashit(acfe_get_setting('theme_folder')),
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_rewrite',
+            'label' => 'Rewrite',
+            'name' => 'rewrite',
+            'type' => 'true_false',
+            'instructions' => 'Triggers the handling of rewrites for this post type. To prevent rewrites, set to false.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'message' => '',
+            'default_value' => 1,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_rewrite_args_select',
+            'label' => 'Rewrite Arguments',
+            'name' => 'rewrite_args_select',
+            'type' => 'true_false',
+            'instructions' => 'Use additional rewrite arguments',
+            'required' => 0,
+            'conditional_logic' => array(
+                array(
+                    array(
+                        'field' => 'field_acfe_dpt_rewrite',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'message' => '',
+            'default_value' => 0,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_rewrite_args',
+            'label' => 'Rewrite Arguments',
+            'name' => 'rewrite_args',
+            'type' => 'group',
+            'instructions' => 'Additional arguments',
+            'required' => 0,
+            'conditional_logic' => array(
+                array(
+                    array(
+                        'field' => 'field_acfe_dpt_rewrite',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                    array(
+                        'field' => 'field_acfe_dpt_rewrite_args_select',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'layout' => 'row',
+            'sub_fields' => array(
+                array(
+                    'key' => 'field_acfe_dpt_rewrite_slug',
+                    'label' => 'Slug',
+                    'name' => 'acfe_dpt_rewrite_slug',
+                    'type' => 'text',
+                    'instructions' => 'Customize the permalink structure slug. Defaults to the post type name value. Should be translatable.',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_acfe_dpt_rewrite_args_select',
+                                'operator' => '==',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'acfe_validate' => '',
+                    'acfe_update' => '',
+                    'acfe_permissions' => '',
+                    'default_value' => '',
+                    'placeholder' => 'Default',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
+                ),
+                array(
+                    'key' => 'field_acfe_dpt_rewrite_with_front',
+                    'label' => 'With front',
+                    'name' => 'acfe_dpt_rewrite_with_front',
+                    'type' => 'true_false',
+                    'instructions' => 'Should the permalink structure be prepended with the front base. (example: if your permalink structure is /blog/, then your links will be: false->/news/, true->/blog/news/). Defaults to true.',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_acfe_dpt_rewrite_args_select',
+                                'operator' => '==',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'acfe_validate' => '',
+                    'acfe_update' => '',
+                    'acfe_permissions' => '',
+                    'message' => '',
+                    'default_value' => 1,
+                    'ui' => 1,
+                    'ui_on_text' => '',
+                    'ui_off_text' => '',
+                ),
+                array(
+                    'key' => 'field_acfe_dpt_rewrite_feeds',
+                    'label' => 'Feeds',
+                    'name' => 'feeds',
+                    'type' => 'true_false',
+                    'instructions' => 'Should a feed permalink structure be built for this post type. Defaults to has_archive value.',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_acfe_dpt_rewrite_args_select',
+                                'operator' => '==',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'acfe_validate' => '',
+                    'acfe_update' => '',
+                    'acfe_permissions' => '',
+                    'message' => '',
+                    'default_value' => 1,
+                    'ui' => 1,
+                    'ui_on_text' => '',
+                    'ui_off_text' => '',
+                ),
+                array(
+                    'key' => 'field_acfe_dpt_rewrite_pages',
+                    'label' => 'Pages',
+                    'name' => 'pages',
+                    'type' => 'true_false',
+                    'instructions' => 'Should the permalink structure provide for pagination. Defaults to true.',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_acfe_dpt_rewrite_args_select',
+                                'operator' => '==',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'acfe_validate' => '',
+                    'acfe_update' => '',
+                    'acfe_permissions' => '',
+                    'message' => '',
+                    'default_value' => 1,
+                    'ui' => 1,
+                    'ui_on_text' => '',
+                    'ui_off_text' => '',
+                ),
+            ),
+        ),
+        array(
+            'key' => 'field_acfe_dpt_tab_admin',
+            'label' => 'Admin',
+            'name' => '',
+            'type' => 'tab',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_permissions' => '',
+            'placement' => 'top',
+            'endpoint' => 0,
+        ),
+        array(
+            'key' => 'field_acfe_dpt_admin_archive',
+            'label' => 'Archive Page',
+            'name' => 'acfe_dpt_admin_archive',
+            'type' => 'true_false',
+            'instructions' => 'ACF Extended: Add an "Archive" Options Page as submenu of the post type.',
+            'required' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'message' => '',
+            'default_value' => 0,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_admin_posts_per_page',
+            'label' => 'Posts per page',
+            'name' => 'acfe_dpt_admin_posts_per_page',
+            'type' => 'number',
+            'instructions' => 'ACF Extended: Number of posts to display on the admin list screen.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'default_value' => 10,
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => -1,
+            'max' => '',
+            'step' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_admin_orderby',
+            'label' => 'Order by',
+            'name' => 'acfe_dpt_admin_orderby',
+            'type' => 'text',
+            'instructions' => 'ACF Extended: Sort retrieved posts by parameter in the admin list screen. Defaults to \'date (post_date)\'.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => array(
+                '5c9479dec93c4' => array(
+                    'acfe_update_function' => 'sanitize_title',
+                ),
+            ),
+            'acfe_permissions' => '',
+            'default_value' => 'date',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array(
+            'key' => 'field_acfe_dpt_admin_order',
+            'label' => 'Order',
+            'name' => 'acfe_dpt_admin_order',
+            'type' => 'select',
+            'instructions' => 'ACF Extended: Designates the ascending or descending order of the \'orderby\' parameter in the admin list screen. Defaults to \'DESC\'.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'choices' => array(
+                'ASC' => 'ASC',
+                'DESC' => 'DESC',
+            ),
+            'default_value' => array(
+                0 => 'DESC',
             ),
             'allow_null' => 0,
             'multiple' => 0,
@@ -1751,187 +2541,6 @@ Default: if empty, \'name\' is set to value of \'label\', and \'singular_name\' 
             ),
         ),
         array(
-            'key' => 'field_acfe_dpt_tab_menu',
-            'label' => 'Menu',
-            'name' => '',
-            'type' => 'tab',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_permissions' => '',
-            'placement' => 'top',
-            'endpoint' => 0,
-        ),
-        array(
-            'key' => 'field_acfe_dpt_menu_position',
-            'label' => 'Menu position',
-            'name' => 'menu_position',
-            'type' => 'number',
-            'instructions' => 'The position in the menu order the post type should appear. show_in_menu must be true',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'default_value' => 20,
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'min' => 0,
-            'max' => '',
-            'step' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_menu_icon',
-            'label' => 'Menu icon',
-            'name' => 'menu_icon',
-            'type' => 'text',
-            'instructions' => 'The url to the icon to be used for this menu or the name of the icon from the iconfont (<a href="https://developer.wordpress.org/resource/dashicons/" target="_blank">Dashicons</a>)',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'default_value' => 'dashicons-admin-post',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_show_ui',
-            'label' => 'Show UI',
-            'name' => 'show_ui',
-            'type' => 'true_false',
-            'instructions' => 'Whether to generate a default UI for managing this post type in the admin',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'message' => '',
-            'default_value' => 1,
-            'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_show_in_menu',
-            'label' => 'Show in menu',
-            'name' => 'show_in_menu',
-            'type' => 'true_false',
-            'instructions' => 'Where to show the post type in the admin menu. show_ui must be true',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'message' => '',
-            'default_value' => 1,
-            'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_show_in_menu_text',
-            'label' => 'Show in menu (text)',
-            'name' => 'show_in_menu_text',
-            'type' => 'text',
-            'instructions' => 'If an existing top level page such as \'tools.php\' or \'edit.php?post_type=page\', the post type will be placed as a sub menu of that',
-            'required' => 0,
-            'conditional_logic' => array(
-                array(
-                    array(
-                        'field' => 'field_5c9f5dd58d5ee',
-                        'operator' => '==',
-                        'value' => '1',
-                    ),
-                ),
-            ),
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'default_value' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_show_in_nav_menus',
-            'label' => 'Show in nav menus',
-            'name' => 'show_in_nav_menus',
-            'type' => 'true_false',
-            'instructions' => 'Whether post_type is available for selection in navigation menus',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'message' => '',
-            'default_value' => 1,
-            'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_show_in_admin_bar',
-            'label' => 'Show in admin bar',
-            'name' => 'show_in_admin_bar',
-            'type' => 'true_false',
-            'instructions' => 'Where to show the post type in the admin menu. show_ui must be true',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'message' => '',
-            'default_value' => 1,
-            'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
-        ),
-        array(
             'key' => 'field_acfe_dpt_tab_capability',
             'label' => 'Capability',
             'name' => '',
@@ -2034,563 +2643,6 @@ etc...',
             'placeholder' => '',
         ),
         array(
-            'key' => 'field_acfe_dpt_tab_archive',
-            'label' => 'Archive',
-            'name' => '',
-            'type' => 'tab',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_permissions' => '',
-            'placement' => 'top',
-            'endpoint' => 0,
-        ),
-        array(
-            'key' => 'field_acfe_dpt_archive_template',
-            'label' => 'Template',
-            'name' => 'acfe_dpt_archive_template',
-            'type' => 'text',
-            'instructions' => 'ACF Extended: Which template file to load for the archive query. More informations on <a href="https://developer.wordpress.org/themes/basics/template-hierarchy/">Template hierarchy</a>',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'default_value' => '',
-            'placeholder' => 'my-template.php',
-            'prepend' => str_replace(home_url(), '', ACFE_THEME_URL) . '/',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_has_archive',
-            'label' => 'Has archive',
-            'name' => 'has_archive',
-            'type' => 'true_false',
-            'instructions' => 'Enables post type archives.',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'message' => '',
-            'default_value' => 1,
-            'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_has_archive_slug',
-            'label' => 'Slug',
-            'name' => 'has_archive_slug',
-            'type' => 'text',
-            'instructions' => 'Will use post type name as archive slug by default.',
-            'required' => 0,
-            'conditional_logic' => array(
-                array(
-                    array(
-                        'field' => 'field_acfe_dpt_has_archive',
-                        'operator' => '==',
-                        'value' => '1',
-                    ),
-                ),
-            ),
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'default_value' => '',
-            'placeholder' => 'Default',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_archive_posts_per_page',
-            'label' => 'Posts per page',
-            'name' => 'acfe_dpt_archive_posts_per_page',
-            'type' => 'number',
-            'instructions' => 'ACF Extended: Number of posts to display in the archive page',
-            'required' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'default_value' => 10,
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'min' => -1,
-            'max' => '',
-            'step' => '',
-            'conditional_logic' => array(
-	            array(
-		            array(
-			            'field' => 'field_acfe_dpt_has_archive',
-			            'operator' => '==',
-			            'value' => '1',
-		            ),
-	            ),
-            ),
-        ),
-        array(
-            'key' => 'field_acfe_dpt_archive_orderby',
-            'label' => 'Order by',
-            'name' => 'acfe_dpt_archive_orderby',
-            'type' => 'text',
-            'instructions' => 'ACF Extended: Sort retrieved posts by parameter in the archive page. Defaults to \'date (post_date)\'.',
-            'required' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => array(
-                '5c9479dec93c4' => array(
-                    'acfe_update_function' => 'sanitize_title',
-                ),
-            ),
-            'acfe_permissions' => '',
-            'default_value' => 'date',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
-            'conditional_logic' => array(
-	            array(
-		            array(
-			            'field' => 'field_acfe_dpt_has_archive',
-			            'operator' => '==',
-			            'value' => '1',
-		            ),
-	            ),
-            ),
-        ),
-        array(
-            'key' => 'field_acfe_dpt_archive_order',
-            'label' => 'Order',
-            'name' => 'acfe_dpt_archive_order',
-            'type' => 'select',
-            'instructions' => 'ACF Extended: Designates the ascending or descending order of the \'orderby\' parameter in the archive page. Defaults to \'DESC\'.',
-            'required' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'choices' => array(
-                'ASC' => 'ASC',
-                'DESC' => 'DESC',
-            ),
-            'default_value' => array(
-                0 => 'DESC',
-            ),
-            'allow_null' => 0,
-            'multiple' => 0,
-            'ui' => 0,
-            'return_format' => 'value',
-            'ajax' => 0,
-            'placeholder' => '',
-            'conditional_logic' => array(
-	            array(
-		            array(
-			            'field' => 'field_acfe_dpt_has_archive',
-			            'operator' => '==',
-			            'value' => '1',
-		            ),
-	            ),
-            ),
-        ),
-        array(
-            'key' => 'field_acfe_dpt_tab_single',
-            'label' => 'Single',
-            'name' => '',
-            'type' => 'tab',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_permissions' => '',
-            'placement' => 'top',
-            'endpoint' => 0,
-        ),
-        array(
-            'key' => 'field_acfe_dpt_single_template',
-            'label' => 'Template',
-            'name' => 'acfe_dpt_single_template',
-            'type' => 'text',
-            'instructions' => 'ACF Extended: Which template file to load for the archive query. More informations on <a href="https://developer.wordpress.org/themes/basics/template-hierarchy/">Template hierarchy</a>',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'default_value' => '',
-            'placeholder' => 'my-template.php',
-            'prepend' => str_replace(home_url(), '', ACFE_THEME_URL) . '/',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_rewrite',
-            'label' => 'Rewrite',
-            'name' => 'rewrite',
-            'type' => 'true_false',
-            'instructions' => 'Triggers the handling of rewrites for this post type. To prevent rewrites, set to false.',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'message' => '',
-            'default_value' => 1,
-            'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_rewrite_args_select',
-            'label' => 'Rewrite Arguments',
-            'name' => 'rewrite_args_select',
-            'type' => 'true_false',
-            'instructions' => 'Use additional rewrite arguments',
-            'required' => 0,
-            'conditional_logic' => array(
-                array(
-                    array(
-                        'field' => 'field_acfe_dpt_rewrite',
-                        'operator' => '==',
-                        'value' => '1',
-                    ),
-                ),
-            ),
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'message' => '',
-            'default_value' => 0,
-            'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_rewrite_args',
-            'label' => 'Rewrite Arguments',
-            'name' => 'rewrite_args',
-            'type' => 'group',
-            'instructions' => 'Additional arguments',
-            'required' => 0,
-            'conditional_logic' => array(
-                array(
-                    array(
-                        'field' => 'field_acfe_dpt_rewrite',
-                        'operator' => '==',
-                        'value' => '1',
-                    ),
-                    array(
-                        'field' => 'field_acfe_dpt_rewrite_args_select',
-                        'operator' => '==',
-                        'value' => '1',
-                    ),
-                ),
-            ),
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'layout' => 'row',
-            'sub_fields' => array(
-                array(
-                    'key' => 'field_acfe_dpt_rewrite_slug',
-                    'label' => 'Slug',
-                    'name' => 'acfe_dpt_rewrite_slug',
-                    'type' => 'text',
-                    'instructions' => 'Customize the permalink structure slug. Defaults to the post type name value. Should be translatable.',
-                    'required' => 0,
-                    'conditional_logic' => array(
-                        array(
-                            array(
-                                'field' => 'field_acfe_dpt_rewrite_args_select',
-                                'operator' => '==',
-                                'value' => '1',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'acfe_validate' => '',
-                    'acfe_update' => '',
-                    'acfe_permissions' => '',
-                    'default_value' => '',
-                    'placeholder' => 'Default',
-                    'prepend' => '',
-                    'append' => '',
-                    'maxlength' => '',
-                ),
-                array(
-                    'key' => 'field_acfe_dpt_rewrite_with_front',
-                    'label' => 'With front',
-                    'name' => 'acfe_dpt_rewrite_with_front',
-                    'type' => 'true_false',
-                    'instructions' => 'Should the permalink structure be prepended with the front base. (example: if your permalink structure is /blog/, then your links will be: false->/news/, true->/blog/news/). Defaults to true.',
-                    'required' => 0,
-                    'conditional_logic' => array(
-                        array(
-                            array(
-                                'field' => 'field_acfe_dpt_rewrite_args_select',
-                                'operator' => '==',
-                                'value' => '1',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'acfe_validate' => '',
-                    'acfe_update' => '',
-                    'acfe_permissions' => '',
-                    'message' => '',
-                    'default_value' => 1,
-                    'ui' => 1,
-                    'ui_on_text' => '',
-                    'ui_off_text' => '',
-                ),
-                array(
-                    'key' => 'field_acfe_dpt_rewrite_feeds',
-                    'label' => 'Feeds',
-                    'name' => 'feeds',
-                    'type' => 'true_false',
-                    'instructions' => 'Should a feed permalink structure be built for this post type. Defaults to has_archive value.',
-                    'required' => 0,
-                    'conditional_logic' => array(
-                        array(
-                            array(
-                                'field' => 'field_acfe_dpt_rewrite_args_select',
-                                'operator' => '==',
-                                'value' => '1',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'acfe_validate' => '',
-                    'acfe_update' => '',
-                    'acfe_permissions' => '',
-                    'message' => '',
-                    'default_value' => 1,
-                    'ui' => 1,
-                    'ui_on_text' => '',
-                    'ui_off_text' => '',
-                ),
-                array(
-                    'key' => 'field_acfe_dpt_rewrite_pages',
-                    'label' => 'Pages',
-                    'name' => 'pages',
-                    'type' => 'true_false',
-                    'instructions' => 'Should the permalink structure provide for pagination. Defaults to true.',
-                    'required' => 0,
-                    'conditional_logic' => array(
-                        array(
-                            array(
-                                'field' => 'field_acfe_dpt_rewrite_args_select',
-                                'operator' => '==',
-                                'value' => '1',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'acfe_validate' => '',
-                    'acfe_update' => '',
-                    'acfe_permissions' => '',
-                    'message' => '',
-                    'default_value' => 1,
-                    'ui' => 1,
-                    'ui_on_text' => '',
-                    'ui_off_text' => '',
-                ),
-            ),
-        ),
-        array(
-            'key' => 'field_acfe_dpt_tab_admin',
-            'label' => 'Admin',
-            'name' => '',
-            'type' => 'tab',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_permissions' => '',
-            'placement' => 'top',
-            'endpoint' => 0,
-        ),
-        array(
-            'key' => 'field_acfe_dpt_admin_archive',
-            'label' => 'Archive Page',
-            'name' => 'acfe_dpt_admin_archive',
-            'type' => 'true_false',
-            'instructions' => 'Add archive page to the post type administration.',
-            'required' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'message' => '',
-            'default_value' => 0,
-            'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_admin_posts_per_page',
-            'label' => 'Posts per page',
-            'name' => 'acfe_dpt_admin_posts_per_page',
-            'type' => 'number',
-            'instructions' => 'ACF Extended: Number of posts to display on the admin list screen',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'default_value' => 10,
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'min' => -1,
-            'max' => '',
-            'step' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_admin_orderby',
-            'label' => 'Order by',
-            'name' => 'acfe_dpt_admin_orderby',
-            'type' => 'text',
-            'instructions' => 'ACF Extended: Sort retrieved posts by parameter in the admin list screen. Defaults to \'date (post_date)\'.',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => array(
-                '5c9479dec93c4' => array(
-                    'acfe_update_function' => 'sanitize_title',
-                ),
-            ),
-            'acfe_permissions' => '',
-            'default_value' => 'date',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array(
-            'key' => 'field_acfe_dpt_admin_order',
-            'label' => 'Order',
-            'name' => 'acfe_dpt_admin_order',
-            'type' => 'select',
-            'instructions' => 'ACF Extended: Designates the ascending or descending order of the \'orderby\' parameter in the admin list screen. Defaults to \'DESC\'.',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'acfe_validate' => '',
-            'acfe_update' => '',
-            'acfe_permissions' => '',
-            'choices' => array(
-                'ASC' => 'ASC',
-                'DESC' => 'DESC',
-            ),
-            'default_value' => array(
-                0 => 'DESC',
-            ),
-            'allow_null' => 0,
-            'multiple' => 0,
-            'ui' => 0,
-            'return_format' => 'value',
-            'ajax' => 0,
-            'placeholder' => '',
-        ),
-        array(
             'key' => 'field_acfe_dpt_tab_rest',
             'label' => 'REST',
             'name' => '',
@@ -2612,7 +2664,7 @@ etc...',
             'label' => 'Show in rest',
             'name' => 'show_in_rest',
             'type' => 'true_false',
-            'instructions' => 'Whether to expose this post type in the REST API',
+            'instructions' => 'Whether to expose this post type in the REST API. Set this to true for the post type to be available in the block editor',
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(

@@ -329,7 +329,7 @@ function acfe_options_edit_metabox(){
     // Serialized || HTML
     if(is_serialized($option['option_value']) || $option['option_value'] != strip_tags($option['option_value'])){
         
-        $type = 'serilized';
+        $type = 'serialized';
         $instructions = 'Use this <a href="https://duzun.me/playground/serialize" target="_blank">online tool</a> to unserialize/seriliaze data.';
         
         if($option['option_value'] != strip_tags($option['option_value'])){
@@ -406,7 +406,7 @@ function acfe_options_edit_metabox(){
             'label'             => __('Value ' . $type),
             'key'               => 'field_acfe_options_edit_value',
             'name'              => 'field_acfe_options_edit_value',
-            'type'              => 'text',
+            'type'              => 'textarea',
             'prefix'            => 'acf',
             'instructions'      => '',
             'required'          => false,
