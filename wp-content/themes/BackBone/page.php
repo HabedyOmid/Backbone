@@ -1,13 +1,5 @@
-<?php get_header(); ?>
+<?php get_header();
 
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Content Goes Here!</h1>
-            </div>
-        </div>
-    </div>
-</section>
+    get_template_part( 'sections/section-all' ); 
 
-<?php get_footer(); ?>
+get_footer(); ?>
