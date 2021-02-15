@@ -14,4 +14,4 @@ Once **node.js** and **npm** installation is completed. Open `themes/BackBone` t
 | `npm install`         | Installing build-tools dependencies                                                     |
 | `npx mix`             | Compiles SASS to CSS, Babel to compile and bundle JS files                              |
 | `npx mix watch`       | Compiles and watches file(SASS, CSS, JS and PHP) changes using `BrowserSync`            |
-| `npx mix --production`| Compiles & minifies all assets for production using `PurgeCSS`                          |
+| `npx mix --production`| Compiles & minifies all assets for production optimize CSS using `PurgeCSS`                          |
