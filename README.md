@@ -1,4 +1,4 @@
-# Gulp Masterfy Assets
+# BackBone - WordPress Theme (Laravel Mix) Build-tool
 
 ## ![alt text](preview.png)
 
