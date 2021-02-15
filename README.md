@@ -9,10 +9,13 @@ You need to have `node.js`, and `npm` installed globally on your system to use *
 Once **node.js** and **npm** installation is completed. Open `themes/BackBone` theme folder within your terminal and run `npm install` command to install all dependencies for build-tool.
 
 ## Technologies & Features:
-Laravel Mix is using `WebPack` build-tool. I have added some additional features:
-
+Laravel Mix is using `WebPack` build-tool and some additional features:
+* `sass` compiles SASS to CSS and minify CSS for production
+* `browser-sync` watch for file changes and apply changes to browser real-time
 * `autoprefixer` adding CSS prefixers for all browsers support
 * `purgecss` to remove unused CSS from project files, significantly reduces css file size for better performance and page speed optimization
+
+**NOTE:** to edit/update build-tool configuration visit `webpack.mix.js` file
 
 | Command        | Descriptions                                                                            |
 | -------------- | --------------------------------------------------------------------------------------- |
