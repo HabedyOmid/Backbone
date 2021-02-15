@@ -3,10 +3,8 @@ require('laravel-mix-purgecss');
 
 // Bundle .JS files
  mix.babel([
-    './src/js/bootstrap.affix.js',
-    './src/js/aos.js', 
-    './src/js/anim.js', 
-    './src/js/slick.min.js', 
+    './src/js/jquery-3.4.1.min.js',
+    './src/js/bootstrap.bundle.min.js', 
     './src/js/app.js'], './app.js')
 
     // Compile sass files
@@ -29,6 +27,6 @@ require('laravel-mix-purgecss');
 
     // Auto Reload
     .browserSync({
-        proxy: 'https://ztcorporate.test',
+        proxy: 'https://backbone.test',
         files: ['./**/*.php', './src/js/**/*.js', 'src/scss/**/*.scss']
     });
