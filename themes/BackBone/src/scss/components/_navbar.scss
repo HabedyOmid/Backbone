@@ -1,256 +1,290 @@
-/* purgecss start ignore */
-
 .navbar {
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  padding: 1rem 2rem;
-  transition: 0.2s;
-  z-index: 999;
-  max-width: $body-width;
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	background: transparent;
+	height: auto;
+	padding: 0 !important;
+	position: relative;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 5000;
+	background-color: $navbar-bg;
+	font-size: $font-size-md;
+	border-bottom: 1px solid $border-color;
 
-  &.affix {
-    background-color: $dark;
-    padding: 0 2rem;
-
-    #menu-primary > .menu-item:last-child {
-      background-color: $blue;
-    }
-  }
-
-  &-collapse {
-    display: block !important;
-  }
-
-  // brand
-  .navbar__brand img {
-    max-width: 250px;
-  }
-
-  #menu-primary {
-    padding: 0;
-
-    .menu-item {
-      padding: 2rem 2rem;
+  	.container {
+		min-width: 100% !important;
+		background: inherit;
+		position: relative;
+		@include flex;
+		align-items: center;
+		padding: 0 0 0 3rem !important;
     }
 
-    .nav-link {
-      color: white;
-    }
+  	// Menu Toggle on mobile
+	button.navbar__toggler{
+		border: 0;
+		outline: 0;
+		background: transparent;
+		height: 3rem;
+		position: absolute;
+		right: 2rem;
+		top: 50%;
+		transform: translateY(-50%);
+		margin: 0;
+		padding: 0;
+		display: none;
+		cursor: pointer;
 
-    .dropdown {
-      &-item {
-        color: white;
-      }
-    }
-  }
+		span {
+			display: block;
+			width: 2.6rem;
+			height: .2rem;
+			background-color: $body-color;
+			margin: 0;
+			padding: 0;
+			border: 0;
+			transition: .3s;
+			transform-origin: center;
+
+			&:before,
+			&:after {
+				content: '';
+				display: block;
+				width: 2.6rem;
+				height: .2rem;
+				background-color: inherit;
+				border-radius: 0rem;
+				transition: $transition-sm;
+			}
+			&:before { transform: translateY(-.8rem); }
+			&:after { transform: translateY(.7rem); }
+		}
+
+		// Hamburger's style When Toggled
+		&[aria-expanded="true"] {
+			position: fixed;
+			top: 3.3rem;
+			right: 3rem;
+			z-index: 99999999;
+			span {
+				background: rgba(0,0,0, 0);
+				&:before,
+				&:after { background-color: $body-color; }
+				&:before { transform: translateY(0.2rem) rotate(45deg) !important; }
+				&:after { transform: rotate(-45deg); }
+			}
+		}
+
+		@include media-breakpoint-down(md) { display: block; }
+	}
+
+  	// Logo
+  	.navbar__brand{
+		float: left;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0 0 0 1rem;
+		a{
+			width: auto;
+			line-height: 0;
+			img, svg{ 
+				width: 18rem; 
+				height: auto; 
+			}
+		}
+  	}
+
+	// Navbar Links
+   .navbar-collapse{
+  		height: $navbar-height;
+  		width: 100%;
+  		display: flex;
+  		justify-content: right;
+  		align-self: flex-end;
+  		justify-content: flex-end;
+
+		// Navigation Main Container
+  		ul#menu-primary{
+			list-style: none;
+			display: flex;
+			height: 100%;
+			text-align: left;
+			transition: $transition-md;
+			transition-timing-function: $transition-timing-bezier;
+
+			// First List Items
+			> li{
+				list-style: none;
+				padding: 0;
+				display: flex;
+				align-self: center;
+				height: 100%;
+
+				// Active Items
+				&.active{
+					> a:link,
+					> a:visited,
+					a.active{ color: $nav-link-hover-color; }
+				}
+
+				// CTA-LINK
+				&.cta-link{
+					background-color: $primary;
+					padding-left: 1.5rem;
+					padding-right: 1.5rem;
+					text-transform: uppercase;
+					font-weight: $bold-3;
+					letter-spacing: 1px;
+
+					a:link,
+					a:visited{
+						color: $white;
+
+						&:hover,
+						&:active{
+						
+						}
+					}
+				}
+			}
+
+			// Child items in _dropdown.scss file
+			a:link,
+			a:visited{
+				color: $nav-link-color;
+				text-decoration: $nav-link-decoration;
+				padding: 2.3rem 2rem;
+				display: flex;
+				align-items: center;
+
+				&:hover,
+				&:active{
+					color: $nav-link-hover-color;
+					text-decoration: $nav-link-hover-decoration;
+				}
+			}
+  		 }
+  	}
 }
 
-// Menu Toggle on mobile
-.navbar__toggler {
-  border: 0;
-  outline: 0;
-  background: transparent;
-  height: 3rem;
-  position: absolute;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 0;
-  padding: 0;
-  display: none;
-  cursor: pointer;
 
-  span {
-    display: block;
-    width: 2.5rem;
-    height: 0.2rem;
-    background-color: $white;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    transition: 0.3s;
-    transform-origin: center;
-
-    &:before,
-    &:after {
-      content: "";
-      display: block;
-      width: 2.5rem;
-      height: 0.2rem;
-      background-color: inherit;
-      border-radius: 0rem;
-      transition: $transition-sm;
-    }
-    &:before {
-      transform: translateY(-1rem);
-    }
-    &:after {
-      transform: translateY(0.9rem);
-    }
-  }
-
-  // Hamburger's style When Toggled
-  &.collapsed span {
-    background: rgba(#fff, 0);
-
-    &:before,
-    &:after {
-      background-color: $white;
-    }
-
-    &:before {
-      transform: translateY(0.2rem) rotate(45deg) !important;
-    }
-
-    &:after {
-      transform: rotate(-45deg);
-    }
-  }
+// Hide & Show on Scroll
+.hideShowOnScroll{
+	height: $navbar-height;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 5000;
+	transition: $transition-sm;
+	&.scrollUp { transform: translateY(-$navbar-height); }
 }
 
-// desktop special
-@include media-breakpoint-up(lg) {
-  .navbar {
-    &-content {
-      margin-left: auto;
-    }
 
-    #menu-primary {
-      display: flex;
-    }
-
-    .navbar-dropdown-plus {
-      display: none;
-    }
-
-    .dropdown {
-      position: relative;
-
-      &-menu {
-        position: absolute;
-        top: 110%;
-        width: 250px;
-        right: 0;
-        background-color: $dark;
-        padding: 0 0;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.2s;
-
-        .nav-item {
-          padding: 1rem 3rem !important;
-        }
-      }
-
-      &:hover {
-        .dropdown-menu {
-          opacity: 1;
-          visibility: visible;
-          top: 100%;
-        }
-      }
-    }
-  }
+nav.navbar + header,
+nav.navbar + main{
+	margin-top: $navbar-height !important;
 }
 
-// mobile special
-@include media-breakpoint-down(lg) {
-  .navbar__toggler {
-    display: block;
-  }
 
-  .navbar__brand {
-    padding: 2rem 0;
-  }
+// small navbar
+@include media-breakpoint-down(md) {
+	nav.navbar {
+		#menu-primary {
+			position: fixed;
+			right: -$navbar-sm-max-width;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto !important;
+			max-width: $navbar-sm-max-width;
+			background: $navbar-bg;
+			box-shadow: $box-shadow;
+			padding-top: 8rem;
+			flex-direction: column;
 
-  .navbar {
-    &-content {
-      position: absolute;
-      top: 110%;
-      left: 0;
-      width: 100%;
-      background-color: $dark;
-      max-height: calc(100vh - 80px);
-      overflow: auto;
-      opacity: 0;
-      visibility: hidden;
-      transition: 0.2s;
+			a{ background-color: transparent !important;}
 
-      &.show {
-        opacity: 1;
-        visibility: visible;
-        top: 100%;
-      }
-    }
+			&.show { right: 0; }
 
-    #menu-primary {
-      & > .menu-item:last-child {
-        background-color: $blue;
-      }
+			& > li {
+				width: 90% !important;
+				min-width: 230px !important;
+				align-self: center !important;
+				height: auto !important;
+				padding: 0 !important;
+				flex-direction: column !important;
 
-      .dropdown {
-        &-menu {
-          max-height: 0;
-          overflow: hidden;
-          transition: 0.2s;
-          padding: 0 4rem;
+				& > a {
+					padding: $cat-sm-padding !important;
+					width: 100%;
+					font-size: $font-size-lg;
+					opacity: .8;
 
-          &.show {
-            max-height: 500px;
-            padding: 1rem 4rem;
-          }
+					&.dropdown-toggle:after {
+						position: absolute;
+						right: 2rem;
+						top: 50%;
+						transform: translateY(-50%);
+					}
+				}
 
-          .nav-item {
-            padding: 0.7rem 0 !important;
-          }
-        }
-      }
-    }
+				&:last-child { margin: 1rem auto !important; }
 
-    .nav-item {
-      padding: 0 0 !important;
-      position: relative;
+				& > ul {
+					position: static !important;
+					width: 100% !important;
+					display: block !important;
+					visibility: visible !important;
+					opacity: 1 !important;
+					width: 100%;
+					transform: none;
+					padding: 0 !important;
+					height: initial !important;
+					min-height: initial !important;
+					max-height: 0 !important;
+					overflow: hidden !important;
 
-      .nav-link {
-        display: block;
-        padding: 1rem 2rem;
-        position: relative;
-      }
+					&.show {
+						max-height: 100rem !important;
+						padding: 1rem 0 !important;
+					}
 
-      .navbar-dropdown-plus {
-        position: absolute;
-        right: 1rem;
-        top: 0;
-        padding: 1rem 1.5rem;
-        cursor: pointer;
+					& > .menu-item {
+						padding-top: 0; // Dropdowns as Columns
+						padding-bottom: 0; // Dropdowns as Columns
+						padding: 0 1.5rem;
 
-        &::after {
-          content: "+";
-          font-size: 2rem;
-        }
+						& > a {
+							margin-bottom: .2rem !important;
+							margin-top: 0 !important;
+						}
+					}
+				}
 
-        &.toggled {
-          right: 1.2rem;
-          top: -0.2rem;
+				.parent__dropdown {
+					& > .menu-item {
+						& > a {
+							margin-bottom: 0rem !important;
+							margin-top: 1rem !important;
+						}
+					}
+				}
+			}
 
-          &:after {
-            content: "-";
-          }
-        }
-      }
-    }
-  }
+			ul.dropdown-menu {
+				opacity: 1 !important;
+				visibility: visible !important;
+				margin-top: 0 !important;
+				width: 100%;
+				background-color: transparent !important;
+			}
+		}
+	}
 }
-
-// body no scroll (when navbar open in mobile size only navbar scroll body no scroll
-.no-scroll {
-  overflow: hidden !important;
-}
-
-/* purgecss end ignore */

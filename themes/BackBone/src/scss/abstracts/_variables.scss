@@ -1,92 +1,41 @@
-// $white:    #fff;
-// $black:    #000;
-// $primary: #00a5fa;
-// $secondary: #FF0052;
-// $gray: #F0F0F0;
-// $dark: #0A0F0F;
-// $charcoal: #0B232F;
-$light: #f2f2f2;
-$gray: #54585a;
-
-$dark: #0e0e0e;
-$blue: #0082c6;
-$dark-blue: #151440;
-$med-blue: #003b7e;
-
-$zindex-dropdown: 1000;
-$zindex-sticky: 1020;
-$zindex-fixed: 1030;
-$zindex-modal-backdrop: 9940;
-$zindex-modal: 9950;
-$zindex-popover: 1060;
-$zindex-tooltip: 1070;
-
-$theme-colors: map-merge(
-  (
-    "primary": $primary,
-    "secondary": $secondary,
-    "white": $white,
-    "gray": $gray,
-    "black": $black,
-  ),
-  $theme-colors
-);
-
-// Grid containers
-//
-// Define the maximum width of `.container` for different screen sizes.
-
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1250px,
-);
-
-// buttons
-
-$input-btn-padding: 2rem 4rem;
-$input-btn-font-size: 1.8rem;
-
-// Grid columns
-//
-// Set the number of columns and specify the width of the gutters.
-
-$grid-gutter-width: 3rem;
+$primary: blue;
+$black: #000;
+$white: #fff;
+$dark: #202020;
+$light: #f1f1f1;
+$border-color: $light;
 
 // Typography
 $reset-root-font-size: 62.5%; // 1rem == 10px root font-size
-
-$font-family-base: brother-1816, sans-serif;
-$font-family-secondary: "DM Serif Display", serif;
-
-$paragraph-line-height: 170%;
+$font-family-base: "Rubik", sans-serif;
+$paragraph-line-height: 3rem;
 $paragraph-bottom-margin: 2rem;
-$heading-line-height: 170%;
-$heading-margin-bottom: 2rem;
+$bold-1: 300;
+$bold-2: 400;
+$bold-3: 500;
 
 // Font Sizes
-$font-size-base: 1.4rem;
-$font-size-sm: 1.3rem;
-$font-size-md: 1.7rem;
-$font-size-lg: 2rem;
-$font-size-xl: 3.2rem;
+$font-size-base: 1.6rem;
+$font-size-xs: 1.1rem;
+$font-size-sm: 1.2rem;
+$font-size-md: 1.4rem;
+$font-size-lg: 1.8rem;
+$font-size-xl: 2.2rem;
 
-// font weights
-$font-weight-normal: normal;
-$font-weight-bold: bold;
-$font-weight-bolder: border;
+// Links
+$link-color: $primary;
+$link-decoration: none;
+$link-hover-color: darken($primary, 10%);
+$link-hover-decoration: none;
 
 // Body Settings
-$body-color: $gray;
+$body-color: $dark;
 $body-bg: $light;
-$body-width: 180rem;
 
 // Border Radius
 $border-radius-sm: 0.4rem;
 $border-radius-md: 0.8rem;
 $border-radius-lg: 1rem;
-$border-color: rgba($white, 0.2);
 
 // Transition
 $transition-sm: all 0.3s;
@@ -101,13 +50,10 @@ $box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
 
 // Navbar Settings
 $navbar-bg: $white;
-$nav-link-color: $body-color;
 $navbar-height: 7rem;
+$nav-link-color: $body-color;
 $nav-link-decoration: none;
 $nav-link-hover-color: $primary;
 $nav-link-hover-decoration: none;
 $navbar-sm-max-width: 420px;
 $cat-sm-padding: 1rem 1.5rem;
-
-// dropdowns
-$dropdown-min-width: 28rem;
