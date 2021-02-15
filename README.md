@@ -1,10 +1,8 @@
-# BackBone - WordPress Theme (Laravel Mix) Build-tool
-
-## ![alt text](preview.png)
+# BackBone - WP Theme & Laravel Mix
 
 ### Requirements:
 
-You need to have `node.js`, `npm` and `gulp.js` installed globally on your system before using this tool and commands available for this automation.
+You need to have `node.js`, and `npm` installed globally on your system to use #Laravel Mix build-tool.
 
 -   [node.js](https://nodejs.org/en/) - is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 -   [npm](https://www.npmjs.com/) - is node.js package manager for installing open-source JavaScript apps.
