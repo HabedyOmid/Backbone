@@ -7,7 +7,11 @@ You need to have `node.js`, and `npm` installed globally on your system to use *
 -   [npm](https://www.npmjs.com/) - is node.js package manager for installing open-source JavaScript apps.
 
 ### Installation:
-Once **node.js** and **npm** installation is completed. Open this project folder within your terminal and run `npm install` command to install all of the dependencies and to unlock all the below tasks.
+Once **node.js** and **npm** installation is completed. Open `themes/BackBone` theme folder within your terminal and run `npm install` command to install all dependencies for build-tool.
+
+
+`<addr>`
+
 
 | Command        | Descriptions                                                                            |
 | -------------- | --------------------------------------------------------------------------------------- |
