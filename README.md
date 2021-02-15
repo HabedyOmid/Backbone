@@ -1,5 +1,7 @@
 # BackBone - WP Theme & Laravel Mix
 
+## ![alt text](preview.png)
+
 ## Requirements:
 You need to have `node.js`, and `npm` installed globally on your system to use **Laravel Mix** build-tool.
 -   [node.js](https://nodejs.org/en/) - is a JavaScript runtime built on Chrome's V8 JavaScript engine.
