@@ -13,7 +13,7 @@ Once **node.js** and **npm** installation is completed. Open `themes/BackBone` t
 | -------------- | --------------------------------------------------------------------------------------- |
 | `npm install`  | Installing build-tools dependencies                                                     |
 | `npx mix`      | Compiles SASS to CSS, Babel to compile and bundle JS files                              |
-| `npx mix watch`| Compiles all assets and watch for file (SASS, CSS, JS and PHP) changes. Apply changes to browser using `BrowserSync`|
+| `npx mix watch`| Compiles all assets and watch for file (SASS, CSS, JS and PHP) changes using `BrowserSync`|
 | `gulp js`      | Compile, minify and combine JS files to a single file. Babel (ES5, ES6) support enabled |
 | `gulp imgs`    | Compress and optimize image (`.png`, `.jpg`, `.gif` and `.svg`) graphic files           |
 | `gulp vendors` | Copy all vendors / plugins lib files from src to dist directory                         |
