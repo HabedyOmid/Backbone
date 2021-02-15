@@ -1,0 +1,30 @@
+*,
+*::after,
+*::before{
+	margin: 0px;
+	padding: 0px;
+	box-sizing: inherit;  // To inherit box-sizing from "body" element
+	text-decoration: none;
+}
+
+html{
+	font-size: $reset-root-font-size;
+	overflow-x: hidden;
+	background-color: $white;
+}
+
+body{
+	box-sizing: border-box;
+	margin: 0 auto;
+	font-style: normal;
+	color: $body-color;
+	background-color: $white;
+	box-shadow: $box-shadow-sm;
+	max-width: $body-width;
+	font-size: $font-size-base;  // 1.6 * 10 (Root HTML font size) == 16px / 1rem = 10px
+	font-family: $font-family-base;
+
+	&.modal-open{
+		overflow: hidden !important;
+	}
+}

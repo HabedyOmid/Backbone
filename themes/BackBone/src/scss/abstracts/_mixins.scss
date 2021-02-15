@@ -1,0 +1,41 @@
+@mixin flex() {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+
+@mixin create-link-button($bg, $color) {
+	a:link,
+	a:visited{
+		color: $bg;
+		font-size: $font-size-sm;
+		text-transform: uppercase;
+		font-weight: $font-weight-light;
+		letter-spacing: 1.5px;
+		padding: .7rem 1.5rem .8rem 1.5rem;
+		border: 1px solid $bg;
+		line-height: 0;
+		&:active, 
+		&:hover,
+		&:focus{ background-color: $bg; color: $color; }
+	}
+}
+
+@mixin create-link-button-solid($bg, $color) {
+	a:link,
+	a:visited{
+		color: $color;
+		font-size: $font-size-sm;
+		text-transform: uppercase;
+		font-weight: $font-weight-light;
+		letter-spacing: 1.5px;
+		padding: .7rem 1.5rem .8rem 1.5rem;
+		background-color: $bg;
+		line-height: 0;
+		&:active, 
+		&:hover,
+		&:focus{ background-color: darken($bg, 7%); color: $color; }
+	}
+}

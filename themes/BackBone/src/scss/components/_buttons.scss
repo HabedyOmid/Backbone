@@ -1,0 +1,86 @@
+/* purgecss start ignore */
+.btn {
+  padding: 1.8rem 2rem;
+  font-size: 1.8rem;
+  border-radius: 0;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  outline: 0;
+  cursor: pointer;
+
+  &-primary {
+    background-color: $blue;
+    color: white;
+
+    &:hover {
+      background: darken($blue, 5%);
+    }
+    &:active {
+      background: darken($blue, 10%);
+    }
+  }
+
+  &-dark {
+    background-color: $dark;
+    color: white;
+
+    &:hover {
+      background: lighten($dark, 5%);
+    }
+    &:active {
+      background: lighten($dark, 10%);
+    }
+  }
+
+  &-dark-blue {
+    background-color: $med-blue;
+    color: white;
+
+    &:hover {
+      background: darken($med-blue, 5%);
+    }
+    &:active {
+      background: darken($med-blue, 10%);
+    }
+  }
+
+  &-circle {
+    position: relative;
+    padding: 0;
+    width: 4.4rem;
+    height: 4.4rem;
+    line-height: 2rem;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50%;
+
+    img {
+      width: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+.btn-social {
+  padding: 0 !important;
+  position: relative;
+
+  &-sm {
+    width: 3rem;
+    height: 3rem;
+
+    img {
+      width: 60%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+/* purgecss end ignore */

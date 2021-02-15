@@ -1,0 +1,22 @@
+/* purgecss start ignore */
+.custom-input {
+  outline: 0;
+  border-radius: 0;
+  display: block;
+  width: 100%;
+  padding: 1.8rem 2rem;
+  border: 1px solid $dark;
+  background: transparent;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+
+  &::placeholder {
+    color: $dark;
+  }
+
+  &:focus {
+    background: darken(white, 5%);
+  }
+}
+
+/* purgecss end ignore */

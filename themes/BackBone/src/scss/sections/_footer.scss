@@ -1,0 +1,37 @@
+.footer {
+    background-color: $gray;
+    padding: 2rem 0;
+    color: $white;
+
+
+    // brand
+    &-logo {
+        width: 20rem;
+    }
+
+    &-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: $white !important;
+        margin-bottom: .2rem;
+    }
+
+    p {
+        color: $white !important;
+        font-size: 1.2rem;
+    }
+
+    &-link {
+        display: block;
+        color: inherit;
+        font-size: 1.2rem;
+        margin-bottom: .1rem;;
+    }
+
+    &-social-btn {
+        width: 32px;
+        padding: 0 .3rem;
+    }
+
+
+}

@@ -1,0 +1,256 @@
+/* purgecss start ignore */
+
+.navbar {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 1rem 2rem;
+  transition: 0.2s;
+  z-index: 999;
+  max-width: $body-width;
+
+  &.affix {
+    background-color: $dark;
+    padding: 0 2rem;
+
+    #menu-primary > .menu-item:last-child {
+      background-color: $blue;
+    }
+  }
+
+  &-collapse {
+    display: block !important;
+  }
+
+  // brand
+  .navbar__brand img {
+    max-width: 250px;
+  }
+
+  #menu-primary {
+    padding: 0;
+
+    .menu-item {
+      padding: 2rem 2rem;
+    }
+
+    .nav-link {
+      color: white;
+    }
+
+    .dropdown {
+      &-item {
+        color: white;
+      }
+    }
+  }
+}
+
+// Menu Toggle on mobile
+.navbar__toggler {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  height: 3rem;
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 0;
+  display: none;
+  cursor: pointer;
+
+  span {
+    display: block;
+    width: 2.5rem;
+    height: 0.2rem;
+    background-color: $white;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    transition: 0.3s;
+    transform-origin: center;
+
+    &:before,
+    &:after {
+      content: "";
+      display: block;
+      width: 2.5rem;
+      height: 0.2rem;
+      background-color: inherit;
+      border-radius: 0rem;
+      transition: $transition-sm;
+    }
+    &:before {
+      transform: translateY(-1rem);
+    }
+    &:after {
+      transform: translateY(0.9rem);
+    }
+  }
+
+  // Hamburger's style When Toggled
+  &.collapsed span {
+    background: rgba(#fff, 0);
+
+    &:before,
+    &:after {
+      background-color: $white;
+    }
+
+    &:before {
+      transform: translateY(0.2rem) rotate(45deg) !important;
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+// desktop special
+@include media-breakpoint-up(lg) {
+  .navbar {
+    &-content {
+      margin-left: auto;
+    }
+
+    #menu-primary {
+      display: flex;
+    }
+
+    .navbar-dropdown-plus {
+      display: none;
+    }
+
+    .dropdown {
+      position: relative;
+
+      &-menu {
+        position: absolute;
+        top: 110%;
+        width: 250px;
+        right: 0;
+        background-color: $dark;
+        padding: 0 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.2s;
+
+        .nav-item {
+          padding: 1rem 3rem !important;
+        }
+      }
+
+      &:hover {
+        .dropdown-menu {
+          opacity: 1;
+          visibility: visible;
+          top: 100%;
+        }
+      }
+    }
+  }
+}
+
+// mobile special
+@include media-breakpoint-down(lg) {
+  .navbar__toggler {
+    display: block;
+  }
+
+  .navbar__brand {
+    padding: 2rem 0;
+  }
+
+  .navbar {
+    &-content {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      width: 100%;
+      background-color: $dark;
+      max-height: calc(100vh - 80px);
+      overflow: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+
+      &.show {
+        opacity: 1;
+        visibility: visible;
+        top: 100%;
+      }
+    }
+
+    #menu-primary {
+      & > .menu-item:last-child {
+        background-color: $blue;
+      }
+
+      .dropdown {
+        &-menu {
+          max-height: 0;
+          overflow: hidden;
+          transition: 0.2s;
+          padding: 0 4rem;
+
+          &.show {
+            max-height: 500px;
+            padding: 1rem 4rem;
+          }
+
+          .nav-item {
+            padding: 0.7rem 0 !important;
+          }
+        }
+      }
+    }
+
+    .nav-item {
+      padding: 0 0 !important;
+      position: relative;
+
+      .nav-link {
+        display: block;
+        padding: 1rem 2rem;
+        position: relative;
+      }
+
+      .navbar-dropdown-plus {
+        position: absolute;
+        right: 1rem;
+        top: 0;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+
+        &::after {
+          content: "+";
+          font-size: 2rem;
+        }
+
+        &.toggled {
+          right: 1.2rem;
+          top: -0.2rem;
+
+          &:after {
+            content: "-";
+          }
+        }
+      }
+    }
+  }
+}
+
+// body no scroll (when navbar open in mobile size only navbar scroll body no scroll
+.no-scroll {
+  overflow: hidden !important;
+}
+
+/* purgecss end ignore */

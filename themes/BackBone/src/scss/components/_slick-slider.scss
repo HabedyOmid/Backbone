@@ -1,0 +1,36 @@
+/* purgecss start ignore */
+
+.slick-slider {
+  .slick-dots {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: auto;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: center;
+
+    li {
+      width: 1.4rem !important;
+      height: 1.4rem !important;
+      border-radius: 0 !important;
+      border: 1px solid white;
+      padding: 0;
+      margin: 0.2rem;
+
+      &.slick-active {
+        background: white;
+      }
+
+      button::before {
+        display: none !important;
+        background: transparent !important;
+        color: transparent;
+      }
+    }
+  }
+}
+
+/* purgecss end ignore */

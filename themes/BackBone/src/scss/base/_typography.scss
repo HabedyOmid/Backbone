@@ -1,0 +1,102 @@
+/* purgecss start ignore */
+
+::selection {
+  background-color: $primary;
+  color: $white;
+}
+
+body {
+  color: $dark;
+}
+
+p {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+small,
+.small {
+  font-size: 1.3rem !important;
+}
+
+a:link,
+a:visited {
+  transition: $transition-sm;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+a {
+  color: $blue;
+}
+
+h1,
+.h1 {
+  font-size: 4rem;
+}
+h2,
+.h2 {
+  font-size: 3.2rem;
+}
+h3,
+.h3 {
+  font-size: 2.8rem;
+}
+h4,
+.h4 {
+  font-size: 2.4rem;
+}
+h5,
+.h5 {
+  font-size: 2rem;
+}
+h6,
+.h6 {
+  font-size: 1.8rem;
+}
+
+ul,
+ol {
+  padding: 0 0 2rem 2rem;
+  list-style-type: none;
+
+  li {
+    line-height: $paragraph-line-height;
+    padding: 0.5rem 0 0.5rem 1rem;
+  }
+}
+
+// custom texts
+.has-custom-arrow {
+  &::after {
+    content: "➝";
+    color: $secondary;
+    padding-left: 0.3rem;
+  }
+}
+
+.angle-up {
+  font-size: 0px;
+  line-height: 0%;
+  width: 0px;
+  border-bottom: 20px solid $primary;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+
+  &.angle-sm {
+    border-bottom-width: 13px;
+    border-left-width: 8px;
+    border-right-width: 8px;
+  }
+}
+
+/* purgecss end ignore */

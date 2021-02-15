@@ -1,0 +1,58 @@
+/*!
+=========================================================
+* BackBone - WP + Bootstrap 4.x Starter Theme
+=========================================================
+Theme Name: BackBone
+Theme URI: https://github.com/HabedyOmid/Backbone
+Author: Versa Creative
+Description: BackBone theme is developed to build any Wordpress site with 100% freedom of design and development using ACF (Advance Custom Field) and CPT UI (Custom Post Type). The theme also uses Gulp, BrowserSync and AutoPrefixer to compile (SASS, CSS and JS) adding prefixes to support almost all browsers, and to compress (JPG, PNG, SVG, GIF). Automating tasks to watch for (SASS, CSS, PHP, and JS) files change, to recompile and push those changes to browser in real-time.
+Version: 2.6
+License: GNU General Public License v2 or later
+License URI: LICENSE
+Tags: ACF, CPT-UI, Bootstrap 4.x, Gulp, BrowswerSync, AutoPrefixer, SASS, CSS Architecture 7-1 Pattern
+=========================================================
+*/
+
+// Boostrap 4.x Core
+@import "vendors/bootstrap5/functions";
+@import "vendors/bootstrap5/variables";
+
+@import "abstracts/variables";
+@import "vendors/bootstrap5/mixins";
+
+// custom core
+@import "abstracts/mixins";
+@import "vendors/bootstrap5/grid";
+@import "vendors/bootstrap5/containers";
+@import "vendors/bootstrap5/transitions";
+@import "vendors/bootstrap5/modal";
+@import "vendors/bootstrap5/bootstrap-utilities.scss";
+@import "vendors/bootstrap5/utilities";
+
+// bootstrap components
+
+// custom
+@import "base/base";
+@import "base/typography";
+@import "base/utilities";
+
+@import "components/buttons";
+@import "components/card";
+@import "components/custom-input";
+@import "components/list";
+@import "components/modal";
+@import "components/navbar";
+@import "components/pagination";
+@import "components/form";
+@import "components/slick-slider";
+@import "components/timeline";
+
+@import "sections/section-general";
+@import "sections/footer";
+
+// AOS
+@import "vendors/aos/aos";
+
+// Slick
+@import "vendors/slick/slick";
+@import "vendors/slick/slick-theme";

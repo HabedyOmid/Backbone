@@ -1,0 +1,33 @@
+/* purgecss start ignore */
+
+.wpforms-form {
+  button,
+  input[type="submit"] {
+    padding: 1.5rem 2rem !important;
+    color: $white !important;
+    text-transform: uppercase !important;
+    background-color: $blue !important;
+    border: 0 !important;
+    outline: 0 !important;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="text"],
+  textarea {
+    background-color: transparent !important;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    border-radius: 0 !important;
+    padding: 1.5rem 2rem !important;
+    height: auto !important;
+    border: 1px solid $dark !important;
+
+    &:focus {
+      border: 1px solid $blue !important;
+    }
+  }
+}
+
+/* purgecss end ignore */
