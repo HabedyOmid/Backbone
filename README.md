@@ -11,12 +11,12 @@ Once **node.js** and **npm** installation is completed. Open `themes/BackBone` t
 ## Technologies & Features:
 Laravel Mix is using `WebPack` build-tool and some additional features:
 * `sass` compiles SASS to CSS and minify CSS for production
-* `bable` compile and minifies JS files, adding support for ES5, ES6... for older browsers
+* `babel` compile and minifies JS files, adding support for ES5, ES6... for older browsers
 * `browser-sync` watch for file changes and apply changes to browser real-time
 * `autoprefixer` adding CSS prefixers for all browsers support
 * `purgecss` to remove unused CSS from project files, significantly reduces css file size for better performance and page speed optimization
 
-**NOTE:** to edit/update build-tool configuration visit `webpack.mix.js` file
+**NOTE:** to edit/update build-tool configuration visit `themes/BackBone/webpack.mix.js` file
 
 | Command        | Descriptions                                                                            |
 | -------------- | --------------------------------------------------------------------------------------- |
