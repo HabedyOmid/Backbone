@@ -1,13 +1,13 @@
 # BackBone - WP Theme & Laravel Mix
 
 ### Requirements:
-You need to have `node.js`, and `npm` installed globally on your system to use #Laravel Mix build-tool.
+You need to have `node.js`, and `npm` installed globally on your system to use **Laravel Mix** build-tool.
 
 -   [node.js](https://nodejs.org/en/) - is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 -   [npm](https://www.npmjs.com/) - is node.js package manager for installing open-source JavaScript apps.
 
 ### Installation:
-After downloading this repo, open this project folder within your terminal and run `npm install` command to install all of the dependencies and to unlock all the below tasks.
+Once **node.js** and **npm** installation is completed. Open this project folder within your terminal and run `npm install` command to install all of the dependencies and to unlock all the below tasks.
 
 | Command        | Descriptions                                                                            |
 | -------------- | --------------------------------------------------------------------------------------- |
