@@ -9,15 +9,11 @@ You need to have `node.js`, and `npm` installed globally on your system to use *
 ### Installation:
 Once **node.js** and **npm** installation is completed. Open `themes/BackBone` theme folder within your terminal and run `npm install` command to install all dependencies for build-tool.
 
-
-`<addr>`
-
-
 | Command        | Descriptions                                                                            |
 | -------------- | --------------------------------------------------------------------------------------- |
-| `npm install`  | Installing all dependencies for this application                                        |
-| `gulp sass`    | Compiling all SASS into CSS and adding browser support prefixes                         |
-| `gulp css`     | Compile, minify and combine CSS files into a single `.min.css` file                     |
+| `npm install`  | Installing build-tools dependencies                                                     |
+| `npx mix`      | Compiles SASS to CSS, Babel to compile and bundle JS files                              |
+| `npx mix watch`| Compiles all assets and watch for file (SASS, CSS, JS and PHP) changes. Apply changes to browser using `BrowserSync`|
 | `gulp js`      | Compile, minify and combine JS files to a single file. Babel (ES5, ES6) support enabled |
 | `gulp imgs`    | Compress and optimize image (`.png`, `.jpg`, `.gif` and `.svg`) graphic files           |
 | `gulp vendors` | Copy all vendors / plugins lib files from src to dist directory                         |
