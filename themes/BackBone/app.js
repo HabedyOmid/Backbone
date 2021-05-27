@@ -6958,30 +6958,31 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   }, e.Alert = _, e.Button = x, e.Carousel = he, e.Collapse = De, e.Dropdown = en, e.Modal = wn, e.Popover = ci, e.Scrollspy = Oi, e.Tab = Vi, e.Toast = ro, e.Tooltip = Xn, e.Util = m, Object.defineProperty(e, "__esModule", {
     value: !0
   });
-}); // Smooth Scrolling
-
-$(document).ready(function () {
-  $("a").on('click', function (event) {
-    if (this.hash !== "") {
-      event.preventDefault();
-      var hash = this.hash;
-      $('html, body').animate({
-        scrollTop: $(hash).offset().top
-      }, 700, function () {
-        window.location.hash = hash;
-      });
-    }
+});
+jQuery(document).ready(function () {
+  // Navbar Toggle
+  jQuery(".navbar__toggler").click(function () {
+    jQuery(this).toggleClass("collapsed");
+    jQuery("Z").toggleClass("no-scroll");
+    jQuery(".navbar-content").removeAttr("id").toggleClass("show");
+    jQuery(".navbar-collapse").removeAttr("id");
   });
-}); // tgl checkbox for navbar collapse
+}); // Add PLUS (+) icon on mobile screen toggles the menu dropdowns
 
-$('#tgl-checkbox:checkbox').change(function () {
-  if ($(this).is(":checked")) {
-    $('.navbar-item.links').addClass("show");
-  } else {
-    $('.navbar-item.links').removeClass("show");
-  }
-}); // dropdown menu toggle in medium screen size
+jQuery(function ($) {
+  $(".menu-item-has-children > a").each(function (index, value) {
+    jQuery(this).addClass("dropdown-toggle").removeAttr("data-toggle").removeAttr("aria-haspopup").removeAttr("aria-expanded").removeAttr("id").after('<a href="#" class="toggle-icon"></a>');
+  }); // Add class .dropdown_toggled to <ul> tag on + link
 
-$('.dropdown .nav-link').click(function () {
-  $(this).parent().toggleClass('open');
+  $(".toggle-icon").on("click", function (e) {
+    jQuery(this).siblings("ul.dropdown-menu").toggleClass("dropdown_toggled");
+    $(this).toggleClass("toggled").parent().siblings().children().removeClass("dropdown_toggled");
+    $(this).toggleClass("toggled").parent().siblings().children().removeClass("toggled");
+    $(this).toggleClass("toggled");
+  }); // }
+}); // Toggle navbar for mobile
+
+$(".navbar-toggler").on("click", function (e) {
+  $("body").toggleClass("no-scroll");
+  e.preventDefault();
 });

@@ -1,4 +1,3 @@
-// scss-docs-start import-stack
 // Configuration
 @import "functions";
 @import "variables";
@@ -16,10 +15,10 @@
 @import "forms";
 @import "buttons";
 @import "transitions";
-@import "dropdown";
+// @import "dropdown";
 @import "button-group";
-@import "nav";
-@import "navbar";
+// @import "nav";
+// @import "navbar";
 @import "card";
 @import "accordion";
 @import "breadcrumb";
@@ -35,10 +34,10 @@
 @import "popover";
 @import "carousel";
 @import "spinners";
+@import "offcanvas";
 
 // Helpers
 @import "helpers";
 
 // Utilities
 @import "utilities/api";
-// scss-docs-end import-stack

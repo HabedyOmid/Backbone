@@ -214,6 +214,7 @@ class acfe_multilang{
      * PolyLang
      * https://polylang.pro/doc/filter-reference/
      * https://polylang.pro/doc/developpers-how-to/
+     * https://polylang.pro/doc-category/developers/
      * https://polylang.wordpress.com/documentation/documentation-for-developers/general/
      * https://polylang.wordpress.com/documentation/documentation-for-developers/functions-reference/
      */
@@ -282,7 +283,7 @@ class acfe_multilang{
     function set_options_post_id($post_id, $original_post_id){
         
         // Bail early if original post id is 'options' ||'option'
-        if(!is_string($post_id) || in_array($original_post_id, array('options', 'option')))
+        if(!is_string($post_id))
             return $post_id;
         
         $data = acf_get_post_id_info($post_id);
@@ -290,6 +291,21 @@ class acfe_multilang{
         // Bail early if post id isn't an option type
         if($data['type'] !== 'option')
             return $post_id;
+        
+        // Options Exception
+        // $post_id already translated during the native acf/validate_post_id
+        if(in_array($original_post_id, array('options', 'option'))){
+            
+            // Exclude filter
+            $exclude = apply_filters('acfe/modules/multilang/exclude_options', array());
+            
+            if(in_array('options', $exclude)){
+                return 'options';
+            }
+    
+            return $post_id;
+            
+        }
 
         // Bail early if no Options Page found with that post id
         if(!$this->is_options_page($post_id))
@@ -361,8 +377,8 @@ class acfe_multilang{
             
             // Add 'Post Types List' location
             $post_types = acf_get_post_types(array(
-                'show_ui'	=> 1,
-                'exclude'	=> array('attachment')
+                'show_ui' => 1,
+                'exclude' => array('attachment')
             ));
     
             if(!empty($post_types)){
@@ -388,7 +404,29 @@ class acfe_multilang{
         
             }
             
-            $list = apply_filters('acfe/modules/multilang/options', $list);
+            // Depreacted filter
+            $list = apply_filters_deprecated('acfe/modules/multilang/options', array($list), '0.8.8.2', 'acfe/modules/multilang/exclude_options');
+            
+            // Include filter
+            $list = apply_filters('acfe/modules/multilang/include_options', $list);
+            
+            // Exclude filter
+            $exclude = apply_filters('acfe/modules/multilang/exclude_options', array());
+            
+            if(is_array($exclude) && !empty($exclude)){
+                
+                foreach($list as $i => $option){
+                    
+                    if(!in_array($option, $exclude))
+                        continue;
+                    
+                    unset($list[$i]);
+                    
+                }
+                
+                $list = array_values($list);
+                
+            }
             
             $this->options_pages = $list;
             
@@ -528,12 +566,18 @@ acf_new_instance('acfe_multilang');
 
 endif;
 
+/*
+ * Is Multilang Enabled
+ */
 function acfe_is_multilang(){
     
     return acf_get_instance('acfe_multilang')->is_multilang;
     
 }
 
+/*
+ * Get Multilang Data
+ */
 function acfe_get_multilang(){
     
     $wpml = acf_get_instance('acfe_multilang')->is_wpml;
@@ -550,24 +594,36 @@ function acfe_get_multilang(){
     
 }
 
+/*
+ * Get Languages
+ */
 function acfe_get_languages($pluck = 'code', $type = 'all', $plugin = false){
     
     return acf_get_instance('acfe_multilang')->get_languages($pluck, $type, $plugin);
     
 }
 
+/*
+ * Is Polylang
+ */
 function acfe_is_polylang(){
     
     return acf_get_instance('acfe_multilang')->is_polylang;
     
 }
 
+/*
+ * Is WPML
+ */
 function acfe_is_wpml(){
     
     return acf_get_instance('acfe_multilang')->is_wpml;
     
 }
 
+/*
+ * Get Post Language
+ */
 function acfe_get_post_lang($post_id, $field = false){
     
     // Bail early if not multilang
@@ -614,6 +670,9 @@ function acfe_get_post_lang($post_id, $field = false){
     
 }
 
+/*
+ * Get Post Translated
+ */
 function acfe_get_post_translated($post_id, $lang = false){
     
     // Bail early if not multilang
@@ -644,6 +703,9 @@ function acfe_get_post_translated($post_id, $lang = false){
     
 }
 
+/*
+ * Get Default Post Translated
+ */
 function acfe_get_post_translated_default($post_id){
     
     // Get translated post id
@@ -657,44 +719,57 @@ function acfe_get_post_translated_default($post_id){
     
 }
 
-function acfe__(&$string, $name = false, $textdomain = 'acfe'){
+/*
+ * Translate String
+ */
+function acfe_translate($string, $name = false, $textdomain = 'acfe'){
     
+    // Bail early
     if(!acfe_is_multilang() || empty($string))
         return __($string, $textdomain);
     
+    // Name compatibility
     if(empty($name))
         $name = $string;
     
     // WPML
     if(acfe_is_wpml()){
         
-        do_action( 'wpml_register_single_string', $textdomain, $name, $string);
-        
-        $string = __($string, $textdomain);
-        
-        return $string;
+        // Translate (Register string during save)
+        return apply_filters('wpml_translate_single_string', $string, $textdomain, $name);
         
     }
     
     // PolyLang
     if(acfe_is_polylang()){
         
+        // Register string
         pll_register_string($name, $string, $textdomain);
         
-        $string = pll__($string);
-        
-        return $string;
+        // Translate
+        return pll__($string);
         
     }
     
-    $string = __($string, $textdomain);
-    
-    return $string;
+    // Default Translate
+    return __($string, $textdomain);
     
 }
 
+/*
+ * Deprecated Translate String
+ */
+function acfe__($string, $name = false, $textdomain = 'acfe'){
+    
+    return acfe_translate($string, $name, $textdomain);
+    
+}
+
+/*
+ * Deprecated Translate String (echo)
+ */
 function acfe__e($string, $name = false, $textdomain = 'acfe'){
     
-    echo acfe__($string, $name, $textdomain);
+    echo acfe_translate($string, $name, $textdomain);
     
 }

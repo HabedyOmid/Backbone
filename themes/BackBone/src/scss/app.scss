@@ -4,8 +4,7 @@
 ============================================================
 Theme Name: BackBone
 Theme URI: https://github.com/HabedyOmid/Backbone
-Author: Omid Habedy
-Author URI: https://omidhabedy.me/
+Author: Versa Creative
 Description: BackBone theme is developed to build any WordPress site with 100% 
 freedom of design and development using ACF (Advance Custom Field) and CPT UI (Custom Post Type). 
 Version: 3.0
@@ -14,7 +13,6 @@ License URI: LICENSE
 Tags: ACF, Bootstrap 5, Webpack, Laravel Mix, BrowserSync, Babel, SASS, PurgeCSS, AutoPreFixer
 ===============================================================================================
 */
-
 
 // Custom
 @import "abstracts/variables";
@@ -29,5 +27,6 @@ Tags: ACF, Bootstrap 5, Webpack, Laravel Mix, BrowserSync, Babel, SASS, PurgeCSS
 @import "base/utilities";
 
 @import "components/navbar";
-@import "components/dropdown";
+@import "components/buttons";
+@import "components/wysiwyg";
 @import "components/footer";

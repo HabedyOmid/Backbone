@@ -1,33 +1,47 @@
-// Smooth Scrolling
-$(document).ready(function(){
-    $("a").on('click', function(event) {
-
-      if (this.hash !== "") {
-          event.preventDefault();
-
-          var hash = this.hash;
-
-          $('html, body').animate({
-            scrollTop: $(hash).offset().top
-          }, 700, function(){
-            window.location.hash = hash;
-          });
-        }
-    });
+jQuery(document).ready(function () {
+  // Navbar Toggle
+  jQuery(".navbar__toggler").click(function () {
+    jQuery(this).toggleClass("collapsed");
+    jQuery("Z").toggleClass("no-scroll");
+    jQuery(".navbar-content").removeAttr("id").toggleClass("show");
+    jQuery(".navbar-collapse").removeAttr("id");
+  });
 });
 
+// Add PLUS (+) icon on mobile screen toggles the menu dropdowns
+jQuery(function ($) {
+  $(".menu-item-has-children > a").each(function (index, value) {
+    jQuery(this)
+      .addClass("dropdown-toggle")
+      .removeAttr("data-toggle")
+      .removeAttr("aria-haspopup")
+      .removeAttr("aria-expanded")
+      .removeAttr("id")
+      .after('<a href="#" class="toggle-icon"></a>');
+  });
 
-// tgl checkbox for navbar collapse
-$('#tgl-checkbox:checkbox').change(function(){
-    if($(this).is(":checked")) {
-        $('.navbar-item.links').addClass("show");
-    } else {
-        $('.navbar-item.links').removeClass("show");
-    }
+  // Add class .dropdown_toggled to <ul> tag on + link
+  $(".toggle-icon").on("click", function (e) {
+    jQuery(this).siblings("ul.dropdown-menu").toggleClass("dropdown_toggled");
+    $(this)
+      .toggleClass("toggled")
+      .parent()
+      .siblings()
+      .children()
+      .removeClass("dropdown_toggled");
+    $(this)
+      .toggleClass("toggled")
+      .parent()
+      .siblings()
+      .children()
+      .removeClass("toggled");
+    $(this).toggleClass("toggled");
+  });
+  // }
 });
 
-
-// dropdown menu toggle in medium screen size
-$('.dropdown .nav-link').click(function(){
-    $(this).parent().toggleClass('open');
+// Toggle navbar for mobile
+$(".navbar-toggler").on("click", function (e) {
+  $("body").toggleClass("no-scroll");
+  e.preventDefault();
 });

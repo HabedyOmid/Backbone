@@ -120,19 +120,6 @@ add_action( 'wp_head', 'backbone_pingback_header' );
 
 
 
-
-//
-// Get Post Type
-// 
-function is_post_type($type){
-    global $wp_query;
-    if($type == get_post_type($wp_query->post->ID)) return true;
-    return false;
-}
-
-
-
-
 //
 // Post navigation
 // 
@@ -195,33 +182,6 @@ function advance_numeric_pagination( $custom_query ) {
             'total'     => $total_pages,
         ));
     }
-}
-
-
-//
-// Remove jQuery Migrate File - Front-end ONLY
-// 
-function dequeue_jquery_migrate( &$scripts){
-    if(!is_admin()){
-        $scripts->remove( 'jquery');
-    }
-}
-add_filter( 'wp_default_scripts', 'dequeue_jquery_migrate' );
-
-
-
-
-//
-// ACF Theme Settings
-// 
-if( function_exists('acf_add_options_page') ) {
-    acf_add_options_page(array(
-        'page_title'    => 'Theme General Settings',
-        'menu_title'    => 'Site Options',
-        'menu_slug'     => 'theme-general-settings',
-        'capability'    => 'edit_posts',
-        'redirect'      => false
-    ));
 }
 
 
@@ -303,9 +263,6 @@ function get_image_src($id, $size = "lg") {
 }
 
 
-
-
-
 //
 // Image ALT by ID
 //
@@ -331,8 +288,16 @@ function get_image_alt_by_id( $attachment_ID ) {
 }
 
 
-// Disable Gutenberg Editor
-add_filter("use_block_editor_for_post_type", "disable_gutenberg_editor");
-function disable_gutenberg_editor(){
-    return false;
+
+//
+// ACF Theme Settings
+// 
+if( function_exists('acf_add_options_page') ) {
+    acf_add_options_page(array(
+        'page_title'    => 'Theme General Settings',
+        'menu_title'    => 'Site Options',
+        'menu_slug'     => 'theme-general-settings',
+        'capability'    => 'edit_posts',
+        'redirect'      => false
+    ));
 }

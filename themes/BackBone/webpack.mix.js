@@ -27,6 +27,6 @@ require('laravel-mix-purgecss');
 
     // Auto Reload
     .browserSync({
-        proxy: 'https://backbone.test',
+        proxy: 'https://energybuddy.test',
         files: ['./**/*.php', './src/js/**/*.js', 'src/scss/**/*.scss']
     });

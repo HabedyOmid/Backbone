@@ -1,28 +1,39 @@
-::selection{
-	background-color: $primary;
-	color: $white;
+/* purgecss start ignore */
+
+::selection {
+  background-color: $primary;
+  color: $white;
 }
 
 a:link,
-a:visited{
-	color: $link-color;
-	text-decoration: $link-decoration;
-	transition: $transition-md;
+a:visited {
+  color: $link-color;
+  text-decoration: $link-decoration;
+  transition: $transition-md;
 
-	&:hover,
-	&:active{
-		color: $link-hover-color;
-		text-decoration: $link-hover-decoration;
-	}
+  &:hover,
+  &:active {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+  }
 }
 
-p{
-	line-height: $paragraph-line-height;
-	&:not(:last-child){
-		margin-bottom: 2rem;
-	}
+p {
+  line-height: $paragraph-line-height;
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
 }
 
-h1, h2, h3, h4, h5, h6{
-	font-weight: $bold-3;
+h1 {
+  font-weight: $font-weight-bolder;
 }
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $font-weight-bold;
+}
+
+/* purgecss end ignore */

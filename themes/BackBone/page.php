@@ -1,5 +1,14 @@
-<?php get_header();
+<?php 
+get_header();
 
-    get_template_part( 'sections/section-all' ); 
+    while ( have_posts() ) :
+        the_post();
+        the_content();
 
-get_footer(); ?>
+        // If comments are open or there is at least one comment, load up the comment template.
+        if ( comments_open() || get_comments_number() ) {
+            comments_template();
+        }
+    endwhile;
+
+get_footer();

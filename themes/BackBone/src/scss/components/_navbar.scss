@@ -1,290 +1,380 @@
-.navbar {
-	display: flex;
-	flex-wrap: wrap;
-	list-style: none;
-	background: transparent;
-	height: auto;
-	padding: 0 !important;
-	position: relative;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: 5000;
-	background-color: $navbar-bg;
-	font-size: $font-size-md;
-	border-bottom: 1px solid $border-color;
+/* purgecss start ignore */
 
-  	.container {
-		min-width: 100% !important;
-		background: inherit;
-		position: relative;
-		@include flex;
-		align-items: center;
-		padding: 0 0 0 3rem !important;
+$navbar_height: 9rem;
+$dropdown-min-width: 25rem;
+$child-dropdown-width: 15%;
+
+.navbar {
+  position: fixed;
+  background-color: $navbar-bg;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: $navbar_height;
+  font-family: $font-family-base;
+
+  // Logo
+  &__brand {
+    display: flex;
+    align-items: center;
+    margin-right: 5rem;
+    a {
+      display: block;
+    }
+    img {
+      width: auto;
+      height: 6rem;
+      display: block;
+    }
+  }
+
+  // Navbar content wrappers
+  .container {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .navbar-content {
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
+      margin-left: auto;
+      height: 100%;
+      flex: 1;
+
+      .navbar-collapse {
+        display: block !important;
+        height: 100%;
+        #menu-primary {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  // all links
+  a,
+  a:link,
+  a:visited {
+    color: $nav-link-color;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+
+    &:hover,
+    &:active {
+      color: $nav-link-hover-color;
+    }
+  }
+
+  // all list items
+  ul,
+  ul li,
+  ol,
+  ol li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// menu primary
+#menu-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+
+  & > li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-right: 3.5rem;
     }
 
-  	// Menu Toggle on mobile
-	button.navbar__toggler{
-		border: 0;
-		outline: 0;
-		background: transparent;
-		height: 3rem;
-		position: absolute;
-		right: 2rem;
-		top: 50%;
-		transform: translateY(-50%);
-		margin: 0;
-		padding: 0;
-		display: none;
-		cursor: pointer;
+    // CTA button
+    &.cta-link {
+      margin-left: auto;
 
-		span {
-			display: block;
-			width: 2.6rem;
-			height: .2rem;
-			background-color: $body-color;
-			margin: 0;
-			padding: 0;
-			border: 0;
-			transition: .3s;
-			transform-origin: center;
+      a:link,
+      a:visited {
+        padding: 1rem 3.5rem;
+        background-color: $primary;
+        color: $white;
+        font-weight: $font-weight-bold;
+        border-radius: 3rem;
+        border: 1px solid $primary;
 
-			&:before,
-			&:after {
-				content: '';
-				display: block;
-				width: 2.6rem;
-				height: .2rem;
-				background-color: inherit;
-				border-radius: 0rem;
-				transition: $transition-sm;
-			}
-			&:before { transform: translateY(-.8rem); }
-			&:after { transform: translateY(.7rem); }
-		}
+        &:hover,
+        &:active,
+        &:focus {
+          color: $primary;
+          background-color: $secondary;
+        }
+      }
+    }
 
-		// Hamburger's style When Toggled
-		&[aria-expanded="true"] {
-			position: fixed;
-			top: 3.3rem;
-			right: 3rem;
-			z-index: 99999999;
-			span {
-				background: rgba(0,0,0, 0);
-				&:before,
-				&:after { background-color: $body-color; }
-				&:before { transform: translateY(0.2rem) rotate(45deg) !important; }
-				&:after { transform: rotate(-45deg); }
-			}
-		}
+    // List item has dropdown
+    &.menu-item-has-children {
+      position: relative;
+    }
 
-		@include media-breakpoint-down(md) { display: block; }
-	}
+    // Link with dropdown meun
+    .dropdown-toggle {
+      position: relative;
+      &:after {
+        content: "\25BE";
+        font-size: 1.2rem;
+        color: inherit;
+        transition: $transition-sm;
+        margin-left: 0.6rem;
+        display: inline-block;
+        position: relative;
+        top: -0.2rem;
+        color: $gray-400;
+      }
+    }
 
-  	// Logo
-  	.navbar__brand{
-		float: left;
-		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 0 0 0 1rem;
-		a{
-			width: auto;
-			line-height: 0;
-			img, svg{ 
-				width: 18rem; 
-				height: auto; 
-			}
-		}
-  	}
+    // Dropdown list
+    & > .dropdown-menu {
+      position: absolute;
+      max-width: 100%;
+      left: 0;
+      top: $navbar_height;
+      background-color: $primary;
+      min-width: $dropdown-min-width;
+      transition: $transition-md;
+      transition: 0.3s;
+      flex-direction: column;
+      z-index: 9;
+      opacity: 0;
+      visibility: hidden;
+      padding: 1rem;
 
-	// Navbar Links
-   .navbar-collapse{
-  		height: $navbar-height;
-  		width: 100%;
-  		display: flex;
-  		justify-content: right;
-  		align-self: flex-end;
-  		justify-content: flex-end;
+      & > li {
+        max-width: 110rem !important;
+        a {
+          padding: 1rem;
+          display: inline-block;
+        }
+      }
+    }
 
-		// Navigation Main Container
-  		ul#menu-primary{
-			list-style: none;
-			display: flex;
-			height: 100%;
-			text-align: left;
-			transition: $transition-md;
-			transition-timing-function: $transition-timing-bezier;
+    & > .toggle-icon {
+      display: none;
+    }
 
-			// First List Items
-			> li{
-				list-style: none;
-				padding: 0;
-				display: flex;
-				align-self: center;
-				height: 100%;
-
-				// Active Items
-				&.active{
-					> a:link,
-					> a:visited,
-					a.active{ color: $nav-link-hover-color; }
-				}
-
-				// CTA-LINK
-				&.cta-link{
-					background-color: $primary;
-					padding-left: 1.5rem;
-					padding-right: 1.5rem;
-					text-transform: uppercase;
-					font-weight: $bold-3;
-					letter-spacing: 1px;
-
-					a:link,
-					a:visited{
-						color: $white;
-
-						&:hover,
-						&:active{
-						
-						}
-					}
-				}
-			}
-
-			// Child items in _dropdown.scss file
-			a:link,
-			a:visited{
-				color: $nav-link-color;
-				text-decoration: $nav-link-decoration;
-				padding: 2.3rem 2rem;
-				display: flex;
-				align-items: center;
-
-				&:hover,
-				&:active{
-					color: $nav-link-hover-color;
-					text-decoration: $nav-link-hover-decoration;
-				}
-			}
-  		 }
-  	}
+    // Show dropdown on hover
+    &:hover {
+      & > .dropdown-menu {
+        transition-delay: 0s;
+        visibility: visible;
+        opacity: 1;
+        top: 100%;
+      }
+    }
+  }
 }
 
+// Menu Toggle on mobile
+.navbar__toggler {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  height: 4rem;
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 0;
+  display: none;
+  cursor: pointer;
 
-// Hide & Show on Scroll
-.hideShowOnScroll{
-	height: $navbar-height;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: 5000;
-	transition: $transition-sm;
-	&.scrollUp { transform: translateY(-$navbar-height); }
+  span {
+    display: block;
+    width: 3.4rem;
+    height: 0.2rem;
+    background-color: $secondary;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    transition: 0.3s;
+    transform-origin: center;
+
+    &:before,
+    &:after {
+      content: "";
+      display: block;
+      width: 3.4rem;
+      height: 0.2rem;
+      background-color: inherit;
+      border-radius: 0rem;
+      transition: $transition-sm;
+    }
+    &:before {
+      transform: translateY(-1rem);
+    }
+    &:after {
+      transform: translateY(0.9rem);
+    }
+  }
+
+  // Hamburger's style When Toggled
+  &.collapsed span {
+    background: rgba(0, 0, 0, 0);
+    &:before,
+    &:after {
+      background-color: $secondary;
+    }
+    &:before {
+      transform: translateY(0.2rem) rotate(45deg) !important;
+    }
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
 }
 
+// toggle icon (plus)
+.toggle-icon {
+  display: inline-block;
+  position: relative;
+  top: 0rem;
+  padding-left: 0.2rem;
+  cursor: pointer;
 
-nav.navbar + header,
-nav.navbar + main{
-	margin-top: $navbar-height !important;
+  &:after {
+    content: "\002b";
+    color: $white;
+    font-size: 3rem;
+    line-height: 0;
+  }
+
+  &.toggled:after {
+    content: "\002d";
+    font-size: 4rem !important;
+  }
 }
 
+// mobile
+@media screen and (max-width: 960px) {
+  .navbar {
+    // Toggle icon
+    &__toggler {
+      display: block;
+    }
 
-// small navbar
-@include media-breakpoint-down(md) {
-	nav.navbar {
-		#menu-primary {
-			position: fixed;
-			right: -$navbar-sm-max-width;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			overflow: auto !important;
-			max-width: $navbar-sm-max-width;
-			background: $navbar-bg;
-			box-shadow: $box-shadow;
-			padding-top: 8rem;
-			flex-direction: column;
+    // Logo
+    &__brand {
+      img {
+        max-width: 20rem;
+      }
+    }
 
-			a{ background-color: transparent !important;}
+    // Navbar wrappers and all content
+    .navbar-content {
+      position: absolute;
+      left: 0;
+      top: $navbar_height;
+      width: 100%;
+      min-height: 80vh;
+      display: flex !important;
+      flex-direction: column;
+      padding: 2rem;
+      opacity: 0;
+      visibility: hidden;
+      background-color: $body-bg;
 
-			&.show { right: 0; }
+      &.show {
+        opacity: 1;
+        visibility: visible;
+        overflow: auto;
+      }
 
-			& > li {
-				width: 90% !important;
-				min-width: 230px !important;
-				align-self: center !important;
-				height: auto !important;
-				padding: 0 !important;
-				flex-direction: column !important;
+      .navbar-collapse {
+        display: block !important;
+        min-height: 100% !important;
 
-				& > a {
-					padding: $cat-sm-padding !important;
-					width: 100%;
-					font-size: $font-size-lg;
-					opacity: .8;
+        #menu-primary {
+          display: block;
 
-					&.dropdown-toggle:after {
-						position: absolute;
-						right: 2rem;
-						top: 50%;
-						transform: translateY(-50%);
-					}
-				}
+          .dropdown-toggle {
+            &:after {
+              content: "";
+            }
+          }
 
-				&:last-child { margin: 1rem auto !important; }
+          & > li {
+            margin: 0;
+            height: auto !important;
+            padding: 5px 0;
 
-				& > ul {
-					position: static !important;
-					width: 100% !important;
-					display: block !important;
-					visibility: visible !important;
-					opacity: 1 !important;
-					width: 100%;
-					transform: none;
-					padding: 0 !important;
-					height: initial !important;
-					min-height: initial !important;
-					max-height: 0 !important;
-					overflow: hidden !important;
+            &.cta-link {
+              a:link,
+              a:visited {
+                background-color: $secondary;
+                color: $white;
+              }
+            }
 
-					&.show {
-						max-height: 100rem !important;
-						padding: 1rem 0 !important;
-					}
+            // List item has dropdown
+            &.menu-item-has-children {
+              position: relative;
+              display: flex;
+              flex-wrap: wrap;
 
-					& > .menu-item {
-						padding-top: 0; // Dropdowns as Columns
-						padding-bottom: 0; // Dropdowns as Columns
-						padding: 0 1.5rem;
+              // Link
+              a {
+                flex: 1;
+              }
 
-						& > a {
-							margin-bottom: .2rem !important;
-							margin-top: 0 !important;
-						}
-					}
-				}
+              // Link to toggle dropdown
+              .toggle-icon {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+              }
 
-				.parent__dropdown {
-					& > .menu-item {
-						& > a {
-							margin-bottom: 0rem !important;
-							margin-top: 1rem !important;
-						}
-					}
-				}
-			}
+              // Dropdown
+              .dropdown-menu {
+                width: 100%;
+                position: static;
+                opacity: 1;
+                min-height: 0;
+                max-height: 0 !important;
+                background: transparent;
+                overflow: hidden;
+                visibility: hidden;
+                opacity: 0;
+                padding: 0;
 
-			ul.dropdown-menu {
-				opacity: 1 !important;
-				visibility: visible !important;
-				margin-top: 0 !important;
-				width: 100%;
-				background-color: transparent !important;
-			}
-		}
-	}
+                &.dropdown_toggled {
+                  opacity: 1;
+                  visibility: visible;
+                  max-height: 140rem !important;
+                }
+
+                li {
+                  a {
+                    padding: 5px 10px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
+
+.navbar + main {
+  margin-top: $navbar_height;
+}
+
+/* purgecss end ignore */
