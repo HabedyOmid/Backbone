@@ -1,31 +1,24 @@
 /*!
 ============================================================
-* BackBone - WP + Bootstrap 5.x + Laravel Mix, Boilerplate
+* BackBone - WP + Laravel Mix, Boilerplate
 ============================================================
 Theme Name: BackBone
 Theme URI: https://github.com/HabedyOmid/Backbone
-Author: Versa Creative
+Author: Omid Habedy
 Description: BackBone theme is developed to build any WordPress site with 100% 
 freedom of design and development using ACF (Advance Custom Field) and CPT UI (Custom Post Type). 
 Version: 3.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
-Tags: ACF, Bootstrap 5, Webpack, Laravel Mix, BrowserSync, Babel, SASS, PurgeCSS, AutoPreFixer
+Tags: ACF, Webpack, Laravel Mix, BrowserSync, Babel, SASS, PurgeCSS, AutoPreFixer
 ===============================================================================================
 */
 
-// Custom
 @import "abstracts/variables";
 @import "abstracts/mixins";
-
-// Bootstrap.x Core
-@import "vendors/bootstrap/bootstrap";
-
-// Custom Components / Overrides
 @import "base/typography";
 @import "base/base";
 @import "base/utilities";
-
 @import "components/navbar";
 @import "components/buttons";
 @import "components/wysiwyg";
