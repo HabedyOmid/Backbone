@@ -1,5 +1,4 @@
 <nav class="navbar" role="navigation">
-
 	<div class="container">
 		<button
 			class="navbar__toggler"
