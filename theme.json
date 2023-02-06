@@ -1,0 +1,151 @@
+{
+	"$schema": "http://schemas.wp.org/trunk/theme.json",
+	"version": 2,
+	"settings": {
+		"appearanceTools": false,
+		"border": {
+			"radius": false,
+			"color": false,
+			"style": false,
+			"width": false
+		},
+		"layout": {
+			"contentSize": "800px",
+			"wideSize": "1080px"
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"units": ["px", "em", "rem", "vh", "vw", "%"],
+			"spacingScale": {
+				"operator": "*",
+				"increment": 2,
+				"steps": 50,
+				"mediumStep": 2.5,
+				"unit": "px"
+			}
+		},
+		"color": {
+			"defaultPalette": false,
+			"palette": [
+				{
+					"slug": "slate-100",
+					"color": "#f1f5f9",
+					"name": "Slate 100"
+				},
+				{
+					"slug": "slate-200",
+					"color": "#e2e8f0",
+					"name": "Slate 200"
+				},
+				{
+					"slug": "slate-300",
+					"color": "#cbd5e1",
+					"name": "Slate 300"
+				},
+				{
+					"slug": "slate-400",
+					"color": "#94a3b8",
+					"name": "Slate 400"
+				},
+				{
+					"slug": "slate-500",
+					"color": "#64748b",
+					"name": "Slate 500"
+				},
+				{
+					"slug": "slate-600",
+					"color": "#475569",
+					"name": "Slate 600"
+				},
+				{
+					"slug": "slate-700",
+					"color": "#334155",
+					"name": "Slate 700"
+				},
+				{
+					"slug": "slate-800",
+					"color": "#1e293b",
+					"name": "Slate 800"
+				},
+				{
+					"slug": "slate-900",
+					"color": "#0f172a",
+					"name": "Slate 900"
+				}
+			]
+		},
+		"typography": {
+			"lineHeight": false,
+			"dropCap": false,
+			"letterSpacing": false,
+			"customFontSize": false,
+			"fontStyle": false,
+			"fontWeight": false,
+			"fluid": false,
+			"fontSizes": [
+				{
+					"slug": "small",
+					"size": "12px",
+					"name": "Small"
+				},
+				{
+					"slug": "medium",
+					"size": "14px",
+					"name": "Medium"
+				},
+				{
+					"slug": "large",
+					"size": "18px",
+					"name": "Base"
+				},
+				{
+					"slug": "x-large",
+					"size": "22px",
+					"name": "Large"
+				}
+			],
+			"fontFamilies": [
+				{
+					"fontFamily": "'scandia-web', sans-serif",
+					"slug": "primary",
+					"name": "Primary"
+				},
+				{
+					"fontFamily": "'Recoleta Alt'",
+					"slug": "secondary",
+					"name": "Secondary",
+					"fontFace": [
+						{
+							"fontFamily": "'Recoleta Alt'",
+							"fontWeight": "300",
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": ["file:./src/fonts/Recoleta-Regular.ttf"]
+						}
+					]
+				}
+			]
+		}
+	},
+	"styles": {
+		"elements": {
+			"button": {},
+			"link": {},
+			"caption": {},
+			"cite": {},
+			"heading": {}
+		},
+		"spacing": {
+			"blockGap": "50px"
+		},
+		"color": {
+			"background": "var(--wp--preset--color--slate-700)",
+			"text": "var(--wp--preset--color--slate-200)"
+		},
+		"blocks": {
+			"core/button": {},
+			"core/query": {}
+		}
+	}
+}
