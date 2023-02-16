@@ -1,15 +1,11 @@
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
-	content: [
-		"./src/**/*.{scss}",
-		"./templates/**/*.{html,js}",
-		"./parts/**/*.{html,js}",
-	],
+	content: ["./templates/**/*.{html,js}", "./parts/**/*.{html,js}"],
 	theme: {
 		extend: {
 			fontFamily: {
-				primary: ["Now Alt"],
+				primary: ["scandia-web", "sans-serif"],
 				secondary: ["Recoleta Alt"],
 			},
 			fontSize: {
@@ -36,6 +32,7 @@ module.exports = {
 				150: "150%",
 			},
 			colors: {
+				transparent: "transparent",
 				slate: {
 					100: "var(--wp--preset--color--slate-100)",
 					200: "var(--wp--preset--color--slate-200)",
@@ -46,6 +43,20 @@ module.exports = {
 					700: "var(--wp--preset--color--slate-700)",
 					800: "var(--wp--preset--color--slate-800)",
 					900: "var(--wp--preset--color--slate-900)",
+				},
+				primary: {
+					100: "var(--wp--preset--color--primary-100)",
+					200: "var(--wp--preset--color--primary-200)",
+					300: "var(--wp--preset--color--primary-300)",
+					400: "var(--wp--preset--color--primary-400)",
+					500: "var(--wp--preset--color--primary-500)",
+				},
+				secondary: {
+					100: "var(--wp--preset--color--secondary-100)",
+					200: "var(--wp--preset--color--secondary-200)",
+					300: "var(--wp--preset--color--secondary-300)",
+					400: "var(--wp--preset--color--secondary-400)",
+					500: "var(--wp--preset--color--secondary-500)",
 				},
 			},
 			spacing: {
@@ -64,6 +75,26 @@ module.exports = {
 				8: "2rem",
 				9: "2.25rem",
 				10: "2.5rem",
+				11: "2.75rem",
+				12: "3rem",
+				13: "3.25rem",
+				14: "3.5rem",
+				15: "3.75rem",
+				16: "4rem",
+				17: "4.25rem",
+				18: "4.5rem",
+				19: "4.75rem",
+				20: "5rem",
+				21: "5.25rem",
+				22: "5.5rem",
+				23: "5.75rem",
+				24: "6rem",
+				25: "6.25rem",
+				26: "6.5rem",
+				27: "6.75rem",
+				28: "7rem",
+				29: "7.25rem",
+				30: "7.5rem",
 				"grid-1/2": "calc(50% - 0.625rem)",
 				"grid-1/3": "calc(33.333333% - 0.625rem)",
 				"grid-1/4": "calc(25% - 0.96rem)",

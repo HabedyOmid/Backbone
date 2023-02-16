@@ -1,0 +1,17 @@
+a:link,
+a:visited {
+	&,
+	* {
+		@apply text-slate-200 #{!important};
+	}
+
+	&:hover,
+	&:focus,
+	&:active,
+	&.active {
+		&,
+		* {
+			@apply text-primary-100 #{!important};
+		}
+	}
+}
