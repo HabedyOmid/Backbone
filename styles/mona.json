@@ -1,0 +1,181 @@
+{
+	"version": 2,
+	"title": "Mona Variable Font",
+    "settings": {
+        "typography": {
+            "fontFamilies": [
+				{
+					"fontFamily": "Mona Sans,sans-serif",
+					"name": "System Font",
+					"slug": "system",
+                    "fontFace": [
+                        {
+                            "fontFamily": "Mona Sans",
+                            "fontWeight": "normal",
+                            "fontStyle": "normal",
+                            "fontStretch": "normal",
+                            "src": [ "file:./assets/fonts/Mona/MonaSans.woff2" ]
+                        }
+                    ]
+				},
+				{
+					"fontFamily": "var(--greenshift-primary-fontfamily, var(--wp--preset--font-family--system))",
+					"name": "Primary Custom Font",
+					"slug": "primary"
+				},
+				{
+					"fontFamily": "var(--greenshift-secondary-fontfamily, var(--wp--preset--font-family--system))",
+					"name": "Secondary Custom Font",
+					"slug": "secondary"
+				},
+				{
+					"fontFamily": "var(--greenshift-tertiary-fontfamily, var(--wp--preset--font-family--system))",
+					"name": "Tertiary Custom Font",
+					"slug": "tertiary"
+				},
+				{
+					"fontFamily": "\"Source Serif Pro\", serif",
+					"name": "Source Serif Pro",
+					"slug": "source-serif-pro"
+				},
+				{
+					"fontFamily": "monospace",
+					"name": "Monospace",
+					"slug": "monospace"
+				}
+            ]
+        },
+        "color": {
+			"palette": [
+				{
+					"name": "Base color (content text)",
+					"slug": "basecolor",
+					"color": "#000001"
+				},
+				{
+					"name": "Contrast color (content background)",
+					"slug": "contrastcolor",
+					"color": "#fffffe"
+				},
+				{
+					"name": "Primary",
+					"slug": "primary",
+					"color": "#53fdca"
+				},
+				{
+					"name": "Secondary",
+					"slug": "secondary",
+					"color": "#35F4BB"
+				},
+				{
+					"name": "Text over primary",
+					"slug": "textonprimary",
+					"color": "#000001"
+				},
+				{
+					"name": "Secondary Button",
+					"slug": "button",
+					"color": "#7635f3"
+				},
+				{
+					"name": "Text over button",
+					"slug": "textonbutton",
+					"color": "#fffffb"
+				},
+				{
+					"name": "Attention Color",
+					"slug": "accent",
+					"color": "#de1414"
+				},
+				{
+					"name": "Accented Light Background",
+					"slug": "lightbg",
+					"color": "#f9fafb"
+				},
+				{
+					"name": "Tag color",
+					"slug": "tagcolor",
+					"color": "#b952fe26"
+				},
+				{
+					"name": "Light Grey (for Meta text)",
+					"slug": "lightgrey",
+					"color": "#A8B8CD"
+				},
+				{
+					"name": "Price color (for woocommerce)",
+					"slug": "price",
+					"color": "#444444"
+				},
+				{
+					"name": "Borders, Dividers",
+					"slug": "lightborder",
+					"color": "#cecece6b"
+				},
+				{
+					"name": "Input background",
+					"slug": "inputbg",
+					"color": "#fafbfd"
+				},
+				{
+					"name": "Input text",
+					"slug": "inputtext",
+					"color": "#444"
+				}
+			],
+			"gradients": [
+				{
+					"slug": "diagonal-primary-to-secondary",
+					"gradient": "linear-gradient(to bottom right,var(--wp--preset--color--primary) 0%,var(--wp--preset--color--secondary) 100%)",
+					"name": "Diagonal primary to secondary"
+				},
+				{
+					"slug": "creative-primary",
+					"gradient": "linear-gradient(196deg, rgb(83, 253, 202) 0%, rgb(83, 253, 202) 54%, rgb(142, 250, 213) 100%)",
+					"name": "Text Gradient"
+				},
+				{
+					"slug": "creative-btn",
+					"gradient": "linear-gradient(166deg, rgb(83, 253, 202) 0%, rgb(75, 248, 196) 100%)",
+					"name": "Button background"
+				},
+				{
+					"slug": "creative-two",
+					"gradient": "linear-gradient(135deg,rgb(255,203,112) 0%,rgb(191 42 182) 50%,rgb(36 64 211) 100%)",
+					"name": "Multi Color second"
+				},
+				{
+					"slug": "creative-third",
+					"gradient": "linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(185,0,108) 93%)",
+					"name": "Multi Color third"
+				},
+				{
+					"slug": "creative-four",
+					"gradient": "linear-gradient(135deg,rgb(64,129,246) 0%,rgb(128,104,250) 18%,rgb(255,128,170) 38%,rgb(255,103,88) 56%,rgb(255,101,24) 65%,rgb(255,177,36) 76%)",
+					"name": "Multi Color four"
+				},
+				{
+					"slug": "creative-five",
+					"gradient": "linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%)",
+					"name": "Multi Color five"
+				},
+				{
+					"slug": "creative-six",
+					"gradient": "linear-gradient(119deg, #84a1ff 0%, #3057ff 39%, #ff4242 100%)",
+					"name": "Multi Color six"
+				},
+				{
+					"slug": "creative-seven",
+					"gradient": "linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%)",
+					"name": "Multi Color seven"
+				},
+				{
+					"slug": "rainbow",
+					"gradient": "linear-gradient(90deg,#fe6459,#fedd40,#53e7ab,#52dbff,#6967e2,#fe58e3,#fe6459)",
+					"name": "Rainbow creative"
+				}
+
+			]
+		}
+    }
+}

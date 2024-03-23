@@ -1,0 +1,128 @@
+{
+	"version": 2,
+	"title": "Black Content Grotesk",
+    "settings": {
+		"typography": {
+            "fontFamilies": [
+				{
+					"fontFamily": "Space Grotesk,sans-serif",
+					"name": "System Font",
+					"slug": "system",
+                    "fontFace": [
+                        {
+                            "fontFamily": "Space Grotesk",
+                            "fontWeight": "normal",
+                            "fontStyle": "normal",
+                            "fontStretch": "normal",
+                            "src": [ "file:./assets/fonts/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf" ]
+                        }
+                    ]
+				},
+				{
+					"fontFamily": "var(--greenshift-primary-fontfamily, var(--wp--preset--font-family--system))",
+					"name": "Primary Custom Font",
+					"slug": "primary"
+				},
+				{
+					"fontFamily": "var(--greenshift-secondary-fontfamily, var(--wp--preset--font-family--system))",
+					"name": "Secondary Custom Font",
+					"slug": "secondary"
+				},
+				{
+					"fontFamily": "var(--greenshift-tertiary-fontfamily, var(--wp--preset--font-family--system))",
+					"name": "Tertiary Custom Font",
+					"slug": "tertiary"
+				},
+				{
+					"fontFamily": "\"Source Serif Pro\", serif",
+					"name": "Source Serif Pro",
+					"slug": "source-serif-pro"
+				},
+				{
+					"fontFamily": "monospace",
+					"name": "Monospace",
+					"slug": "monospace"
+				}
+            ]
+        },
+        "color": {
+			"palette": [
+				{
+					"name": "Base color (content text)",
+					"slug": "basecolor",
+					"color": "#fffffe"
+				},
+				{
+					"name": "Contrast color (content background)",
+					"slug": "contrastcolor",
+					"color": "#000001"
+				},
+				{
+					"name": "Primary",
+					"slug": "primary",
+					"color": "#7000f4"
+				},
+				{
+					"name": "Secondary",
+					"slug": "secondary",
+					"color": "#2184f9"
+				},
+				{
+					"name": "Text over primary",
+					"slug": "textonprimary",
+					"color": "#fffffd"
+				},
+				{
+					"name": "Secondary Button",
+					"slug": "button",
+					"color": "#ffd800"
+				},
+				{
+					"name": "Text over button",
+					"slug": "textonbutton",
+					"color": "#010101"
+				},
+				{
+					"name": "Attention Color",
+					"slug": "accent",
+					"color": "#de1414"
+				},
+				{
+					"name": "Accented Light Background",
+					"slug": "lightbg",
+					"color": "#f9fafb"
+				},
+				{
+					"name": "Tag color",
+					"slug": "tagcolor",
+					"color": "#b952fe26"
+				},
+				{
+					"name": "Light Grey (for Meta text)",
+					"slug": "lightgrey",
+					"color": "#A8B8CD"
+				},
+				{
+					"name": "Price color (for woocommerce)",
+					"slug": "price",
+					"color": "#999"
+				},
+				{
+					"name": "Borders, Dividers",
+					"slug": "lightborder",
+					"color": "#cecece6b"
+				},
+				{
+					"name": "Input background",
+					"slug": "inputbg",
+					"color": "#fafbfd"
+				},
+				{
+					"name": "Input text",
+					"slug": "inputtext",
+					"color": "#444"
+				}
+			]
+		}
+    }
+}

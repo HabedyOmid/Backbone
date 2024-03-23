@@ -1,28 +1,23 @@
 {
-	"name": "BackBone",
-	"version": "2.0.0",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"devDependencies": {
-		"autoprefixer": "^10.4.13",
-		"browser-sync": "^2.27.11",
-		"browser-sync-webpack-plugin": "^2.3.0",
-		"laravel-mix": "^6.0.49",
-		"laravel-mix-purgecss": "^6.0.0",
-		"mix-tailwindcss": "^1.3.0",
-		"postcss": "^8.4.21",
-		"resolve-url-loader": "^5.0.0",
-		"sass": "^1.32.12",
-		"sass-loader": "^13.2.0",
-		"tailwindcss": "^3.2.4"
-	},
-	"browserslist": [
-		"last 6 version",
-		"> 1%",
-		"ie 10"
-	]
+  "name": "greenshift",
+  "version": "1.0.0",
+  "description": "Fastest Block theme",
+  "main": "index.js",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "check-engines": "wp-scripts check-engines",
+    "build:custom": "wp-scripts build src/index.js src/index-advanced.js",
+    "packages-update": "wp-scripts packages-update",
+    "lint:js": "wp-scripts lint-js",
+    "lint:style": "wp-scripts lint-style"
+  },
+  "author": "Wpsoul",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^20.0.2"
+  },
+  "dependencies": {
+    "classnames": "^2.3.1"
+  }
 }
